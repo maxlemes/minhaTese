@@ -1,0 +1,428 @@
+\chapter{Inexact scaled gradient method} \label{chap:SGM}
+
+The aim of this section is to present an  inexact  version of SGP method, which   inexactness are in two distinct senses.  First,  we  use  a version of the inexactness scheme introduced in \cite{BirginMartinezRaydan2003},  and also a variation of the one appeared in \cite{VillaSalzo2013},  to compute an inexact projection  onto the feasible  set   allowing an appropriate  relative error tolerance. Second,  using the  inexactness  conceptual scheme for  nonmonotones    line  search   introduced  in  \cite{GrapigliaSachs2017, SachsSachs2011}, a step size is computed  to define the next iterate.  The statement of the  conceptual algorithm is as follows.\\
+
+\begin{algorithm}[H]
+\addtocontents{loa}{\def\string\figurename{Algorithm}}
+	%\begin{algorithmic}[h]
+	\begin{description}
+		 \item[Step 0.] Choose  $\sigma,{\zeta_{\min}}  \in (0, 1)$, $\delta_{\min}\in [0, 1)$, $0<\underline \omega<\bar \omega<1$, $0 < \alpha_{\min} \leq \alpha_{\max}$ and $\mu \geq1$. Let $x^0\in C$, $\nu_0\geq 0$ and set $k \gets 0$.
+		 \item[Step 1.] Choose positive real numbers $\alpha_k$ and $\zeta_k$, and a positive definite matrix $D_k$ such that
+		\begin{equation} \label{eq:TolArm}
+			\alpha_{\min}\leq \alpha_k \leq \alpha_{\max}, \qquad \qquad 0 <{\zeta_{\min}}<\zeta_k \leq 1, \qquad \qquad D_k\in {\cal D}_{\mu}.
+		\end{equation}
+		Compute $w^{k}\in C$  as any feasible inexact projection  with respect to the norm $\| \cdot \| _{D_k}$ of $z^k := x^{k}-\alpha_k D_k^{-1}\nabla f(x^{k})$ onto $C$ relative to $x^{k}$  with forcing parameter $\zeta_k$, i.e.,
+		\begin{equation} \label{eq:PInexArm}
+			w^k \in   {\cal P}_{C, \zeta_k}^{D_k}(x^{k}, z^k).
+		\end{equation}
+		If $w^k= x^k$, then {\bf stop} declaring convergence.
+		 \item[Step 2.]  Set $\tau_{\textrm{trial}} \gets 1$. If
+		\begin{equation}\label{eq:TkArm}
+			 f\big(x^{k}+ \tau_{\textrm{trial}}(w^k - x^{k})\big) \leq f(x^{k}) + \sigma \tau_{\textrm{trial}}\big\langle \nabla f(x^{k}), w^k - x^{k} \big\rangle + \nu_k,
+		\end{equation}
+		then  $\tau_k\gets \tau_{\textrm{trial}}$, define the next iterate $x^{k+1}$ as
+		\begin{equation} \label{eq:IterArm}
+			x^{k+1} = x^{k} + \tau_k (w^k - x^{k}),
+		\end{equation}
+		and go to {\bf Step 3}. Otherwise, choose $\tau_{\textrm{new}} \in [\underline\omega \tau_{\textrm{trial}}, \bar\omega \tau_{\textrm{trial}} ]$, set $\tau_{\textrm{trial}} \gets \tau_{\textrm{new}}$, and repeat test \eqref{eq:TkArm}.
+		
+		 \item[Step 3.]  Take  $\delta_{k+1}\in [\delta_{\min}, 1]$ and choose    $\nu_{k+1}\in {\mathbb R}$ satisfying
+		\begin{equation} \label{eq:nuk}
+			0\leq \nu_{k+1}\leq (1-\delta_{k+1})\big[f(x^{k})+\nu_{k}-f(x^{k+1})\big].
+		\end{equation}
+		Set $k\gets k+1$ and go to \textbf{Step~1}.
+\end{description}
+%	\end{algorithmic}
+	
+	\caption{SGP with inexact projection and nonmonotone line search}
+	\label{Alg:GeneralSeach}
+\end{algorithm}
+
+Let us describe the main features of Algorithm~\ref{Alg:GeneralSeach}. In Step~1,  we first  choose   $\alpha_{\min}\leq \alpha_k \leq \alpha_{\max}$, $0 < \zeta_{\min} \leq \zeta_k  < 1$, and  $D_k\in  {\cal D}_{\mu}$. Then, by using some (inner) procedure, such as those specified in Section~\ref{chap:SubInexProj}, we compute $w^k$ as any feasible inexact projection of $z^k = x_k - \alpha_kD_k^{-1}\nabla f(x_k)$ onto the feasible set $C$ relative to the previous iterate $x^k$ with forcing parameter $\zeta_k$. If $w^k= x^k$, then Lemma~\ref{Le:ProjProperty}{\it (ii)} implies that $x^{k}$ is a solution of  problem \eqref{eq:OptP}.  Otherwise,  $w^k\neq  x^k$ and Lemma~\ref{Le:ProjProperty}{\it (i)}  implies  that $ w^k- x^k$ is a descent direction of $f$ at $x^k$, i.e.,  $\langle \nabla f(x^k), w^k- x^k \rangle < 0$.    Hence, in Step~2, we employ a nonmonotone line search  with tolerance parameter $\nu_k\geq 0$ to compute a step size  $\tau_k \in (0, 1]$,  and  the next iterate is computed as in \eqref{eq:IterArm}. Finally, due to  \eqref{eq:TkArm} and  $\delta_{k+1}\in [\delta_{\min}, 1]$, we have $0\leq (1-\delta_{k+1})\big[f(x^{k})+\nu_{k}-  f(x^{k+1})\big]$.  Therefore, the next   tolerance parameter $\nu_{k+1}\in {\mathbb R}$ can be chosen satisfying \eqref{eq:nuk}  in Step~3, completing the iteration.
+
+ It is worth mentioning that the conditions in \eqref{eq:TolArm}  allow combining several strategies for choosing the step sizes $\alpha_k$  and the matrices $D_k$  to accelerate the performance of the classical gradient method.   Strategies  of choosing the step sizes $\alpha_k$  and the matrices $D_k$ have their origin in the study of the gradient  method  for unconstrained  optimization,  papers dealing with this issue include  but are not limited to \cite{BB1988, DaiHage2006, Serafino2018, Friedlander1999, Dai2006}, see also  \cite{BonettiniPrato2015, DaiFletcher2005, DaiFletcher2006, Polyak_Levitin1966}. More details  about   selecting  step sizes $\alpha_k$  and matrices $D_k$  can be found in the recent  review  \cite{bonettini2019recent} and  references therein.
+
+
+Below, we present some  particular instances  of the parameter   $\delta_k\geq 0$ and  the non-monotonicity tolerance parameter $ \nu_ {k} \geq 0$  in Step~3.
+
+\begin{enumerate}
+\item {\it Armijo line search} 
+
+	Taking  $\nu_k\equiv 0$, the line search   \eqref{eq:TkArm}  is the well-known (monotone) Armijo line search, see \cite[Section 2.3]{Bertsekas1999}. In this case, we  can take  $\delta_k\equiv 1$ in Step~3. 
+	
+		\item {\it Max-type line search} 
+	
+		The earliest nonmonotone line search strategy  was proposed  in \cite{Grippo1986}. Let $M>0$ be an integer parameter. In an iteration $k$, this strategy requires a step size $\tau_k>0$ satisfying
+		\begin{equation}\label{eq:grippo}
+		f\big(x^{k}+ \tau_k(w^k - x^{k})\big) \leq \max_{0\leq j\leq m_k}f(x^{k-j}) + \sigma \tau_k\big\langle \nabla f(x^{k}), w^k - x^{k} \big\rangle,
+	\end{equation}
+	where $m_0=0$ and $0\leq m_k\leq \min\{m_{k-1}+1, M\}$.  To simplify the notations,  we define $f(x^{\ell(k)}):=\max_{0\leq j\leq m_k}f(x^{k-j})$.  In order to identify \eqref{eq:grippo} as a particular instance of \eqref{eq:TkArm}, we  set
+	\begin{equation} \label{eq:casg}
+		\nu_{k}= f(x^{\ell(k)})-f(x^k), \quad 0=\delta_{\min}\leq \delta_{k+1}\leq  [f(x^{\ell(k)})- f(x^{\ell(k+1)})]/[f(x^{\ell(k)})-f(x^{k+1})].
+	\end{equation}
+	Parameters $\nu_{k}$ and $\delta_{k+1}$ in \eqref{eq:casg} satisfy the corresponding conditions in Algorithm~\ref{Alg:GeneralSeach}, i.e.,  $\nu_{k} \geq 0$ and  $\delta_{k+1}\in [\delta_{\min}, 1]$ (with   $\delta_{\min}=0$)  satisfy \eqref{eq:nuk}.  In fact, the definition of $f(x^{\ell(k)})$ implies that   $ f(x^{k})\leq f(x^{\ell(k)})$ and hence $\nu_{k} \geq 0$.  Due to  $\langle \nabla f(x^{k}), w^k - x^{k} \rangle<0$,   it follows from  \eqref{eq:TkArm} that $f(x^{\ell(k)})-f(x^{k+1})>0$. Since   $m_{k+1}\leq m_{k}+1$, we conclude that  $f(x^{\ell(k)})-f(x^{\ell(k+1)}) \geq 0$.  Hence, since $ f(x^{k+1})\leq f(x^{\ell(k+1)})$, we obtain $\delta_{k+1}\in [0, 1]$.  Moreover,  \eqref{eq:nuk} is equivalent  to  $\delta_{k+1}[f(x^{k})+\nu_{k}-f(x^{k+1})] \leq(f(x^{k})+\nu_{k}) -  (f(x^{k+1})+ \nu_{k+1})$,  which in turn, taking into account  that $\nu_{k}= f(x^{\ell(k)})-f(x^k)$, is equivalent to second inequality in \eqref{eq:casg}. Thus, \eqref{eq:grippo} is a particular instance of \eqref{eq:TkArm} with  $\nu_{k}$ and $\delta_{k+1}$ defined in \eqref{eq:casg}.  Therefore,  Algorithm~\ref{Alg:GeneralSeach} has as a particular instance the  inexact   projected  version of the scaled gradient method employing   the nonmonotone line search  \eqref{eq:grippo}. This version has been considered in \cite{BirginMartinezRaydan2003}; see also  \cite{Bonettini2009, WangLiu2005}.
+
+	
+	\item {\it Average-type line search} 
+	
+		Let us first recall the definition of the sequence of ``cost updates" $(c_k)_{k\in\mathbb{N}}$  that  characterizes the nonmonotone line search proposed in  \cite{ZhangHager2004}. Let   $0\leq \eta_{\min}\leq \eta_{\max}<1$,   $c_0 = f(x_0)$ and  $q_0 = 1$. Choose $\eta_k\in [\eta_{\min},  \eta_{\max}]$ and set
+	\begin{equation} \label{eq:zhs}
+		q_{k+1}=\eta_kq_{k}+1, \qquad c_{k+1} = [\eta_kq_kc_k + f(x^{k+1})]/q_{k+1}, \qquad \forall k \in \mathbb{N}.
+	\end{equation}
+	Some algebraic manipulations show that the sequence defined in   \eqref{eq:zhs} is equivalent to
+	\begin{equation} \label{eq:zhsn}
+		c_{k+1} = (1-1/q_{k+1})c_{k}+f(x^{k+1})/q_{k+1}, \qquad \forall k \in \mathbb{N}.
+	\end{equation}
+	Since \eqref{eq:nuk} is equivalent  to  $ f(x^{k+1})+ \nu_{k+1}\leq (1-\delta_{k+1})(f(x^{k})+\nu_{k})+\delta_{k+1}f(x^{k+1})$,  it follows from \eqref{eq:zhsn} that  letting  $\nu_{k}=c_k-f(x^k)$ and $\delta_{k+1}=1/q_{k+1}$, Algorithm~\ref{Alg:GeneralSeach} becomes the  inexact   projected  version of the scaled gradient method employing   the nonmonotone line search proposed in   \cite{ZhangHager2004}.  Finally,  considering that $q_0 = 1$ and  $\eta_{\max}<1$, the  first equality in   \eqref{eq:zhs} implies  that $q_{k+1}=1+\sum_{j=0}^{k}\prod_{i=0}^{j}\eta_{k-i}\leq \sum_{j=0}^{+\infty} \eta_{\max}^{j}=1/(1-\eta_{\max})$. In this case, due to $\delta_{k+1}=1/q_{k+1}$, we can take   $\delta_{\min}=1-\eta_{\max}>0$ in  Step~3.  For gradient projection methods employing   the nonmonotone Average-type line search see, for example, \cite{Paulo2007,Schuverdt2019,  Xihong2018}.
+	\end{enumerate}
+\begin{remark} \label{rem:outras}
+	The general line search in Step~2 of Algorithm~\ref{Alg:GeneralSeach} with  parameters  $\delta_{k+1}$  and  $\nu_{k}$ properly chosen in Step~3, also contains as particular cases the nonmonotone line searches  that appeared in  \cite{Ahookhosh2012,MoLiuYan2007}, see also \cite{GrapigliaSachs2017}.
+\end{remark}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Partial asymptotic convergence analysis} \label{Sec:PartialConvRes}
+The goal  of this section is to present a partial  convergence result for  the sequence $(x^k)_{k\in\mathbb{N}}$ generated by Algorithm~\ref{Alg:GeneralSeach}, namely, we will prove that every cluster point of $(x^k)_{k\in\mathbb{N}}$ is stationary for problem~\eqref{eq:OptP}.  For that, we state a result that is contained in the proof of \cite[Theorem 4]{GrapigliaSachs2017}. 
+\begin{lemma} \label{le:fkvk}
+For all $k \in \mathbb{N}$,   $0\leq \delta_{k+1}\big[ f(x^{k})+\nu_{k}-  f(x^{k+1})\big] \leq \big( f(x^{k})+\nu_{k}\big) - \big( f(x^{k+1})+\nu_{k+1}\big)$. As consequence the sequence   $\left(f(x^k)+\nu_k\right)_{k\in\mathbb{N}}$ is    non-increasing.
+	
+\end{lemma}
+
+
+Next, we present our first convergence result. It is worth noting that, just as in the classical projected gradient method, we do not need to assume that $f$ has a bounded sub-level  set.
+
+\begin{proposition} \label{pr:statArm}
+	Assume that $\lim_{k\to +\infty} \nu_{k} = 0$.   Then, Algorithm~\ref{Alg:GeneralSeach} stops in a finite number of iterations at a stationary point of problem \eqref{eq:OptP}, or generates an infinite sequence $(x^k)_{k\in\mathbb{N}}$ for which every cluster point is stationary for problem~\eqref{eq:OptP}.
+\end{proposition}
+\begin{proof}
+	First, assume that $(x^k)_{k\in\mathbb{N}}$ is finite. In this case, according to Step~1,   there exists $k \in \mathbb{N}$ such that $x^k = w^k \in{\cal P}_{C, \zeta_k}^{D_k}(x^{k}, z^k)$, where $z^k = x^{k}-\alpha_k D_k^{-1}\nabla f(x^{k})$, $0 <{\bar \zeta}<\zeta_k \leq 1$ and $\alpha_k > 0$. Therefore, applying Lemma~\ref{Le:ProjProperty}{\it (ii)} with $x = x^{k}$, $\alpha = \alpha_k$ and $\zeta= \zeta_k$, we conclude that $x^k$ is stationary for problem~\eqref{eq:OptP}.  Now, assume that $(x^k)_{k\in\mathbb{N}}$ is infinite.   Let ${\bar x}$ be a cluster point of $(x^k)_{k\in\mathbb{N}}$ and $(x^{k_j})_{j\in\mathbb{N}}$ be a subsequence of $(x^k)_{k\in\mathbb{N}}$ such that $\lim_{j\to +\infty} x^{k_j} = \bar{x}$. Since $C$ is closed and  $(x^k)_{k\in\mathbb{N}}\subset C$,  we have $\bar{x} \in C$. Moreover,     since  $\lim_{k\to +\infty} \nu_{k} = 0$, we have $\lim_{j\to +\infty}\left(f(x^{k_j}) +\nu_{k_j}\right) =f(\bar{x})$. Hence, considering that  $\lim_{k\to +\infty} \nu_{k} = 0$ and Lemma~\ref{le:fkvk} implies  that   $\left(f(x^k)+\nu_{k}\right)_{k\in\mathbb{N}}$  is  non-increasing, we conclude that $\lim_{k\to +\infty} f(x^{k})= \lim_{k\to +\infty}\left(f(x^{k}) +\nu_{k}\right) =f(\bar{x})$.
+	On the other hand,  due to  $w^k \in {\cal P}_{C, \zeta_k}^{D_k}(x^{k}, z^k)$, where $z^k = x^{k}-\alpha_k \nabla f(x^{k})$,  Definition~\ref{def:InexactM} implies
+	\begin{equation} \label{eq:bsw}
+		\|w^{k_j} - z^{k_j}\|_{D_k}^2\leq \zeta_{k_j} \| {\cal P}_{C}^{ D_k}(z^{k_j})-z^{k_j}\|_{D_k}^2+(1-\zeta_{k_j})\|x^{k_j}-z^{k_j}\|_{D_k}^2 .
+	\end{equation}
+	Considering that $(\alpha_k)_{k\in\mathbb{N}}$ and $(\zeta_k)_{k\in\mathbb{N}}$ are bounded, $(D_k)_{k\in\mathbb{N}}\subset  {\cal D}_{\mu}$,  $(x^{k_j})_{j\in\mathbb{N}}$ converges to ${\bar x}$ and $\nabla f$ is continuous, the last inequality together Remark~\ref{re:cproj} and \eqref{eq:pnv}  imply that $(w^{k_j})_{j\in\mathbb{N}}\subset C$ is also bounded. Thus, we can assume without loss of generality that $\lim_{j\to +\infty} w^{k_j} = \bar{w}\in C$.  In addition,  taking into account that  $x^k \neq w^k$ for all $k = 0,1, \ldots$, applying Lemma~\ref{Le:ProjProperty}{\it (i)} with $x = x^{k}$, $\alpha = \alpha_k$, $z(\alpha)=z^k$ and $\zeta= \zeta_k$, we obtain  that $\langle \nabla f(x^k), w^k- x^k \rangle < 0$, for all $k = 0, 1, \ldots$. Therefore,  \eqref{eq:TkArm} and \eqref{eq:IterArm} imply that
+	\begin{equation}\label{eq:fmotArmf}
+		0 < -\sigma\tau_{k} \big\langle \nabla f(x^{k}), w^{k}-x^{k} \big\rangle \leq f(x^{k}) +\nu_k- f(x^{k+1}), \qquad \forall ~k \in \mathbb{N}.
+	\end{equation}
+	Now, due $\tau_k \in (0,1]$, for all $k=0,1, \ldots$, we can also assume without loss of generality that $\lim_{j \to +\infty} \tau_{k_j} = \bar{\tau} \in [0,1].$
+	Therefore,   since $\lim_{k\to +\infty} f(x^{k}) =f(\bar{x})$ and $\lim_{k\to +\infty} \nu_{k} = 0$, taking limit in \eqref{eq:fmotArmf} along the  subsequences  $(x^{k_j})_{j\in\mathbb{N}}$,  $(w^{k_j})_{j\in\mathbb{N}}$ and $(\tau_{k_j})_{j\in\mathbb{N}}$  yields
+	$
+		\bar{\tau} \big\langle \nabla f(\bar{x}), \bar{w}- \bar{x} \big\rangle=0.
+	$
+	We have two possibilities: $\bar{\tau} > 0$ or $\bar{\tau} = 0$. If $\bar{\tau} > 0$, then  $\big\langle \nabla f(\bar{x}), \bar{w}- \bar{x} \big\rangle = 0.$  
+		Now, we  assume that $\bar{\tau} = 0$. In this case, for all $j$ large enough, there exists $0<\hat\tau_{k_j}\leq \min\{1,\tau_{k_j}/\underline\omega\}$ such that
+	\begin{equation}\label{eq:ffA10}		
+		f\big(x^{k_j}+\hat\tau_{k_j} (w^{k_j} - x^{k_j})\big) > f(x^{k_j}) + \sigma \hat\tau_{k_j} \big\langle \nabla f(x^{k_j}), w^{k_j} - x^{k_j} \big\rangle +\nu_{k_j}.
+	\end{equation}
+On the other hand, by the mean value theorem, there exists $\xi_{k_j}\in(0,1)$ such that
+		$$\langle \nabla f\big(x^{k_j}+\xi_{k_j}\hat\tau_{k_j} (w^{k_j} - x^{k_j})\big), \hat\tau_{k_j} (w^{k_j} - x^{k_j})\rangle = f\big(x^{k_j}+\hat\tau_{k_j} (w^{k_j} - x^{k_j})\big) - f(x^{k_j}).$$
+Combining this equality with \eqref{eq:ffA10}, and taking into account that $\nu_{k_j}\geq 0$, we have 
+		$$\langle \nabla f\big(x^{k_j}+\xi_{k_j}\hat\tau_{k_j} (w^{k_j} - x^{k_j})\big), \hat\tau_{k_j} (w^{k_j} - x^{k_j})\rangle>\sigma \hat\tau_{k_j} \big\langle \nabla f(x^{k_j}), w^{k_j} - x^{k_j} \big\rangle,$$
+ for $j$ large enough. Since $0<\hat\tau_{k_j}\leq \min\{1,\tau_{k_j}/\underline\omega\}$, it follows that $\lim_{j\to\infty} \hat\tau_{k_j} \|w^{k_j} - x^{k_j}\|=0$. Then, dividing both sides of the above inequality by $\hat\tau_{k_j}>0$ and taking limits as $j$ goes to $+\infty$, we conclude that $ \langle \nabla f(\bar{x}), \bar{w}-\bar{x} \rangle \geq \sigma \langle \nabla f(\bar{x}), \bar{w}-\bar{x} \rangle$.   Hence, due to $\sigma \in (0, 1)$, we obtain $\langle \nabla f(\bar{x}), \bar{w}-\bar{x} \rangle \geq 0$. We recall that $\langle \nabla f(x^{k_j}), w^{k_j}- x^{k_j} \rangle < 0$, for all $j=0, 1, \ldots$, which taking limit as $j$ goes to $+\infty$ yields $\langle \nabla f(\bar{x}), \bar{w}-\bar{x} \rangle \leq 0$. Hence, we also have $\langle \nabla f(\bar{x}), \bar{w}-\bar{x} \rangle = 0$. Therefore, for any of the two possibilities, $\bar{\tau} > 0$ or $\bar{\tau} = 0$, we have $\langle \nabla f(\bar{x}), \bar{w}-\bar{x} \rangle = 0$. On the other hand,  since  $(\alpha_k)_{k\in\mathbb{N}}$ and    $(\zeta_k)_{k\in\mathbb{N}}$   are  bounded, we also assume without loss of generality that $\lim_{j \to +\infty} \alpha_{k_j} = \bar{\alpha} \in [\alpha_{\min}, \alpha_{\max}]$ and $\lim_{j \to +\infty} \zeta_{k_j} = {\bar \zeta} \in [\zeta_{\min}, 1]$. Thus, since Remark~\ref{re:cproj} implies that
+	$$
+		\lim_{j \to +\infty}{\cal P}_{C}^{D_{k_j}}(z^{k_j})= {\cal P}_{C}^{\bar D}(\bar{z}),
+	$$
+	and considering that $\lim_{j\to +\infty} x^{k_j} = \bar{x}\in C$, $\lim_{j\to +\infty} w^{k_j} = \bar{w}\in C$, $\lim_{j \to +\infty} \tau_{k_j} = \bar{\tau} \in [0,1]$,   $\lim_{j \to +\infty} D_{k_j} = \bar{D}\in {\cal D}_{\mu}$, taking limit in \eqref{eq:bsw},  we conclude that
+	$$
+		\|\bar{w} -\bar{z}\|_{\bar D}^2\leq  {\bar \zeta}  \| {\cal P}_{C}^{\bar D}(\bar{z})-\bar{z}\|_{\bar D}^2+(1- {\bar \zeta} )\| \bar{x}-\bar{z}\|_{\bar D}^2 ,
+	$$
+	where $\bar{z} = \bar{x}-{\bar \alpha} \nabla f(\bar{x})$. Hence, Definition~\ref{def:InexactM} implies  that ${\bar w}\in  {\cal P}_{C,{\bar \zeta}}^{\bar D}( {\bar x}, {\bar z})$, where $\bar{z} = \bar{x}-{\bar \alpha} \nabla f(\bar{x})$. Therefore, due to $\langle \nabla f(\bar{x}), \bar{w}-\bar{x} \rangle = 0$, we can apply second sentence in Lemma \ref{Le:ProjProperty}{\it (iii)} with $x = \bar{x}$, $z({\bar \alpha}) = \bar{z}$ and $w({\bar \alpha}) = \bar{w}$, to conclude that $\bar{x}$ is stationary for problem~\eqref{eq:OptP}.
+\end{proof}
+
+
+
+The tolerance parameter $\nu_{k}$ that controls the non-monotonicity of the line search must be smaller and smaller as the sequence $(x^k)_{k\in\mathbb{N}}$  tends to  a stationary point. Next corollary presents a general condition for this property, its proof can be found in \cite[Theorem 4]{GrapigliaSachs2017}.
+\begin{corollary} \label{cr:fkvk}
+	If $\delta_{\min}>0$,  then  $\sum_{k=0}^{+\infty} \nu_k<+\infty$. Consequently, $\lim_{k\to +\infty} \nu_{k} = 0$.
+\end{corollary}
+
+The Armijo and the nonmonotone Average-type line searches discussed in Section~\ref{chap:SGM} satisfy  the assumption of Corollary~\ref{cr:fkvk}, i.e., $\delta_{\min}>0$.  However,    for  the  nonmonotone Max-type line search,  we   can only guarantee that $\delta_{\min}\geq 0$. Hence,  we can not apply  Corollary~\ref{cr:fkvk}  to conclude that $\lim_{k\to +\infty} \nu_{k}~=~0$.  In the next proposition, we will deal with this case separately.
+
+\begin{proposition} \label{pr;gripponuo}
+	Assume that the sequence  $(x^k)_{k\in\mathbb{N}}$ is generated by Algorithm~\ref{Alg:GeneralSeach} with the  nonmonotone line  search \eqref{eq:grippo}, i.e.,  $\nu_{k}= f(x^{\ell(k)})-f(x^k)$ for all  $k \in \mathbb{N}$. In addition,  assume that the level set $C_{0}:=\{ x\in C: ~ f(x)\leq f(x^0) \}$ is bounded and $\nu_0= 0$.  Then, $\lim_{k\to +\infty} \nu_{k} = 0$.
+\end{proposition}
+\begin{proof}
+	First of all, note that     $w^k \in   {\cal P}_{C,\zeta_k}^{D_k}(x^{k}, z^k)$,  where $z^k = x^{k}-\alpha_k D^{-1} _k\nabla f(x^{k})$ and $D_k\in {\cal D}_{\mu}$. Thus,  applying Lemma~\ref{Le:ProjProperty}{\it (i)}  with $x=x^k$, $w(\alpha) = w^k$, $z = z^k$ and $\zeta= \zeta_k$, we obtain
+	\begin{equation}\label{eq:apna}
+		\|w^k-x^k\|^2\leq -2\mu \alpha_{\max}\langle \nabla f(x^{k}), w^k-x^{k}\rangle, \qquad \forall k \in \mathbb{N}.
+	\end{equation}
+	On the other hand, due to   $f(x^{\ell(k)})= f(x^k)+ \nu_{k}$,  Lemma~\ref{le:fkvk} implies that    $(f(x^{\ell(k)}))_{k\in\mathbb{N}}$ is    non-increasing and $  f(x^{k+1})\leq   f(x^{k+1})+\nu_{k+1}\leq f(x^{k})+\nu_{k}\leq  f(x^{0})$. Hence, we have  $(x^k)_{k\in\mathbb{N}}\subset C_{0}$ and, as a consequence,    $(f(x^{\ell(k)}))_{k\in\mathbb{N}}$ converges. Note that $\ell(k)$   is an integer such that 
+	\begin{equation}\label{eq:lk}
+		k-m_k\leq \ell(k)\leq k.
+	\end{equation}
+	Since $x^{{\ell(k)}}=x^{{\ell(k)}-1}+ \tau_{{\ell(k)}-1} (w^{{\ell(k)}-1} - x^{{\ell(k)} -1})$,  \eqref{eq:grippo}  implies that
+	$$
+		f\big(x^{\ell(k)}\big)  \leq f\big(x^{\ell({{\ell(k)}-1})}\big)+ \sigma \tau_{{\ell(k)}-1}\big\langle \nabla f(x^{{\ell(k)}-1}), w^{{\ell(k)}-1} - x^{{\ell(k)}-1} \big\rangle,
+	$$
+	for all $k>M$.  In view of   $(f(x^{\ell(k)}))_{k\in\mathbb{N}}$  be convergent, $\langle \nabla f(x^{k}), w^k - x^{k} \rangle<0$ for all  $k \in \mathbb{N}$, and taking into account that   $\tau_k  \in (0, 1]$,  the last inequality together \eqref{eq:apna} implies that
+	\begin{equation}\label{eq:apcss}
+		\lim_{k\to +\infty} \tau_{{\ell(k)}-1}\|w^{{\ell(k)}-1}-x^{{\ell(k)}-1}\|=0.
+	\end{equation}
+	We proceed to  prove that  $\lim_{k\to +\infty} f(x^{k})= \lim_{k\to +\infty} f(x^{\ell(k)})$. For that, set ${\hat \ell}(k):=\ell(k+M+2)$. First, we prove by induction that, for all  $j\geq 1$,  the following two equalities  hold
+	\begin{equation}\label{eq:ind}
+		\lim_{k\to +\infty}  \tau_{{\hat \ell}(k)-j}\|w^{{{\hat \ell}(k)}-j}-x^{{{\hat \ell}(k)}-j}\|=0, \qquad \lim_{k\to +\infty} f(x^{{\hat \ell}(k)-j})= \lim_{k\to +\infty} f(x^{\ell(k)}),
+	\end{equation}
+	where we are  considering $k\geq j-1$. Assume that $j=1$. Since  $\{{\hat \ell}(k): ~k\in\mathbb{N}\}\subset \{{\ell}(k): ~k\in\mathbb{N}\}$, the first equality in \eqref{eq:ind} follows from \eqref{eq:apcss}. Hence, $\lim_{k\to +\infty} \|x^{{{\hat \ell}(k)}}-x^{{\hat \ell(k)}-1}\|=0$. Since  $C_{0}$ is  compact and  $f$ is uniformly continuous on $C_{0}$, we have $  \lim_{k\to +\infty} f(x^{{\hat \ell}(k)-1})=\lim_{k\to +\infty} f(x^{{\hat \ell(k)}})$, which again using that $\{{\hat \ell}(k): ~k\in\mathbb{N}\}\subset \{{\ell}(k): ~k\in\mathbb{N}\}$ implies the second equality in \eqref{eq:ind}. Assume that \eqref{eq:ind} holds for $j$. Again, due to  $x^{{{\hat \ell}(k)}-j}=x^{{{{\hat \ell}(k)}-j}-1}+ \tau_{{{{\hat \ell}(k)}-j}-1} (w^{{{{\hat \ell}(k)}-j}-1} - x^{{{{\hat \ell}(k)}-j} -1})$,  \eqref{eq:grippo}  implies that
+	$$
+		f\big(x^{{{\hat \ell}(k)}-j}\big)  \leq f\big(x^{\ell({{{{\hat \ell}(k)}j}-(j+1)})}\big)+ \sigma \tau_{{{{\hat \ell}(k)}}-(j+1)}\big\langle \nabla f(x^{{{{\hat \ell}(k)}}-(j+1)}), w^{{{{\hat \ell}(k)}}-(j+1)} - x^{{{{\hat \ell}(k)}}-(j+1)} \big\rangle.
+	$$
+	Similar argument used to obtain \eqref{eq:apcss} yields  $\lim_{k\to +\infty} \tau_{{{{\hat \ell}(k)}}-(j+1)}\|w^{{{{\hat \ell}(k)}}-(j+1)}-x^{{{{\hat \ell}(k)}}-(j+1)}\|=0$. Thus,  the first equality in \eqref{eq:ind} holds for $j+1$, which  implies  $\lim_{k\to +\infty} \|x^{{{\hat \ell}(k)}-j}-x^{{{{\hat \ell}(k)}}-(1+j)}\|=0$.  Again, the   uniformly continuity of $f$ on $C_{0}$ gives
+	$$
+		\lim_{k\to +\infty} f(x^{{\hat \ell}(k)-(j+1)})=\lim_{k\to +\infty} f(x^{{\hat \ell}(k)-j}),
+	$$
+	which shows that the second equality in \eqref{eq:ind} holds for $j+1$. From  \eqref{eq:lk}  and ${\hat \ell}(k):=\ell(k+M+2)$, we obtain ${\hat \ell}(k)-k-1\leq M+1$. Thus,  taking into account that
+	$$
+		x^{k+1}=x^{{\hat \ell}(k)}- \sum_{j=1}^{{\hat \ell}(k)-k-1} \tau_{{\hat \ell}(k)-j} \big(w^{{\hat \ell}(k)-j} - x^{{\hat \ell}(k)-j}\big),
+	$$
+	it follows from the first inequality in \eqref{eq:ind} that $ \lim_{k\to +\infty} \|x^{k+1}-x^{{\hat \ell}(k)}\|=0$. Hence, due to  $f$ be uniformly continuous on $C_{0}$ and $(f(x^{\ell(k)}))_{k\in\mathbb{N}}$  be convergent,  we conclude that
+	$$ \lim_{k\to +\infty} f(x^{k})=\lim_{k\to +\infty} f(x^{{\hat \ell}(k)})= \lim_{k\to +\infty} f(x^{\ell(k)}),$$
+	and  considering that $\nu_{k}= f(x^{\ell(k)})-f(x^k)$ the desired results follows.
+\end{proof}
+\begin{remark}
+	Let  $C_{0}:=\{ x\in C: ~ f(x)\leq f(x^0) \}$ be  bounded and    $(x^k)_{k\in\mathbb{N}}$ be  generated by Algorithm~\ref{Alg:GeneralSeach} with the  nonmonotone line  search \eqref{eq:grippo} with $\nu_0= 0$.     Then, combining Propositions~\ref{pr:statArm} and \ref{pr;gripponuo}, we conclude that  $(x^k)_{k\in\mathbb{N}}$  is either finite terminating at a stationary point of problem~\eqref{eq:OptP}, or infinite,  and every cluster point of $(x^k)_{k\in\mathbb{N}}$ is stationary for problem~\eqref{eq:OptP}.  Therefore, we have an alternative proof for the result obtained in \cite[Theorem 2.1]{BirginMartinezRaydan2003}. 
+	 \end{remark}
+Due to Proposition~\ref{pr:statArm}, {\it from now on we assume that the sequence $(x^k)_{k\in\mathbb{N}}$ generated by Algorithm~\ref{Alg:GeneralSeach} is infinite}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Full asymptotic convergence  and complexity  analysis } \label{Sec:FullConvRes}
+
+The purpose of this section is twofold.  We will first prove, under suitable assumptions, the full convergence of the  sequence $(x^k)_{k\in\mathbb{N}}$  and then we will present  iteration-complexity bounds for it.   For this end,  we need to be more restrictive both with respect to the inexact projection in \eqref{eq:PInexArm} and in the tolerance parameter that controls the non-monotonicity of the line search used in \eqref{eq:TkArm}. More precisely,  we   assume  that in Step~1  of  Algorithm~\ref{Alg:GeneralSeach}:
+
+
+\begin{itemize}
+	\item[{\bf A1.}] For all $k \in \mathbb{N}$, we take   $w^k \in   {\cal R}_{C,\gamma_k}^{D_k}(x^{k}, z^k)$   with $\gamma_k=(1-\zeta_k)/2$.
+\end{itemize}
+It is worth recalling  that, taking   the parameter $\gamma_k=(1-\zeta_k)/2 $, it follows from Lemma~\ref{pr:condrip} that  $ {\cal R}_{C,\gamma_k}^{D_k}(x^{k}, z^k) \subset {\cal P}_{C, \zeta_k}^{D_k}(x^{k}, z^k)$. In addition, we also assume that   in Step~2 of  Algorithm~\ref{Alg:GeneralSeach}:
+\begin{itemize}
+	\item[{\bf A2.}]For all $k \in \mathbb{N}$,  we take  $0\leq \nu_{k}$ such that  $\sum_{k=0}^{+\infty} \nu_k<+\infty$.
+\end{itemize}
+It follows from Corollary~\ref{cr:fkvk} that the Armijo and the nonmonotone Average-type line searches discussed in Section~\ref{chap:SGM} satisfy  Assumption {\bf A2}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Full asymptotic convergence analysis} \label{SubSec:CAnalysisAF}
+In this section, we  prove  the full convergence of the  sequence  $(x^k)_{k\in\mathbb{N}}$ satisfying {\bf A1} and {\bf A2}.  \textcolor{blue}{For that, we consider an additional assumption on the sequence $(D_k)_{k\in {\mathbb N}}\subset {\cal D}_{\mu}$ as follows.
+\begin{itemize}
+	\item[{\bf A3.}] For all $k \in \mathbb{N}$,   $(1+\eta_k)D_k-  D_{k+1}$ is  a positive semidefinite matrix, for some sequence $(\eta_k)_{k\in\mathbb{N}}\subset [0, +\infty)$ such that $\sum_{k\in \mathbb{N}}\eta_k<\infty$.
+	\end{itemize}
+%\begin{remark}
+It is worth mentioning that Assumption  {\bf A3} has appeared in the study of the scaled gradient projection method, see, for example, \cite{bonettini2019recent}. Note that $D_k= I$ for all $k\in {\mathbb N}$, trivially satisfies {\bf A3}.
+%\end{remark}
+}
+We will begin establishing  a basic inequality for    $(x^k)_{k\in\mathbb{N}}$.  To simplify  notations, we define the constant
+\begin{equation} \label{eq:eta}
+	\xi := \dfrac{2 \alpha_{\max}}{\sigma} > 0.
+\end{equation}
+\textcolor{blue}{		
+\begin{lemma}\label{Le:xkArm}
+	For each  $x\in C$ and for all $k \in \mathbb{N}$, we have
+	\begin{equation}\label{eq:xkArm}
+	\|x^{k+1}-x\|_{D_{k+1}}^2 \leq (1+\eta_k)\Big(\|x^k-x\|_{D_k}^2 + 2\alpha_k\tau_k \big\langle \nabla f(x^k), x-x^k\big\rangle + \xi \big[f(x^k) - f(x^{k+1})+ \nu_k \big]\Big).
+	\end{equation}		
+\end{lemma}
+}
+\begin{proof}
+	We know that $\|x^{k+1}-x\|_{D_k}^2 = \|x^k-x\|_{D_k}^2 + \|x^{k+1}-x^k\|_{D_k}^2 - 2 \langle {D_k} ( x^{k+1}-x^k), x-x^k \rangle$, for all $x \in C$ and $k \in \mathbb{N}$. Thus, using \eqref{eq:IterArm}, we have
+	\begin{equation}\label{eq:xkArm1}
+		\|x^{k+1}-x\|_{D_k}^2 = \|x^k-x\|_{D_k}^2 + \tau_k^2\|w^k - x^{k}\|_{D_k}^2 - 2 \tau_k \big\langle {D_k}(w^k - x^{k}), x-x^k \big\rangle, \qquad \forall ~k \in \mathbb{N}.
+	\end{equation}
+	On the other hand, since  $w^k \in{\cal R}_{C,\gamma_k}^{D_k}(x^{k}, z^k)$ with $z^k = x^{k}-\alpha_k D_k^{-1} \nabla f(x^{k})$, it follows from Definition~\ref{def:InexactProjC},  with $y=x$, $D = D_k$, $u = x^k$, $v = z^k$, $w = w^k$,  and $\gamma = \gamma_k$,  that
+	$$
+		\big\langle D_k(x^k-\alpha_kD_k^{-1}\nabla f(x^k)-w^k), x-w^k\big\rangle \leq \gamma_k \|w^k - x^{k}\|_{D_k}^2, \qquad \forall ~k \in \mathbb{N}.
+	$$
+	Hence,  after some algebraic manipulations in the last inequality, we have
+	$$
+		-\big\langle D_k(w^k-x^k), x-x^k\big\rangle \leq \alpha_k \big\langle \nabla f(x^k), x-w^k \big\rangle - (1-\gamma_k) \|w^k-x^k\|_{D_k}^2.
+	$$
+	Combining the last inequality with \eqref{eq:xkArm1},  we conclude  that
+	\begin{equation} \label{eq:xkArm3}
+		\|x^{k+1}-x\|_{D_k}^2 \leq \|x^k-x\|_{D_k}^2 - \tau_k \big[2(1-\gamma_k) - \tau_k \big] \|w^k-x^k\|_{D_k}^2 + 2\tau_k\alpha_k \big\langle \nabla f(x^k), x-w^k\big\rangle.
+	\end{equation}
+	Since $0 \leq \gamma_k <(1-{\zeta_{\min}})/2 < 1/2$ and $\tau_k \in (0, 1]$, we have $2(1-\gamma_k) - \tau_k > {\zeta_{\min}} > 0$. Thus, it follows from \eqref{eq:xkArm3} that
+	$$
+		\|x^{k+1}-x\|_{D_k}^2 \leq \|x^k-x\|_{D_k}^2 + 2\tau_k\alpha_k \big\langle \nabla f(x^k), x-w^k\big\rangle, \qquad \forall ~k \in \mathbb{N}.
+	$$
+	Thus, considering that $\big\langle \nabla f(x^k), x-w^k\big\rangle = \big\langle \nabla f(x^k), x-x^k\big\rangle + \big\langle \nabla f(x^k), x^k-w^k \big\rangle$ and taking into account \eqref{eq:TkArm}, we conclude that
+	\begin{equation} \label{eq;ali}
+		\|x^{k+1}-x\|_{D_k}^2 \leq  \|x^k-x\|_{D_k}^2 + 2\tau_k\alpha_k \left\langle \nabla f(x^k),x-x^k\right\rangle + \frac{2 \alpha_k}{\sigma} \big[f(x^k)-f(x^{k+1})+\nu_k\big],
+	\end{equation}
+	for all $ k \in \mathbb{N}$.  On the other hand, applying Lemma~\ref{Le:ProjProperty}{\it (iii)}  with $x=x^k$, $\alpha=\alpha_k$, $D = D_k$, $w(\alpha) = w^k$, $z = z^k$ and $\zeta= \zeta_k$, we obtain  $\langle \nabla f(x^k), w^k- x^k \rangle <  0$, for all  $ k \in \mathbb{N}$. Therefore, it follows from \eqref{eq:TkArm} and \eqref{eq:IterArm} that $0 < -\sigma\tau_{k} \big\langle \nabla f(x^{k}), w^{k}-x^{k} \big\rangle \leq f(x^{k}) - f(x^{k+1})+\nu_k$, to all $k \in \mathbb{N}$. Hence, due to $0< \alpha_k\leq  \alpha_{\max}$,  we have
+	$$
+		\alpha_k[f(x^k)-f(x^{k+1})+\nu_k] < \alpha_{\max} [f(x^k)-f(x^{k+1})+\nu_k], \qquad \forall k \in \mathbb{N}.
+	$$
+\textcolor{blue}{Therefore, by combining  of the  last inequality with \eqref{eq:eta} and  \eqref{eq;ali} we obtain that 
+	$$
+	\|x^{k+1}-x\|_{D_k}^2 \leq \|x^k-x\|_{D_k}^2 + 2\alpha_k\tau_k \big\langle \nabla f(x^k), x-x^k\big\rangle + \xi \big[f(x^k) - f(x^{k+1})+ \nu_k \big], \quad \forall ~k \in \mathbb{N}.
+	$$
+Since {\bf A3}  implies that $\|x^{k+1}-x\|_{D_{k+1}}^2\leq (1+\eta_k) \|x^{k+1}-x\|_{D_k}^2$ the desired inequality \eqref{eq:xkArm} follows.}
+\end{proof}
+
+For proceeding with the analysis of  the behavior of the sequence $(x^k)_{k\in\mathbb{N}}$,  we define the following auxiliary set
+\begin{equation*}\label{eq:SetTArm}
+	U := \left\{x \in C: f(x) \leq \inf_{k\in {\mathbb N}}\left(f(x^{k})+\nu_k\right) \right\}.
+\end{equation*}
+
+\begin{corollary} \label{cor:xkquasifeArm}
+	Assume that $f$ is a convex function. If $U \neq \varnothing$, then $(x^k)_{k\in\mathbb{N}}$ converges to a stationary point of problem~\eqref{eq:OptP}.
+\end{corollary}
+\begin{proof}
+	Let $x \in U$.  Since  $f$ is convex, we have $0\geq f(x)-(f(x^k)+\nu_k)\geq \langle \nabla f(x^k),x-x^k\rangle -\nu_k$, for all $k\in \mathbb{N}$. Thus, $\langle \nabla f(x^k),x-x^k\rangle\leq \nu_k$, for all $k\in \mathbb{N}$.   Using Lemma \ref{Le:xkArm},  and taking into account  that  $\tau_k \in (0, 1]$  and  $0<\alpha_{\min}\leq \alpha_k \leq \alpha_{\max}$,  we obtain
+\textcolor{blue}{
+	$$
+		\|x^{k+1}-x\|_{D_{k+1}}^2 \leq (1+\eta_k)\|x^k-x\|_{D_k}^2+2 \alpha_{\max}\beta \nu_k+ \xi \beta \big[f(x^k) - f(x^{k+1}) +\nu_k\big], \quad \forall~k \in \mathbb{N}, 
+	$$
+where $\beta:=1+\sup\{\eta_k:~k\in\mathbb{N}\} $.
+	Defining $\epsilon_k =  2 \alpha_{\max} \beta \nu_k + \xi \beta\big[f(x^k) - f(x^{k+1}) +\nu_k\big]$, we have $\|x^{k+1}-x\|_{D_{k+1}}^2 \leq (1+\eta_k)\|x^k-x\|_{D_k}^2+ \epsilon_k$, for all $k \in \mathbb{N}$}. On the other hand, summing $\epsilon_k$ with $k = 0, 1, \ldots, N$ and using  Corollary~\ref{cr:fkvk},  we have
+\textcolor{blue}{
+$$
+\sum_{k=0}^N \epsilon_k \leq 2   \alpha_{\max} \beta \sum_{k=0}^N \nu_k +  \xi \beta\left(f(x^0) - f(x) + \sum_{k=0}^{N+1} \nu_k \right) < +\infty, \qquad \forall N \in \mathbb{N}.
+$$
+}	
+Hence, $\sum_{k=0}^{+\infty} \epsilon_k<+\infty$.  Thus, it follows from  Definition~\ref{def:QuasiFejer}  that $(x^k)_{k\in\mathbb{N}}$ is quasi-Fej\'er \textcolor{blue}{monotone}   to $U$ with respect to the sequence  $(D_k)_{k\in\mathbb{N}}$ . Since  $U$ is nonempty, it follows from Theorem \ref{teo.qf} that $(x^k)_{k\in\mathbb{N}}$ is bounded, and therefore it has cluster points. Let $\bar{x}$ be a cluster point of $(x^k)_{k\in\mathbb{N}}$ and $(x^{k_j})_{j\in\mathbb{N}}$ be a subsequence of $(x^k)_{k\in\mathbb{N}}$ such that $\lim_{j \to \infty} x^{k_j} = \bar{x}$. Considering that $f$ is continuous and $\lim_{k\to +\infty} \nu_{k} = 0$, we have $\lim_{j \to \infty} (f(x^{k_j})+\nu_{k_j})= f(\bar{x})$.  On the other hand, Lemma~\ref{le:fkvk} implies that  $\left(f(x^k)+\nu_k\right)_{k\in\mathbb{N}}$ is  non-increasing. Thus  $\inf_{k\in {\mathbb N}}(f(x^{k})+\nu_k)= \lim_{k \to \infty} (f(x^{k})+\nu_{k}) = f(\bar{x}).$ Hence, $\bar{x} \in U$, and  Theorem~\ref{teo.qf}  implies that $(x^k)_{k\in\mathbb{N}}$ converges to $\bar{x}$.  The conclusion is obtained  by  using   Proposition ~\ref{pr:statArm}.
+\end{proof}
+
+\begin{theorem}
+	If $f$ is a convex function and $(x^k)_{k\in\mathbb{N}}$ has no cluster points,  then $\Omega^* = \varnothing$, $\lim_{k \to \infty} \|x^k\|= +\infty$, and $\inf_{k\in {\mathbb N}} f(x^k) = \inf \{f(x) : x \in C\}$.
+\end{theorem}
+\begin{proof}
+	Since $(x^k)_{k\in\mathbb{N}}$ has no cluster points, then $\lim_{k \to \infty} \|x^k\|= +\infty$. Assume by contradiction that $\Omega^* \neq  \varnothing$.  Thus, there exists  $\tilde{x}\in C$, such that  $f(\tilde{x}) \leq f(x^k)$ for all $k\in {\mathbb N}$. Therefore, $\tilde{x} \in U$. Using Corollary \ref{cor:xkquasifeArm}, we obtain that $(x^k)_{k\in\mathbb{N}}$ is convergent, contradicting that $\lim_{k \to \infty} \|x^k\|= \infty$. Therefore, $\Omega^* = \varnothing$. Now, we claim that $\inf_{k\in {\mathbb N}} f(x^k) = \inf \{f(x) : x \in C\}$.   If $\inf_{k\in {\mathbb N}} f(x^k) = -\infty$, the claim holds. Assume by contraction that   $\inf_{k\in {\mathbb N}} f(x^k) >  \inf_{x \in C} f(x)$.  Thus,  there exists $\tilde{x} \in C$ such that $f(\tilde{x}) \leq f(x^k)\leq f(x^k)+\nu_k $,  for all $k\in {\mathbb N}$.  Hence, $U \neq \varnothing$.  Using Corollary \ref{cor:xkquasifeArm}, we have that  $(x^k)_{k\in\mathbb{N}}$ is convergent, contradicting again $\lim_{k \to \infty} \|x^k\|= +\infty$ and concluding the proof.
+\end{proof}
+
+\begin{corollary}
+	If $f$ is a convex function and $(x^k)_{k\in\mathbb{N}}$ has at least one cluster point, then    $(x^k)_{k\in\mathbb{N}}$ converges to a stationary point of problem~\eqref{eq:OptP}.
+\end{corollary}
+\begin{proof}
+	Let $\bar{x}$ be a cluster point of  the sequence $(x^k)_{k\in\mathbb{N}}$ and $(x^{k_j})_{j\in\mathbb{N}}$ be a subsequence of $(x^k)_{k\in\mathbb{N}}$ such that $\lim_{j\to +\infty} x^{k_j} = \bar{x}$. Considering that  $f$ is continuous and $\lim_{k\to +\infty} \nu_{k} = 0$, we have $\lim_{j \to \infty} (f(x^{k_j})+\nu_{k_j})= f(\bar{x})$.    On the other hand,  Corollary~\ref{cr:fkvk}   implies that   $(f(x^{k})+\nu_k)_{k\in\mathbb{N}}$ is non-increasing.  Hence, we have   $\inf_{k\in {\mathbb N}} (f(x^{k})+\nu_{k})=\lim_{k\to \infty} (f(x^{k})+\nu_{k})= f(\bar{x})$.  Therefore $\bar{x} \in U$. Using  Corollary~\ref{cor:xkquasifeArm}, we obtain that $(x^k)_{k\in\mathbb{N}}$ converges to a stationary point $\tilde{x}\in C$ of  problem \eqref{eq:OptP}.
+\end{proof}
+
+\begin{theorem}
+	Assume that $f$ is a convex function and  $\Omega^* \neq \varnothing$. Then,   $(x^k)_{k\in\mathbb{N}}$ converges to an optimal solution of problem~\eqref{eq:OptP}.
+\end{theorem}
+\begin{proof}
+	If $\Omega^* \neq \varnothing$, then   $U \neq \varnothing$.   Therefore,  Corollary~\ref{cor:xkquasifeArm} implies  that $(x^k)_{k\in\mathbb{N}}$ converges to a stationary point of  problem~\eqref{eq:OptP} and,  due to  $f$ be   convex, this point  is also an optimal solution.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Iteration-complexity bound}\label{SubSec:IterCompArm}
+
+In the section, we preset some  iteration-complexity bounds related to  the sequence $(x^k)_{k\in\mathbb{N}}$ generated by  Algorithm~\ref{Alg:GeneralSeach}.  For that, besides  assuming  {\bf A1} and {\bf A2},  we also need the following assumption.
+\begin{itemize}
+	\item[{\bf A4.}] The  gradient $\nabla f$ of $f$ is  Lipschitz continuous with constant $L>0$.
+\end{itemize}
+For simple notations, we define the  following positive constant
+
+
+
+\begin{equation} \label{eq;taumin}
+	\tau_{\min} := \min \left\{1, \frac{\underline\omega(1-\sigma)}{{\alpha_{\max}}\mu L}\right\}.
+\end{equation}
+
+
+\begin{lemma}\label{Le:tauminArm}
+	The steepsize $\tau_k$ in Algorithm~\ref{Alg:GeneralSeach} satisfies $\tau_k \geq \tau_{\min}$.
+\end{lemma}
+\begin{proof}
+	First, we assume that $\tau_k=1$. In this case, we have $\tau_k \geq \tau_{\min}$ and the required inequality holds. Now, we assume that $\tau_k<1$. Thus, it follows from  \eqref{eq:TkArm}   that there exists $0<\hat\tau_k\leq \min\{1,\tau_k/\underline\omega\}$ such that
+	\begin{equation}\label{eq:ffA1}
+		f\big(x^{k}+ \hat\tau_k (w^{k} - x^{k})\big) > f(x^{k}) + \sigma \hat\tau_k  \big\langle \nabla f(x^{k}), w^{k} - x^{k} \big\rangle+\nu_k.
+	\end{equation}
+	Considering that we are under assumption {\bf A4}, we  apply   Lemma \ref{Le:derivlipsch} to  obtain 
+	\begin{equation}\label{eq:ffA2}
+		f\big(x^{k}+ \hat\tau_k (w^{k} - x^{k})\big) \leq f(x^{k}) + \hat\tau_k \big\langle \nabla f(x^{k}), w^{k} - x^{k} \big\rangle +\frac{L}{2}\hat\tau_k^2 \|w^k-x^k\|^2.
+	\end{equation}
+	Hence, the combination of \eqref{eq:ffA1} with \eqref{eq:ffA2}  yields
+	\begin{equation}\label{eq:ffA3}
+		(1-\sigma) \big\langle \nabla f(x^{k}), w^{k} - x^{k} \big\rangle + \frac{L}{2}\hat\tau_k \|w^k-x^k\|^2 >  \frac{\nu_k}{\hat\tau_k} .
+	\end{equation}
+	On the order hand,    $w^k \in   {\cal R}_{C,\gamma_k}^{D_k}(x^{k}, z^k)$ with    $\gamma_k=(1-\zeta_k)/2$, where $z^k = x^{k}-\alpha_k D^{-1} _k\nabla f(x^{k})$. Thus,  applying Lemma~\ref{Le:ProjProperty}{\it (i)}  with $x=x^k$, $w(\alpha) = w^k$, $z = z^k$ and $\zeta= \zeta_k$, we obtain
+	$$
+		\big\langle \nabla f(x^{k}), w^k-x^{k}\big\rangle \leq -\frac{1}{2\alpha_k} \|w^k-x^k\|_{D_k}^2.
+	$$
+	Hence,  considering that    $\frac{1}{\mu}  \|w^k-x^k\|^2 \leq  \|w^k-x^k\|_{D_k}^2$  and $0<\alpha_k \leq \alpha_{\max}$, the last inequality 	implies
+	$$
+		\big\langle \nabla f(x^{k}), w^k-x^{k}\big\rangle \leq  -\frac{1}{2\alpha_{\max}\mu} \|w^k-x^k\|^2.
+	$$
+	The combination of  the last inequality with \eqref{eq:ffA3} yields
+	$$
+		\left(-\frac{(1-\sigma)}{2{\alpha_{\max}}\mu} + \frac{L}{2}\hat\tau_k \right)\|w^k-x^k\|^2>  \frac{\nu_k}{\hat\tau_k} \geq 0 .
+	$$
+	Thus, since $\hat\tau_k\leq \tau_k/\underline\omega$,   we obtain  $\tau_k\geq \underline\omega \hat\tau_k >\underline\omega(1-\sigma)/({\alpha_{\max}}\mu L)\geq \tau_{\min}$ and the proof is concluded.
+\end{proof}
+
+Considering  that $ {\cal R}_{C,\gamma_k}^{D_k}(x^{k}, z^k) \subset {\cal P}_{C, \zeta_k}^{D_k}(x^{k}, z^k)$, it follows from Lemma~\ref{Le:ProjProperty}{\it (ii)}  that if $x^k \in {\cal R}_{C,\gamma_k}^{D_k}(x^{k}, z^k)$, then the point $x^k$ is stationary for problem \eqref{eq:OptP}. Since $w^k \in {\cal R}_{C,\gamma_k}^{D_k}(x^{k}, z^k)$, the quantity $\|w^k-x^k\|$ can be seen as a measure of stationarity of the point $x^k$. In next theorem, we present an iteration-complexity bound for this quantity,  which is a constrained inexact  version of  \cite[Theorem~1]{GrapigliaSachs2017}.
+
+\begin{theorem} \label{eq:theocomp}
+	Let $ \tau_{\min}$ be defined in \eqref{eq;taumin}. Then, for every $N \in \mathbb{N}$, the following inequality holds
+	$$
+		\min\left\{\|w^k-x^k\| :~ k= 0, 1 \ldots, N-1\right\} \leq \sqrt{\frac{2{\alpha_{\max}}\mu\left[ f(x^0)-f^* +\sum_{k= 0}^{\infty}\nu_k\right] }{\sigma \tau_{\min}}} \frac{1}{\sqrt{N}}.
+	$$
+\end{theorem}
+
+\begin{proof}
+	Since  $w^k \in   {\cal R}_{C,\gamma_k}^{D_k}(x^{k}, z^k)$ with    $\gamma_k=(1-\zeta_k)/2$, where $z^k = x^{k}-\alpha_k D^{-1} _k\nabla f(x^{k})$,  applying  Lemma~\ref{Le:ProjProperty}{\it (i)} with $x=x^k$, $w(\alpha) = w^k$, $z = z^k$ and $\zeta= \zeta_k$, and taking into account that $(1/\mu)  \|w^k-x^k\|^2 \leq  \|w^k-x^k\|_{D_k}^2$  and $0<\alpha_k \leq \alpha_{\max}$, we obtain
+	\begin{equation*}\label{eq:fD2}
+		\big\langle \nabla f(x^{k}), w^k-x^{k}\big\rangle \leq -\frac{1}{2\alpha_k} \|w^k-x^k\|_{D_k}^2\leq -\frac{1}{2\alpha_{\max}\mu} \|w^k-x^k\|^2.
+	\end{equation*}
+	The definition of $\tau_k$  and \eqref{eq:TkArm} imply  $f(x^{k+1}) - f(x^k) \leq \sigma\tau_k \big\langle \nabla f(x^{k}),  w^k-x^{k} \big\rangle+\nu_k$. The combination of the last two inequalities together with Lemma~\ref{Le:tauminArm} yields
+	$$
+		f(x^k) - f(x^{k+1})+\nu_k \geq \sigma\tau_k \frac{1}{2\alpha_{\max}\mu} \|w^k-x^k\|^2 \geq \sigma \tau_{\min} \frac{1}{2\alpha_{\max}\mu} \|w^k-x^k\|^2.
+	$$
+	Hence, performing the sum of the above inequality for $k= 0, 1,\ldots, N-1$, we conclude that
+	$$
+		\sum_{k= 0}^{N-1} \|w^k - x^k\|^2 \leq \frac{2{\alpha_{\max}}\mu \big[f(x^0) - f(x^{N+1})+ \sum_{k= 0}^{N}\nu_k\big]}{\sigma \tau_{\min}}\leq \frac{2{\alpha_{\max}}\mu \left[ f(x^0) - f^*+ \sum_{k= 0}^{\infty}\nu_k\right]}{\sigma \tau_{\min}},
+	$$
+	which implies the desired result.
+\end{proof}
+\textcolor{blue}{Next we presente} some results regarding the  number of function evaluations performed by Algorithm~\ref{Alg:GeneralSeach}.
+Note that the computational cost associated to each (outer) iteration involves a gradient evaluation, the computation of a (inexact) projection, and evaluations of $f$ at different trial points.
+Thus, we must consider the function evaluations at the rejected trial points.
+\begin{lemma} \label{eq:nfeas}
+	Let $N_{k}$ be  the number of function evaluations after $k\geq 0$ iterations of Algorithm~\ref{Alg:GeneralSeach}. Then,  $N_{k}\leq 1+ (k+1)[\log (\tau_{\min})/\log (\bar\omega)+1].$
+\end{lemma}
+\begin{proof}
+	Let $j(k)\geq 0$ be the number of inner iterations in Step~2 of Algorithm~\ref{Alg:GeneralSeach} to compute the step size $\tau_k$.  Thus, $\tau_k\leq {\bar\omega}^{j(k)}$.
+Using Lemma \ref {Le:tauminArm}, we have  $0< \tau_{\min}\leq  \tau _{k}$ for all  $k\in \mathbb{N}$, which implies that  $ \log \left( \tau_{\min} \right) \leq \log (\tau _{k})=j(k) \log (\bar\omega)$, for all $k \in \mathbb{N}$.  Hence, due to  $\log(\bar\omega) <0$, we have $ j(k) \leq \log (\tau_{\min})/\log (\bar\omega)$. Therefore,
+	$$
+	N_k =	1+ \sum _{\ell=0}^{k}(j(\ell)+1)\leq 1+  \sum _{i=0}^{k} \Big(\frac{\log (\tau_{\min})}{\log (\bar\omega)} +1\Big)= 1+(k+1) \Big(\frac{\log (\tau_{\min})}{\log (\bar\omega)}+1\Big),
+	$$
+	where the first equality follows from the definition of $N_k$.
+\end{proof}
+\begin{theorem}
+	For a given $\epsilon>0$, Algorithm \ref{Alg:GeneralSeach} computes $x^k$ and $w^k$ such that $\|  w^{k}-x^{k}\|\leq \epsilon$ using,  at most,
+$$1+\left({\frac{2{\alpha_{\max}}\mu\left[f(x^0)-f^* +\sum_{k= 0}^{\infty}\nu_k\right] }{\sigma \tau_{\min}}} \frac{1}{\epsilon^2}+1\right) \Big(\frac{\log (\tau_{\min})}{\log (\bar\omega)}+1\Big)$$
+		function evaluations.
+	
+\end{theorem}
+\begin{proof}
+	The proof follows straightforwardly from Theorem~\ref{eq:theocomp} and Lemma~\ref{eq:nfeas}.
+\end{proof}
+
+\begin{theorem}
+	Let $f$ be a convex function on $C$. For a given $\epsilon>0$, the number  of  function evaluations performed by  Algorithm \ref{Alg:GeneralSeach} is,  at most,
+	$$1+\left(\frac{\|x^0 - x^*\|^2_{D_0} + \xi\left[f(x^0)-f^*+ \sum_{k=0}^{\infty} \nu_k\right]}{2 \alpha_{\min} \tau_{\min}}\frac{1}{\epsilon} + 1 \right)\Big(\frac{\log (\tau_{\min})}{\log (\bar\omega)}+1\Big),$$
+	to compute $x^k$ such that $f(x^k) - f^*\leq \epsilon$.
+\end{theorem}
+\begin{proof}
+	The proof follows straightforwardly from Theorem~\ref{th:ccconv} and  Lemma~\ref{eq:nfeas}.
+\end{proof}
+We ended this section with a  theorem about  iteration-complexity bound for the sequence $\left(f(x^k)\right)_{k\in\mathbb{N}}$ when $f$ is convex. 
+\begin{theorem} \label{th:ccconv}
+Let $f$ be a convex function on $C$. \textcolor{blue}{Assume  that    the sequence $(D_k)_{k\in {\mathbb N}}$ satisfies {\bf A3} with $\eta_k\equiv 0$}. Then, for every $N \in \mathbb{N}$,
+	$$
+		\min \left\{f(x^k) - f^* :~k = 0, 1 \ldots, N-1\right\} \leq \frac{\|x^0 - x^*\|^2_{D_0} + \xi\left[f(x^0)-f^*+ \sum_{k=0}^{\infty} \nu_k\right]}{2 \alpha_{\min} \tau_{\min}}\frac{1}{N}.
+	$$
+\end{theorem}
+
+\begin{proof}
+	Using the first inequality in \eqref{eq:TolArm} and Lemma~\ref{Le:tauminArm}, we have $2 \alpha_{\min} \tau_{\min} \leq 2 \alpha_k \tau_k$, for all $k\in {\mathbb N}$. We also know form the convexity of $f$ that $\langle \nabla f(x^k), x^*-x^k \rangle \leq f^* - f(x^k)$, for all $k\in {\mathbb N}$. Thus, applying Lemma \ref{Le:xkArm} with $x=x^*$ \textcolor{blue}{and taking into account that $\eta_k\equiv 0$},  after some algebraic manipulations, we conclude
+	$$
+		2 \alpha_{\min} \tau_{\min} \left[f(x^k)-f^*\right] \leq \|x^k-x^*\|_{D_k}^2-\|x^{k+1}-x^*\|_{D_{k+1}}^2 + \xi \left[f(x^k) - f(x^{k+1})+\nu_k \right] \quad k = 0, 1, \ldots.
+	$$
+	Hence, performing the sum of the above inequality for $k = 0,1,\ldots, N-1$, we obtain
+	$$
+		2 \alpha_{\min} \tau_{\min}\sum_{k=0}^{N-1} \left[f(x^k)-f^*\right] \leq \|x^0-x^*\|_{D_0}^2-\|x^{N+1}-x^*\|_{D_{N}}^2 + \xi\Big[f(x^0)-f(x^{N+1})+ \sum_{k=0}^{N-1} \nu_k\Big].
+	$$
+	Thus, $2\alpha_{\min} \tau_{\min} N \min\{f(x^k) - f^*:~ k = 0, 1 \ldots, N-1\} \leq \|x^0 - x^*\|^2_{D_0}+ \xi[f(x^0)-f^*+ \sum_{k=0}^{N-1} \nu_k]$, which implies the desired inequality.
+\end{proof}
+\begin{remark}
+For suitable choices  of the scale matrix  and the step size,  SGP merges into the well known {\it spectral gradient method}. Therefore, all obtained results in this section  also hold to this method.
+\end{remark}
