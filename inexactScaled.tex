@@ -183,9 +183,9 @@ Due to Proposition~\ref{pr:statArm}, {\it from now on we assume that the sequenc
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Full asymptotic convergence  and complexity  analysis } \label{Sec:FullConvRes}
+\section{Full asymptotic convergence  analysis } \label{SubSec:CAnalysisAF}
 
-The purpose of this section is twofold.  We will first prove, under suitable assumptions, the full convergence of the  sequence $(x^k)_{k\in\mathbb{N}}$  and then we will present  iteration-complexity bounds for it.   For this end,  we need to be more restrictive both with respect to the inexact projection in \eqref{eq:PInexArm} and in the tolerance parameter that controls the non-monotonicity of the line search used in \eqref{eq:TkArm}. More precisely,  we   assume  that in Step~1  of  Algorithm~\ref{Alg:GeneralSeach}:
+The purpose of this section is to prove, under suitable assumptions, the full convergence of the  sequence $(x^k)_{k\in\mathbb{N}}$.   For this end,  we need to be more restrictive with respect to the inexact projection in \eqref{eq:PInexArm} and in the tolerance parameter that controls the non-monotonicity of the line search used in \eqref{eq:TkArm}. More precisely,  we   assume  that in Step~1  of  Algorithm~\ref{Alg:GeneralSeach}:
 
 
 \begin{itemize}
@@ -197,28 +197,25 @@ It is worth recalling  that, taking   the parameter $\gamma_k=(1-\zeta_k)/2 $, i
 \end{itemize}
 It follows from Corollary~\ref{cr:fkvk} that the Armijo and the nonmonotone Average-type line searches discussed in Section~\ref{chap:SGM} satisfy  Assumption {\bf A2}.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Full asymptotic convergence analysis} \label{SubSec:CAnalysisAF}
-In this section, we  prove  the full convergence of the  sequence  $(x^k)_{k\in\mathbb{N}}$ satisfying {\bf A1} and {\bf A2}.  \textcolor{blue}{For that, we consider an additional assumption on the sequence $(D_k)_{k\in {\mathbb N}}\subset {\cal D}_{\mu}$ as follows.
+
+To  prove  the full convergence of the  sequence  $(x^k)_{k\in\mathbb{N}}$ satisfying {\bf A1} and {\bf A2} we consider an additional assumption on the sequence $(D_k)_{k\in {\mathbb N}}\subset {\cal D}_{\mu}$ as follows.
 \begin{itemize}
 	\item[{\bf A3.}] For all $k \in \mathbb{N}$,   $(1+\eta_k)D_k-  D_{k+1}$ is  a positive semidefinite matrix, for some sequence $(\eta_k)_{k\in\mathbb{N}}\subset [0, +\infty)$ such that $\sum_{k\in \mathbb{N}}\eta_k<\infty$.
 	\end{itemize}
 %\begin{remark}
 It is worth mentioning that Assumption  {\bf A3} has appeared in the study of the scaled gradient projection method, see, for example, \cite{bonettini2019recent}. Note that $D_k= I$ for all $k\in {\mathbb N}$, trivially satisfies {\bf A3}.
 %\end{remark}
-}
+
 We will begin establishing  a basic inequality for    $(x^k)_{k\in\mathbb{N}}$.  To simplify  notations, we define the constant
 \begin{equation} \label{eq:eta}
 	\xi := \dfrac{2 \alpha_{\max}}{\sigma} > 0.
-\end{equation}
-\textcolor{blue}{		
+\end{equation}	
 \begin{lemma}\label{Le:xkArm}
 	For each  $x\in C$ and for all $k \in \mathbb{N}$, we have
 	\begin{equation}\label{eq:xkArm}
 	\|x^{k+1}-x\|_{D_{k+1}}^2 \leq (1+\eta_k)\Big(\|x^k-x\|_{D_k}^2 + 2\alpha_k\tau_k \big\langle \nabla f(x^k), x-x^k\big\rangle + \xi \big[f(x^k) - f(x^{k+1})+ \nu_k \big]\Big).
 	\end{equation}		
 \end{lemma}
-}
 \begin{proof}
 	We know that $\|x^{k+1}-x\|_{D_k}^2 = \|x^k-x\|_{D_k}^2 + \|x^{k+1}-x^k\|_{D_k}^2 - 2 \langle {D_k} ( x^{k+1}-x^k), x-x^k \rangle$, for all $x \in C$ and $k \in \mathbb{N}$. Thus, using \eqref{eq:IterArm}, we have
 	\begin{equation}\label{eq:xkArm1}
@@ -276,7 +273,7 @@ $$
 \sum_{k=0}^N \epsilon_k \leq 2   \alpha_{\max} \beta \sum_{k=0}^N \nu_k +  \xi \beta\left(f(x^0) - f(x) + \sum_{k=0}^{N+1} \nu_k \right) < +\infty, \qquad \forall N \in \mathbb{N}.
 $$
 }	
-Hence, $\sum_{k=0}^{+\infty} \epsilon_k<+\infty$.  Thus, it follows from  Definition~\ref{def:QuasiFejer}  that $(x^k)_{k\in\mathbb{N}}$ is quasi-Fej\'er \textcolor{blue}{monotone}   to $U$ with respect to the sequence  $(D_k)_{k\in\mathbb{N}}$ . Since  $U$ is nonempty, it follows from Theorem \ref{teo.qf} that $(x^k)_{k\in\mathbb{N}}$ is bounded, and therefore it has cluster points. Let $\bar{x}$ be a cluster point of $(x^k)_{k\in\mathbb{N}}$ and $(x^{k_j})_{j\in\mathbb{N}}$ be a subsequence of $(x^k)_{k\in\mathbb{N}}$ such that $\lim_{j \to \infty} x^{k_j} = \bar{x}$. Considering that $f$ is continuous and $\lim_{k\to +\infty} \nu_{k} = 0$, we have $\lim_{j \to \infty} (f(x^{k_j})+\nu_{k_j})= f(\bar{x})$.  On the other hand, Lemma~\ref{le:fkvk} implies that  $\left(f(x^k)+\nu_k\right)_{k\in\mathbb{N}}$ is  non-increasing. Thus  $\inf_{k\in {\mathbb N}}(f(x^{k})+\nu_k)= \lim_{k \to \infty} (f(x^{k})+\nu_{k}) = f(\bar{x}).$ Hence, $\bar{x} \in U$, and  Theorem~\ref{teo.qf}  implies that $(x^k)_{k\in\mathbb{N}}$ converges to $\bar{x}$.  The conclusion is obtained  by  using   Proposition ~\ref{pr:statArm}.
+Hence, $\sum_{k=0}^{+\infty} \epsilon_k<+\infty$.  Thus, it follows from  Definition~\ref{def:QuasiFejer}  that $(x^k)_{k\in\mathbb{N}}$ is quasi-Fej\'er monotone to $U$ with respect to the sequence  $(D_k)_{k\in\mathbb{N}}$ . Since  $U$ is nonempty, it follows from Theorem \ref{teo.qf} that $(x^k)_{k\in\mathbb{N}}$ is bounded, and therefore it has cluster points. Let $\bar{x}$ be a cluster point of $(x^k)_{k\in\mathbb{N}}$ and $(x^{k_j})_{j\in\mathbb{N}}$ be a subsequence of $(x^k)_{k\in\mathbb{N}}$ such that $\lim_{j \to \infty} x^{k_j} = \bar{x}$. Considering that $f$ is continuous and $\lim_{k\to +\infty} \nu_{k} = 0$, we have $\lim_{j \to \infty} (f(x^{k_j})+\nu_{k_j})= f(\bar{x})$.  On the other hand, Lemma~\ref{le:fkvk} implies that  $\left(f(x^k)+\nu_k\right)_{k\in\mathbb{N}}$ is  non-increasing. Thus  $\inf_{k\in {\mathbb N}}(f(x^{k})+\nu_k)= \lim_{k \to \infty} (f(x^{k})+\nu_{k}) = f(\bar{x}).$ Hence, $\bar{x} \in U$, and  Theorem~\ref{teo.qf}  implies that $(x^k)_{k\in\mathbb{N}}$ converges to $\bar{x}$.  The conclusion is obtained  by  using   Proposition ~\ref{pr:statArm}.
 \end{proof}
 
 \begin{theorem}
@@ -303,6 +300,10 @@ Hence, $\sum_{k=0}^{+\infty} \epsilon_k<+\infty$.  Thus, it follows from  Defini
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Iteration-complexity bound}\label{SubSec:IterCompArm}
+
+The purpose of this section is twofold.  We will first prove, under suitable assumptions, the full convergence of the  sequence $(x^k)_{k\in\mathbb{N}}$  and then we will present  iteration-complexity bounds for it.   For this end,  we need to be more restrictive both with respect to the inexact projection in \eqref{eq:PInexArm} and in the tolerance parameter that controls the non-monotonicity of the line search used in \eqref{eq:TkArm}. More precisely,  we   assume  that in Step~1  of  Algorithm~\ref{Alg:GeneralSeach}:
+
+
 
 In the section, we preset some  iteration-complexity bounds related to  the sequence $(x^k)_{k\in\mathbb{N}}$ generated by  Algorithm~\ref{Alg:GeneralSeach}.  For that, besides  assuming  {\bf A1} and {\bf A2},  we also need the following assumption.
 \begin{itemize}
