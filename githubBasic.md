@@ -5,7 +5,7 @@
 [1] crie um arquivo .gitignore a adcione o arquivo Manifest.toml
 [2] git init
 [3] git add src/ test/ Project.toml LICENSE.md README.md .gitignore
-[4] git commit -m "Mensagem do commit""
+[4] git commit -m "Mensagem do commit"
 [5] git status 
 [6] git remote add origin https://github.com/maxlemes/NOME.jl
 [7] git push -u origin master
