@@ -98,6 +98,10 @@ $ git checkout -- ARQUIVO
 
 $ git remote -v
 
+## Adicionando Repositórios Remotos
+
+git remote add origin https://github.com/NOME
+
 ## Enviando para seus controles remotos
 
 $ git push origin master
