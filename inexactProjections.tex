@@ -9,8 +9,8 @@ In this chapter, we recall two concepts  of relative feasible inexact projection
 The next result  characterizes  the exact projection, its  proof can be found in  \cite[Theorem 3.14]{BauschkeLivro2014}.
 
 \begin{lemma} \label{pr:cham}
-	Let $v, w \in {\mathbb R}^n$.  Then,  $w={\cal P}_{C}^{D}(v)$ if and only if  $w\in C$ and  
-	$$\left\langle D(v-w), y-w\right\rangle \leq  0,$$   
+	Let $v, w \in {\mathbb R}^n$.  Then,  $w={\cal P}_{C}^{D}(v)$ if and only if  $w\in C$ and
+	$$\left\langle D(v-w), y-w\right\rangle \leq  0,$$
 	for all $y \in C.$
 \end{lemma}
 
@@ -18,7 +18,7 @@ The next result  characterizes  the exact projection, its  proof can be found in
 	It follows from Lemma~\ref{pr:cham}  that $\|{\cal P}_{C}^{D}(v)-{\cal P}_{C}^{D}(u)\|_{D}\leq \|v-u\|_{D}$.  Moreover, since   $D\in {\cal D}_{\mu}$, by \eqref{eq:pnv}, we conclude that   ${\cal P}_{C}^{D}(\cdot)$ is Lipschitz continuous with constant $L=\mu$.   Furthermore,  if  $(D_k)_{k\in\mathbb{N}}\subset {\cal D}_{\mu}$,    $\lim_{k\to +\infty} z^{k} = \bar{z}$, and   $\lim_{k \to +\infty} D_{k} = \bar{D}$, then $\lim_{k \to +\infty}{\cal P}_{C}^{D_k}(z^{k})= {\cal P}_{C}^{\bar D}(\bar{z})$, see   \cite[Proposition~4.2]{CombettesVu2013}.
 \end{remark}
 
-In the following, we recall  the  concept of a  feasible inexact projection with respect to $\| \cdot \| _{D}$ relative to a fixed point. 
+In the following, we recall  the  concept of a  feasible inexact projection with respect to $\| \cdot \| _{D}$ relative to a fixed point.
 
 \begin{definition} \label{def:InexactM}
 	The {\it feasible inexact projection mapping, with respect to the norm $\| \cdot \|_{D}$,   onto $C$}  relative to a point  $u \in C$ and forcing parameter $\zeta\in (0, 1]$, denoted by ${\cal P}_{C,\zeta}^{D}(u,  \cdot): {\mathbb R}^n \rightrightarrows C$,  is the set-valued mapping defined as follows
@@ -30,9 +30,9 @@ In the following, we recall  the  concept of a  feasible inexact projection with
 
 In the following, we show that the definition given above is nothing more than a reformulation of the concept of  relative feasible inexact projection with respect to $\| \cdot \|_{D}$  introduced in  \cite{BirginMartinezRaydan2003}.
 \begin{remark}
-	Let $u\in C$, $v\in \mathbb{R}^n$ and  $D$ be   an $n\times n$ positive definite matrix. Consider the quadratic  function $Q: \mathbb{R}^n \to \mathbb{R}$ defined by 
+	Let $u\in C$, $v\in \mathbb{R}^n$ and  $D$ be   an $n\times n$ positive definite matrix. Consider the quadratic  function $Q: \mathbb{R}^n \to \mathbb{R}$ defined by
 	$$
-	  Q(z):=(1/2) \left\langle {D}(z-u),z-u\right\rangle +  \left \langle D(u-v), z-u \right\rangle.
+		Q(z):=(1/2) \left\langle {D}(z-u),z-u\right\rangle +  \left \langle D(u-v), z-u \right\rangle.
 	$$
 	Thus,  letting  $\| \cdot \|_{D}$  be  the norm  defined by \eqref{def:normaD},  some algebraic manipulations   shows that
 	\begin{equation} \label{eq:qppq}
@@ -43,10 +43,10 @@ In the following, we show that the definition given above is nothing more than a
 	$$
 		w\in C, \qquad Q(w)\leq \zeta Q ( {\cal P}_{C}^{D}(v)) ,
 	$$
-	is  equivalent to find  $w\in C$ such that 
+	is  equivalent to find  $w\in C$ such that
 	$$
-	  \|w-v\|_{D}^2\leq \zeta \| {\cal P}_{C}^{D}(v)-v\|_{D}^2+(1-\zeta)\|u-v\|_{D}^2,
-	$$  
+		\|w-v\|_{D}^2\leq \zeta \| {\cal P}_{C}^{D}(v)-v\|_{D}^2+(1-\zeta)\|u-v\|_{D}^2,
+	$$
 	which corresponds to condition \eqref{eq:Projwm} in Definition~\ref{def:InexactM}.
 \end{remark}
 The  concept of  feasible inexact projection  in Definition~\ref{def:InexactM}  provides  more latitude to   the usual  concept  of exact projection \eqref{eq:exactM}.  The next   remark makes  this more precise.
@@ -55,7 +55,7 @@ The  concept of  feasible inexact projection  in Definition~\ref{def:InexactM}  
 	In addition, if $\underline{\zeta}$ and $\bar{\zeta}$ are forcing parameters such that $0<\underline{\zeta}\leq \bar{\zeta}\leq 1$, then ${\cal P}_{C,\bar{\zeta}}^{D}(u, v) \subset {\cal P}_{C,\underline{\zeta}}^{D}(u, v)$.
 \end{remark}
 \begin{lemma} \label{pr:condm}
-	Let $v \in {\mathbb R}^n$, $u \in C$ and $w\in {\cal P}_{C,\zeta}^{D}(u, v)$. Then, 
+	Let $v \in {\mathbb R}^n$, $u \in C$ and $w\in {\cal P}_{C,\zeta}^{D}(u, v)$. Then,
 	$$
 		\left\langle D(v-w), y-w\right\rangle \leq  \frac{1}{2} \|w-y\|_{D}^2 +   \frac{1}{2} \left[\zeta \| {\cal P}_{C}^{D}(v)-v\|_{D}^2+(1-\zeta)\|u-v\|_{D}^2 - \|y-v\|_{D}^2\right] ,   \qquad y \in C.
 	$$
@@ -82,7 +82,7 @@ The  next lemma is a variation of \cite[Lemma 6]{Reiner_Orizon_Leandro2019}.  It
 \begin{lemma} \label{pr:cond}
 	Let $v \in {\mathbb R}^n$, $u \in C$, $\gamma \geq 0$ and $w\in {\cal R}_{C,\gamma}^{D}(u, v)$. Then,  for all $0 \leq \gamma <1/2$, the holds
 	$$
-\displaystyle \|w-x\|_{D}^2 \leq \|x-v\|_{D}^2 + \frac{2\gamma}{1-2\gamma}\|u-v\|_{D}^2- \frac{1}{1-2\gamma}\|w-v\|_{D}^2, \qquad \forall x \in C.
+		\displaystyle \|w-x\|_{D}^2 \leq \|x-v\|_{D}^2 + \frac{2\gamma}{1-2\gamma}\|u-v\|_{D}^2- \frac{1}{1-2\gamma}\|w-v\|_{D}^2, \qquad \forall x \in C.
 	$$
 \end{lemma}
 \begin{proof}
@@ -186,7 +186,7 @@ It follows from Remark~\ref{re:ni} that, in general,  ${\cal P}_{C,\zeta}^{D}(u,
 
 Next, we present  important properties of  inexact projections,  it  will be useful in  the sequel.
 \begin{lemma} \label{Le:ProjProperty}
-	Let $x \in C$, $\alpha > 0$ and  $z(\alpha) = x-\alpha D^{-1} \nabla f(x)$. Take $w(\alpha) \in  {\cal P}_{C,\zeta}^{D}(x, z(\alpha))$ with $\zeta\in (0, 1]$. Then, 
+	Let $x \in C$, $\alpha > 0$ and  $z(\alpha) = x-\alpha D^{-1} \nabla f(x)$. Take $w(\alpha) \in  {\cal P}_{C,\zeta}^{D}(x, z(\alpha))$ with $\zeta\in (0, 1]$. Then,
 	\begin{itemize}
 		\item[(i)] $\displaystyle \langle \nabla f(x), w(\alpha) - x\rangle \leq -\frac{1}{2\alpha} \|w(\alpha) -x\|_{D}^2 +   \frac{\zeta}{2\alpha} \left[\| {\cal P}_{C}^{D}(z(\alpha))-z(\alpha)\|_{D}^2 - \|x-z(\alpha)\|_{D}^2\right]$;
 		\item[(ii)] the point $x$ is stationary for problem \eqref{eq:OptP} if and only if $x \in {\cal P}_{C,\zeta}^{D}(x, z(\alpha))$;
@@ -242,7 +242,7 @@ We end this section by discussing how to compute a point $w\in{\cal R}_{C, \gamm
 
 \begin{algorithm}[H]
 	\begin{description}
-		\item[Input:]  $D\in {\cal D}_{\mu}$,  $\gamma \in (0, 1]$,  $v\in {\mathbb R}^n$ and   $u \in C$. 
+		\item[Input:]  $D\in {\cal D}_{\mu}$,  $\gamma \in (0, 1]$,  $v\in {\mathbb R}^n$ and   $u \in C$.
 		\item[ Step 0.] Let $w^0\in  C$ and  set $\ell \gets 0$.
 		\item[ Step 1.] Use a LO oracle to compute an optimal solution $z^\ell$ and the optimal value $s_{\ell}^*$ as
 			\begin{equation}\label{eq:CondG_{C}}

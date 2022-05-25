@@ -1,0 +1,19 @@
+ \documentclass[tikz,convert={outfile=\jobname.svg}]{standalone}
+  \input{\string~/Projetos/ufg/preambles/preambleTikz}
+
+\newcommand\DrawControl[3]{
+  node[#2,circle,fill=#2,inner sep=2pt,label={above:$#1$},label={[black]below:{\footnotesize#3}}] at #1 {}
+}
+
+\begin{document}
+
+% \input{bezier_1}
+% \input{bezier_2}
+% \input{bezier_3}
+% \input{bezier_4}
+% \input{bezier_5}
+% \input{bezier_6}
+\input{exactProj}
+\input{example}
+
+\end{document}

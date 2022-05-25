@@ -1,0 +1,11 @@
+\begin{tikzpicture}[baseline]
+\draw[help lines] (0,-2) grid (8,2);
+\draw[ultra thick,blue] 
+  (1,0) 
+    .. controls (3,2) and (5,-2) .. 
+  (7,0) \DrawControl{(3,2)}{blue}{1}\DrawControl{(5,-2)}{blue}{2};  
+\draw[ultra thick,red] 
+  (1,0) 
+    .. controls (-1,5) and (8,-5) .. 
+  (7,0) \DrawControl{(-1,5)}{red}{1}\DrawControl{(8,-5)}{red}{2};  
+\end{tikzpicture}
