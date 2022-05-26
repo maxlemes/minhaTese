@@ -1,14 +1,14 @@
-\begin{tikzpicture}
+\begin{tikzpicture}[scale = 1, rotate = -30]
 
 	% adicionando as linhas de grade
-	\draw[help lines] (0,0) grid (15,10);
+	%\draw[help lines] (0,0) grid (15,10);
 
 	% definindo os pontos
 	\coordinate (A) at (1,1.5);
 	\coordinate (C) at (2,4);
 	\coordinate (D) at (3,0);
 
-	\coordinate (V) at (10,6);
+	\coordinate (V) at (9,6);
 	\coordinate (P) at (6,4);
 	\coordinate (U) at (5,2);
 	\coordinate (M) at ($(P)!3cm!90:(V)$);
@@ -44,7 +44,7 @@
 
 
 	% mark right angle
-	\tkzMarkRightAngle[fill=lightgray](V,P,M);
+	\tkzMarkRightAngle[fill=red, opacity=0.5](V,P,M);
 
 	% desenhando a reta perpendicular
 	\draw [line width=0.8pt] (P) -- ($(P)!3cm! 90:(V)$);
@@ -53,27 +53,31 @@
 	% Mark the angle uPv
 	\begin{scope}
 		\clip (U) -- (P) -- (V);
-		\fill[red, opacity=0.5, draw=black] (P) circle (5mm);
+		\fill[cyan, opacity=0.5, draw=black] (P) circle (5mm);
 		\draw (P) circle (5mm);
-		\node at ($(P)+(-30:7mm)$) {$\theta$};
 	\end{scope}
 
+	% adicionando o angulo theta
+	\node at ($(P)+(-30:7mm)$) {$\theta$};
 
 	%\draw[line width=0.8pt](V) circle (4.47cm);
 
 	% desenhando o segmento uP e Pv
-	\draw [line width=0.8pt] (U) -- (P);
-	\draw [line width=0.8pt] (V) -- (P);
+	\draw [dashed, line width=0.8pt] (U) -- (P);
+	\draw [dashed, line width=0.8pt] (V) -- (P);
 
 
 	% adicionando os pontos ao gráfico
 	\node[above] at (C) {$C$};
 
-	\node[left] at (P) {$P$};
+	\node[left] at (P) {$w$};
 	\filldraw (P) circle(1pt);
 	\node[above] at (V) {$v$};
 	\filldraw (V) circle(1pt);
-	\node[left] at (U) {$u$};
+	\node[left] at (U) {$y$};
 	\filldraw (U) circle(1pt);
+
+	% adicionando as legendas
+	\node at (4,-1)  {$w = {\cal P}_{C}^{D}(v)$};
 
 \end{tikzpicture}

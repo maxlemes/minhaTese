@@ -1,16 +1,16 @@
-\begin{tikzpicture}
+\begin{tikzpicture}[scale = 1, rotate = -30]
 
 	% adicionando as linhas de grade
-	\draw[help lines] (-1,-1) grid (15,10);
+	%\draw[help lines] (-1,-1) grid (15,10);
 
 	% definindo os pontos
 	\coordinate (A) at (1,1.5);
 	\coordinate (C) at (2,4);
 	\coordinate (D) at (3,0);
 
-	\coordinate (V) at (7.5,4.5);
+	\coordinate (V) at (9,6);
 	\coordinate (P) at (6,4);
-	\coordinate (W) at ($(V)!1.3!(P)$);
+	\coordinate (W) at ($(V)!1.2!-7:(P)$);
 	\coordinate (U) at (5,2);
 	\coordinate (M) at ($(P)!3cm!90:(V)$);
 
@@ -27,13 +27,18 @@
 	}
 
 	% definindo um círculo com centro V e raio 5 cm
-	\def\regionB{(V) circle (2.5cm);}
+	\def\regionB{(V) circle (4.5cm);}
+
+		% desenhando o segmento uP e Pv
+	\draw [dashed,line width=0.8pt] (U) -- (V);
+	\draw [dashed,line width=0.8pt] (V) -- (W);
+	\draw[dashed,gray,line width=0.5pt]\regionB
 
 	% colorindo a interseçao
 	\begin{scope}
 		\clip  % definindo a região fora da \regionA e dentro da \regionB
 		\regionA
-		\fill[fill=red, opacity=0.5]
+		\fill[fill=cyan, opacity=0.5]
 		\regionB
 
 		% definindo a fronteira da \regionB no interior da \regionA
@@ -46,19 +51,18 @@
 
 	%\draw[line width=0.8pt](V) circle (4.47cm);
 
-	% desenhando o segmento uP e Pv
-	\draw [line width=0.8pt] (U) -- (V);
-	\draw [line width=0.8pt] (V) -- (W);
-
 
 	% adicionando os pontos ao gráfico
 	\node[above] at (C) {$C$};
 
-	\node[left] at (W) {$w$};
+	\node[below] at (W) {$w$};
 	\filldraw (W) circle(1pt);
 	\node[above] at (V) {$v$};
 	\filldraw (V) circle(1pt);
 	\node[left] at (U) {$u$};
 	\filldraw (U) circle(1pt);
+
+	% adicionando as legendas
+	\node at (4,-1)  {$w \in {\cal P}_{C,\zeta}^{D}(u, v)$};
 
 \end{tikzpicture}
