@@ -1,0 +1,96 @@
+\begin{tikzpicture}
+	\makeatletter
+	\def\convertto#1#2{\strip@pt\dimexpr #2*65536/\number\dimexpr 1#1}
+	\makeatother
+
+	% adicionando as linhas de grade
+	%\draw[help lines] (-1,-1) grid (15,10);
+
+	% definindo os pontos
+	\coordinate (A) at (1,1.5);
+	\coordinate (C) at (2,4);
+	\coordinate (D) at (3,0);
+
+	\coordinate (V) at (10,6);
+	\coordinate (P) at (6,4);
+	\coordinate (W) at ($(V)!1.2!-5:(P)$);
+	\coordinate (U) at (4,2);
+	\coordinate (M) at ($(P)!3cm!90:(V)$);
+	\coordinate (N) at ($(W)!0.2!(V)$);
+
+	% %--Computing the distance between (U) and (W)
+	% %Creating a math coordinate
+	% \tikzmath{coordinate \C;
+	% 	%Storing coordinates difference
+	% 	\C = (W)-(U);
+	% 	%Computing the length of C = (Cx,Cy) from its components Cx and Cy
+	% 	%Note the length \distAB is in points (pt)
+	% 	\distWU = sqrt((\Cx)^2+(\Cy)^2);
+	% 	% coordinate \D;
+	% 	% %Storing coordinates difference
+	% 	% \D = (W)-(V);
+	% 	% %Computing the length of C = (Cx,Cy) from its components Cx and Cy
+	% 	% %Note the length \distAB is in points (pt)
+	% 	% \distWV = sqrt((\Dx)^2+(\Dy)^2);
+	% 	%Convert back to centimeters
+	% 	\distAB = \convertto{cm}{\distWU pt};
+	% }
+
+
+	% definindo as regioes 
+
+	% curva Bezier onde (270:-1) define o angulo e o sentido que passa pelo ponto A
+	\def\regionA{
+		(A)
+		.. controls ++(270:-1) and ++( 30:-1) .. (C)
+		.. controls ++( 30: 1) and ++(120: 1) .. (P)
+		.. controls ++(120:-1) and ++(180:-1) .. (D)
+		.. controls ++(180: 1) and ++(270: 1) ..
+		cycle;
+	}
+
+	% definindo um círculo com centro V e raio 5 cm
+	\def\regionB{(V) circle (2.5cm);}
+
+	% colorindo a interseçao
+	\begin{scope}
+		\clip  % definindo a região fora da \regionA e dentro da \regionB
+		\regionA
+		\fill[fill=purple]
+		\regionB
+
+		% definindo a fronteira da \regionB no interior da \regionA
+		\draw[line width=0.8pt]\regionB
+	\end{scope}
+
+	% desenhando a fronteira da \regionA
+	\draw[line width=0.8pt]\regionA
+
+	% desenhando a reta perpendicular
+	\draw [line width=0.8pt] (N) -- ($(N)!3cm! 90:(V)$) node[right] {$\pi$};
+	\draw [line width=0.8pt] (N) -- ($(N)!3cm!-90:(V)$);
+
+	%\draw[line width=0.8pt](V) circle (4.47cm);
+
+	% desenhando o segmento uP e Pv
+	\draw [line width=0.8pt] (U) -- (W);
+	\draw [line width=0.8pt] (V) -- (W);
+
+
+	% adicionando os pontos ao gráfico
+	\node[above] at (C) {$C$};
+
+	\node[left] at (W) {$w$};
+	\filldraw (W) circle(1pt);
+	\node[above] at (V) {$v$};
+	\filldraw (V) circle(1pt);
+	\node[left] at (U) {$u$};
+	\filldraw (U) circle(1pt);
+
+    % Adicionando os braços
+	\draw[decorate,decoration={brace,amplitude=2.5mm},purple](W)--node[left,xshift=0.4cm,yshift=0.5cm] {$d(w,\pi)$}(N);
+	\draw[decorate,decoration={brace,mirror,amplitude=2.5mm},blue](U)--node[right,anchor=north west] {$d(u,w)$}(W);
+
+    % adicionando as legendas
+	\node at (8,1)  {$d(w,\pi) \leq \frac{1}{2}d(w,u)$};
+\end{tikzpicture}
