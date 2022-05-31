@@ -1,26 +1,26 @@
-\begin{tikzpicture}[scale = 1, rotate = -30]
+\begin{tikzpicture}[scale = 1, rotate = 0, blacknode/.style={shape=circle, fill=black, line width=0},]
 
 	% adicionando as linhas de grade
 	%\draw[help lines] (0,0) grid (15,10);
 
 	% definindo os pontos
 	\coordinate (A) at (1,1.5);
-	\coordinate (C) at (2,4);
+	\coordinate (C) at (2,8);
 	\coordinate (D) at (3,0);
 
 	\coordinate (V) at (9,6);
-	\coordinate (P) at (6,4);
-	\coordinate (U) at (5,2);
+	\coordinate (P) at (5.7,6);
+	\coordinate (U) at (3,5);
 	\coordinate (M) at ($(P)!3cm!90:(V)$);
 
 	% definindo as regioes 
 
 	% curva Bezier onde (270:-1) define o angulo e o sentido que passa pelo ponto A
 	\def\regionA{
-		(A)
-		.. controls ++(270:-1) and ++( 30:-1) .. (C)
-		.. controls ++( 30: 1) and ++(120: 1) .. (P)
-		.. controls ++(120:-1) and ++(180:-1) .. (D)
+		(1,1.5)
+		.. controls ++(270:-1) and ++( 30:-1) .. (2,4)
+		.. controls ++( 30: 1) and ++(120: 1) .. (6,4)
+		.. controls ++(120:-1) and ++(180:-1) .. (3,0)
 		.. controls ++(180: 1) and ++(270: 1) ..
 		cycle;
 	}
@@ -40,18 +40,18 @@
 	% \end{scope}
 
 	% desenhando a fronteira da \regionA
-	\draw[line width=0.8pt]\regionA
+	\draw[line width=0.8pt,shift={(-1.5cm,5.5cm)},rotate=-30]\regionA
 
 
 	% mark right angle
 	\tkzMarkRightAngle[fill=red, opacity=0.5](V,P,M);
 
 	% desenhando a reta perpendicular
-	\draw [line width=0.8pt] (P) -- ($(P)!3cm! 90:(V)$);
+	\draw [line width=0.8pt] (P) -- ($(P)!3cm! 90:(V)$) node[right] {$\pi$};;
 	\draw [line width=0.8pt] (P) -- ($(P)!3cm!-90:(V)$);
 
 	% Mark the angle uPv
-	\begin{scope}
+	\begin{scope}[shift={(-1.5cm,5.5cm)},rotate=-30]
 		\clip (U) -- (P) -- (V);
 		\fill[cyan, opacity=0.5, draw=black] (P) circle (5mm);
 		\draw (P) circle (5mm);
@@ -70,14 +70,18 @@
 	% adicionando os pontos ao gráfico
 	\node[above] at (C) {$C$};
 
-	\node[left] at (P) {$w$};
+	\node[anchor=south east] at (P) {$w$};
 	\filldraw (P) circle(1pt);
-	\node[above] at (V) {$v$};
+	\node[anchor=south] at (V) {$v$};
 	\filldraw (V) circle(1pt);
-	\node[left] at (U) {$y$};
+	\node[anchor=south] at (U) {$y$};
 	\filldraw (U) circle(1pt);
 
 	% adicionando as legendas
-	\node at (4,-1)  {$w = {\cal P}_{C}^{D}(v)$};
+	%\node at (4,-1)  {$w = {\cal P}_{C}^{D}(v)$};
+
+	\matrix [draw,anchor=south east] at (current bounding box.north east) {
+	\node {$\bullet \;\; w = {\cal P}_{C}^{D}(v)$};\\
+	};
 
 \end{tikzpicture}

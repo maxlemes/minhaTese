@@ -8,13 +8,18 @@
 
 	% definindo os pontos
 	\coordinate (A) at (1,1.5);
-	\coordinate (C) at (2,8);
+	\coordinate (C) at (2,4);
 	\coordinate (D) at (3,0);
 
-	\coordinate (V) at (9,6);
-	\coordinate (P) at (5.7,6);
-	\coordinate (W) at ($(V)!1.2!-5:(P)$);
-	\coordinate (U) at (3,5);
+	\coordinate (V) at (8.4,5.6);
+	\coordinate (P) at (6,4);
+	\coordinate (W) at ($(V)!1.35!-15:(P)$); %-32 1.45
+	% \coordinate (W1) at ($(V)!1.27!11.5:(P)$); %10 1.28
+	% \coordinate (W2) at ($(V)!1.47!-6:(P)$); %10 1.28
+	% \coordinate (W3) at ($(V)!1.45!-33:(P)$); %-32 1.45
+	% \coordinate (W4) at ($(V)!1.52!-15:(P)$); %-32 1.45
+	% \coordinate (W5) at ($(V)!1.52!-25:(P)$); %-32 1.45
+	\coordinate (U) at (5,2);
 	\coordinate (M) at ($(P)!3cm!90:(V)$);
 
 
@@ -37,7 +42,7 @@
 		\dist =  0.5*\distAB;
 	}
 
-	% definindo o ponto N 
+	% definindo o ponto N acrescente draw dentro do colchete para desenhar o circulo
 	\node(Circle) at (W) [circle through=($(W)!0.5!(U)$)] {};
 	\coordinate (N) at (intersection 1 of W--V and Circle);
 
@@ -55,21 +60,26 @@
 	}
 
 	% definindo um círculo com centro V e raio 5 cm
-	\def\regionB{(V) circle (2.5cm);}
+
+	\coordinate (E) at ($(P)!1cm!50:(V)$);
+	\def\regionB{(E) circle (2cm);}
+	%\draw[line width=0.8pt]\regionB
 
 	% colorindo a interseçao
-	% \begin{scope}
-	% 	\clip  % definindo a região fora da \regionA e dentro da \regionB
-	% 	\regionA
-	% 	\fill[fill=purple]
-	% 	\regionB
+	\begin{scope}[shift={(5cm,-1cm)},rotate=70]
+		\clip  % definindo a região fora da \regionA e dentro da \regionB
+		\regionA
+		\fill[fill=cyan, opacity=0.5]
+		\regionB
 
-	% 	% definindo a fronteira da \regionB no interior da \regionA
-	% 	\draw[line width=0.8pt]\regionB
-	% \end{scope}
+		% definindo a fronteira da \regionB no interior da \regionA
+		\draw[line width=0.8pt]\regionB
+	\end{scope}
 
 	% desenhando a fronteira da \regionA
-	\draw[line width=0.8pt,shift={(-1.5cm,5.5cm)},rotate=-30]\regionA
+	\draw[line width=0.8pt,shift={(5cm,-1cm)},rotate=70]\regionA
+
+
 
 	% desenhando a reta perpendicular
 	\draw [line width=0.8pt] (N) -- ($(N)!3cm! 90:(V)$) node[right] {$\pi$};
@@ -82,25 +92,37 @@
 	\draw [dashed, line width=0.8pt] (V) -- (W);
 
 
-	% Adicionando os braços
-	\draw[decorate,red,decoration={brace,amplitude=2mm},line width=0.8pt](W)--node[above,xshift=0cm,yshift=0.4cm] {$d(w,\pi)$}(N);
-	\draw[decorate,blue,decoration={brace,amplitude=2mm},line width=0.8pt](U)--node[anchor=south east] {$d(u,w)$}(W);
+	% % Adicionando os braços
+	% \draw[decorate,red,decoration={brace,amplitude=2mm},line width=0.8pt](W)--node[left,xshift=-0.1cm,yshift=0.4cm] {$d(w,\pi)$}(N);
+	% \draw[decorate,blue,decoration={brace,amplitude=2mm},line width=0.8pt](U)--node[anchor=south east] {$d(u,w)$}(W);
 
 
 	% adicionando os pontos ao gráfico
-	\node[above] at (C) {$C$};
+	\node[above left] at (C) {$C$};
 
-	\node[anchor=north west] at (W) {$w$};
+	\node[anchor=south] at (W) {$w$};
 	\filldraw (W) circle(1pt);
 	\node[above] at (V) {$v$};
 	\filldraw (V) circle(1pt);
 	\node[anchor=north west] at (U) {$u$};
 	\filldraw (U) circle(1pt);
+	% \node[anchor=north west] at (E) {$E$};
+	% \filldraw (E) circle(1pt);
+	% \node[anchor=north west] at (W1) {$w1$};
+	% \filldraw (W1) circle(1pt);
+	% \node[anchor=north west] at (W2) {$w2$};
+	% \filldraw (W2) circle(1pt);
+	% \node[anchor=north west] at (W3) {$w3$};
+	% \filldraw (W3) circle(1pt);
+	% \node[anchor=north west] at (W4) {$w4$};
+	% \filldraw (W4) circle(1pt);
+	% \node[anchor=north west] at (W5) {$w5$};
+	% \filldraw (W5) circle(1pt);
+
 
 	% adicionando as legendas
-
 	\matrix [draw,anchor=south east] at (current bounding box.north east) {
-		\node {$\bullet \;\; \textcolor{red}{d(w,\pi)} \leq \gamma \textcolor{blue}{d(w,u)}$}; \\
+		\node {$\bullet \;\; w \in {\cal R}_{C,\gamma}^{D}(u, v)$}; \\
 	};
 
 \end{tikzpicture}

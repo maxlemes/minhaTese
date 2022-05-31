@@ -1,9 +1,6 @@
- \documentclass[tikz,convert={outfile=\jobname.svg}]{standalone}
-  \input{\string~/Projetos/ufg/preambles/preambleTikz}
+\documentclass[tikz,convert={outfile=\jobname.svg}]{standalone}
 
-\newcommand\DrawControl[3]{
-  node[#2,circle,fill=#2,inner sep=2pt,label={above:$#1$},label={[black]below:{\footnotesize#3}}] at #1 {}
-}
+ \input{\string~/Projetos/ufg/preambles/preambleTikz}
 
 \begin{document}
 
@@ -14,8 +11,10 @@
 % \input{bezier_5}
 % \input{bezier_6}
  \input{exactProj}
- \input{martinezProj}
- \input{condProj1}
- \input{condProj2}
- 
+\input{martinezProj}
+\input{condProj1}
+\input{condProj2}
+\input{condProj3}
+\input{condProj4}
+
 \end{document}
