@@ -13,7 +13,12 @@
 
 	\coordinate (V) at (9,6);
 	\coordinate (P) at (5.7,6);
-	\coordinate (W) at ($(V)!1.2!-5:(P)$); %-15 9.5
+	\coordinate (W) at ($(V)!1.2!-6:(P)$);
+
+	\coordinate (W1) at ($(V)!1.37!-15:(P)$);
+	\coordinate (W2) at ($(V)!1.31!-2:(P)$);
+	\coordinate (W3) at ($(V)!1.27!13:(P)$);
+
 	\coordinate (U) at (3,5);
 	\coordinate (M) at ($(P)!3cm!90:(V)$);
 
@@ -56,9 +61,16 @@
 
 	% definindo um círculo com centro V e raio 5 cm
 
-	\coordinate (E) at ($(P)!3cm!10:(V)$);
-	\def\regionB{(E) circle (4cm);}
-	%\draw[line width=0.8pt]\regionB
+	\def\regionB{
+		(W1)
+		.. controls ++(110:-0.2) and ++(130:0.2) .. (W2)
+		.. controls ++(130:-0.2) and ++(150:0.2) .. (W3)
+		.. controls ++(150:-0.2) and ++(10:3) ..
+		cycle;
+
+	}
+
+
 	% colorindo a interseçao
 	\begin{scope}[shift={(-1.5cm,5.5cm)},rotate=-30]
 		\clip  % definindo a região fora da \regionA e dentro da \regionB

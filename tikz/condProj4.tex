@@ -13,14 +13,14 @@
 
 	\coordinate (V) at (8.4,5.6);
 	\coordinate (P) at (5,4.5);
-	\coordinate (W) at ($(V)!1.12!-6.5:(P)$);
+	\coordinate (W) at ($(V)!1.05!2:(P)$);
 
-	\coordinate (W1) at ($(V)!1.08!-11:(P)$);
-	\coordinate (W2) at ($(V)!1.12!-6.5:(P)$);
-	\coordinate (W3) at ($(V)!1.11!7:(P)$);
+	\coordinate (W1) at ($(V)!1.06!-11:(P)$);
+	\coordinate (W2) at ($(V)!1.1!-2:(P)$);
+	\coordinate (W3) at ($(V)!1.09!7:(P)$);
 	\coordinate (W4) at ($(V)!1.03!16:(P)$);
 	\coordinate (W5) at ($(V)!0.97!21:(P)$);
-	\coordinate (U) at (5.5,3);
+	\coordinate (U) at (5,3);
 	\coordinate (M) at ($(P)!3cm!90:(V)$);
 
 
@@ -64,10 +64,10 @@
 
 	\def\regionB{
 		(W1)
-		.. controls ++(180:0.1) and ++(190:-0.2) .. (W2)
-		.. controls ++(190:0.2) and ++(250:-0.5) .. (W3)
+		.. controls ++(180:0.1) and ++(210:-0.2) .. (W2)
+		.. controls ++(210:0.2) and ++(240:-0.2) .. (W3)
 	%	.. controls ++(250:0.5) and ++(300:-0.2) .. (W4)
-		.. controls ++(250:0.2) and ++(320:-0.2) .. (W5)
+		.. controls ++(240:0.2) and ++(320:-0.2) .. (W5)
 		.. controls ++(320:0.2) and ++(180:-0.1) ..
 		cycle;
 
@@ -83,8 +83,8 @@
 
 		% definindo a fronteira da \regionB no interior da \regionA
 		\draw[line width=0.8pt]\regionB
-		\draw[fill=red, opacity = 0.5,line width=0.8pt,shift={(5cm,-1cm)},rotate=70] (V) circle [radius=3.51cm];
-		\draw[fill=red, opacity = 0.5,line width=0.8pt,shift={(5cm,-1cm)},rotate=70] (V) circle [radius=3.9cm];
+		%\draw[fill=red, opacity = 0.5,line width=0.8pt,shift={(5cm,-1cm)},rotate=70] (V) circle [radius=3.51cm];
+		%\draw[fill=red, opacity = 0.5,line width=0.8pt,shift={(5cm,-1cm)},rotate=70] (V) circle [radius=4.28cm];
 	\end{scope}
 
 	% desenhando a fronteira da \regionA
