@@ -13,8 +13,10 @@
 
 	\coordinate (V) at (9,6);
 	\coordinate (P) at (5.7,6);
-	\coordinate (W) at ($(V)!1.2!-5:(P)$);
-	\coordinate (U) at (3,5);
+	\coordinate (W) at ($(V)!1.25!-8:(P)$);
+	\coordinate (U) at (3,6);
+	\coordinate (Y) at (3,4.5);
+
 	\coordinate (M) at ($(P)!3cm!90:(V)$);
 
 
@@ -37,9 +39,9 @@
 		\dist =  0.5*\distAB;
 	}
 
-	% definindo o ponto N 
+	% definindo o ponto Wt
 	\node(Circle) at (W) [circle through=($(W)!0.5!(U)$)] {};
-	\coordinate (N) at (intersection 1 of W--V and Circle);
+	\coordinate (Wt) at (intersection 1 of W--V and Circle);
 
 
 	% definindo as regioes 
@@ -72,19 +74,30 @@
 	\draw[line width=0.8pt,shift={(-1.5cm,5.5cm)},rotate=-30]\regionA
 
 	% desenhando a reta perpendicular
-	\draw [line width=0.8pt] (N) -- ($(N)!3cm! 90:(V)$) node[right] {$\pi$};
-	\draw [line width=0.8pt] (N) -- ($(N)!3cm!-90:(V)$);
+	\draw [line width=0.8pt] (Wt) -- ($(Wt)!3cm! 90:(V)$) node[right] {$\pi$};
+	\draw [line width=0.8pt] (Wt) -- ($(Wt)!3cm!-90:(V)$);
 
 	%\draw[line width=0.8pt](V) circle (4.47cm);
+
+	% Mark the angle uPv
+	\begin{scope}[shift={(-1.5cm,5.5cm)},rotate=-30]
+		\clip (Y) -- (Wt) -- (V);
+		\fill[cyan, opacity=0.5, draw=black] (Wt) circle (5mm);
+		\draw (Wt) circle (5mm);
+	\end{scope}
 
 	% desenhando o segmento uP e Pv
 	\draw [dashed, line width=0.8pt] (U) -- (W);
 	\draw [dashed, line width=0.8pt] (V) -- (W);
+	\draw [dashed, line width=0.8pt] (Y) -- (Wt);
 
+	% Adicionando a norma e a seta indicativa
+	\draw[red,-latex, smooth,line width=0.8pt] (5,8) .. controls (5.5,7.5) .. (5.5,6.8);
+	\node[red,anchor=south] at (5,8) {$\|w_t-w\|_D$};
 
 	% Adicionando os braços
-	\draw[decorate,red,decoration={brace,amplitude=2mm},line width=0.8pt](W)--node[above,xshift=0cm,yshift=0.4cm] {$d(w,\pi)$}(N);
-	\draw[decorate,blue,decoration={brace,amplitude=2mm},line width=0.8pt](U)--node[anchor=south east] {$d(u,w)$}(W);
+	\draw[decorate,red,decoration={brace,amplitude=2mm},line width=0.8pt](W)--(Wt);
+	\draw[decorate,blue,decoration={brace,amplitude=2mm},line width=0.8pt](U)--node[anchor=south,yshift=0.3cm] {$\|w-u\|_D$}(W);
 
 
 	% adicionando os pontos ao gráfico
@@ -96,11 +109,16 @@
 	\filldraw (V) circle(1pt);
 	\node[anchor=north west] at (U) {$u$};
 	\filldraw (U) circle(1pt);
+	\node[anchor=south west] at (Wt) {$w_t$};
+	\filldraw (Wt) circle(1pt);
+	\node[anchor=south] at (Y) {$y$};
+	\filldraw (Y) circle(1pt);
 
 	% adicionando as legendas
 
-	\matrix [draw,anchor=south east] at (current bounding box.north east) {
-		\node {$\bullet \;\; \textcolor{red}{d(w,\pi)} \leq \gamma \textcolor{blue}{d(w,u)}$}; \\
+	\matrix [draw, anchor=west] at (current bounding box.north west) {
+		\node {$\bullet \;\; \sqrt{\gamma} \|w-u\|_D \leq \|w_t-w\|_D$}; \\
+		\node {$\bullet \;\; w \in {\cal R}_{C,\gamma}^{D}(u, v)$}; \\
 	};
 
 \end{tikzpicture}

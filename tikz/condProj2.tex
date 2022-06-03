@@ -13,13 +13,13 @@
 
 	\coordinate (V) at (9,6);
 	\coordinate (P) at (5.7,6);
-	\coordinate (W) at ($(V)!1.2!-6:(P)$);
+	\coordinate (W) at ($(V)!1.25!-8:(P)$);
 
-	\coordinate (W1) at ($(V)!1.37!-15:(P)$);
-	\coordinate (W2) at ($(V)!1.31!-2:(P)$);
-	\coordinate (W3) at ($(V)!1.27!13:(P)$);
+	\coordinate (W1) at ($(V)!1.28!-14:(P)$);
+	\coordinate (W2) at ($(V)!1.27!-2:(P)$);
+	\coordinate (W3) at ($(V)!1.29!14:(P)$);
 
-	\coordinate (U) at (3,5);
+	\coordinate (U) at (3,6);
 	\coordinate (M) at ($(P)!3cm!90:(V)$);
 
 
@@ -63,9 +63,9 @@
 
 	\def\regionB{
 		(W1)
-		.. controls ++(110:-0.2) and ++(130:0.2) .. (W2)
-		.. controls ++(130:-0.2) and ++(150:0.2) .. (W3)
-		.. controls ++(150:-0.2) and ++(10:3) ..
+		.. controls ++(90:-0.2) and ++(120:0.2) .. (W2)
+		.. controls ++(120:-0.2) and ++(140:0.2) .. (W3)
+		.. controls ++(140:-0.2) and ++(10:3) ..
 		cycle;
 
 	}
@@ -112,9 +112,9 @@
 	\filldraw (U) circle(1pt);
 
 	% adicionando as legendas
-	\matrix [draw,anchor=south east] at (current bounding box.north east) {
-		\node {$\bullet \;\; w \in {\cal R}_{C,\gamma}^{D}(u, v)$}; \\
-	};
+	% \matrix [draw,anchor=south east] at (current bounding box.north east) {
+	% 	\node {$\bullet \;\; w \in {\cal R}_{C,\gamma}^{D}(u, v)$}; \\
+	% };
 
 
 \end{tikzpicture}
