@@ -1,0 +1,57 @@
+
+\begin{tikzpicture}
+\pgfmathdeclarefunction{gauss}{2}{%
+  \pgfmathparse{1/(sqrt(#2*2*pi))*exp(-((x-#1)^2)/(2*#2))}%
+}
+
+\begin{groupplot}[scale=1, 
+                    group style={
+                          group name=relcost, 
+                          rows=1,columns=2,
+                          horizontal sep=1.1cm,
+                          vertical sep=-2.15cm,
+                          },
+                  %width=12cm,height=5cm, 
+                  xmin=-3,xmax=3,
+                  axis x line = left,
+                  x axis line style=-,
+                  axis y line = none,
+                  y post scale=0.63,
+                  very tick label/.append style={font=\footnotesize},
+                  legend style={font=\small}
+                  ]
+   \def\md{0}
+   \def\sd{1}
+   \def\var{\sd^2}
+   \def\xi{-1.96}
+   \def\xf{1.96}
+   \def\cor{cyan}
+\nextgroupplot[
+     %axis y line=center,
+     %xlabel={$\overline{X}$},
+     %ylabel={$f(x;\mu,\sigma)$},
+     %axis line style = {shorten >=-12.5pt, shorten <=-12.5pt},
+     xlabel style = {at={(axis cs:0,-0.05)}, font=\footnotesize},
+     ylabel style = {at={(axis cs:0,0.1)}, font=\footnotesize},
+     %title style = {at={(0.5,-0.15)},anchor=north, font=\bfseries, align=center},
+     xlabel = {Losses},
+     ylabel={$95\%$},
+     samples=800,
+     domain=(\md-3*\sd):(\md+3*\sd),
+     xtick = {0, 1.96},
+     xticklabels = { \footnotesize{0}, \footnotesize{VaR$_{0.95}$}},
+     ytick = \empty,
+     %tick align=outside,
+     xmin= \md-3.3*\sd,
+     xmax=\md+3.3*\sd,
+     ymin=0,
+     ymax=0.5/\sd, %0.39/DesvioPadrao
+]   
+     \addplot [fill=\cor, opacity=0.3, draw=none, domain=(1.96:3] {gauss(\md,\var)} \closedcycle;
+     %\addplot [fill=\cor!30, draw=none, domain=(1.96:3] {gauss(\md,\var)} \closedcycle;
+     %\draw []  (axis cs:0,0) -- (axis cs:0,0.4);
+     \addplot [thick,\cor] {gauss(0,1)};
+     \draw [] (axis cs:0,0.15) node [above] {\footnotesize{$95\%$}};
+     %\draw [latex-,thick, \cor] (axis cs:1.4,0.2) -- (axis cs:2,0.3) node [above] {\footnotesize{$\alpha$}};
+  \end{groupplot}
+ \end{tikzpicture}

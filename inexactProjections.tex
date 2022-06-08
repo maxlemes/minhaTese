@@ -121,7 +121,7 @@ The concept of  feasible inexact projection  in Definition~\ref{def:InexactProjC
 \textcolor{blue}{
 We show now a geometric interpretation for the inexact projection defined in Definition~\ref{def:InexactProjC}.
 \begin{remark}\normalfont
-	Let $C\subset \mathbb{R}^n$, $u\in C$, $v\in \mathbb{R}^n$, $w\in{\cal R}_{C,\gamma}^{D}(u, v)$ be as stated in Definition~\ref{def:InexactProjC} and $w_t = w+t(v-w)$, with $0\leq t <0$. It is easy to see that, for all $y\in C$,
+	Let $C\subset \mathbb{R}^n$, $u\in C$, $v\in \mathbb{R}^n$, $w\in{\cal R}_{C,\gamma}^{D}(u, v)$ be as stated in Definition~\ref{def:InexactProjC} and $w_t = w+t(v-w)$, with $0\leq t <1$. It is easy to see that, for all $y\in C$,
 	\begin{align*}
 		\begin{aligned}
 			w_t - w & = t(v-w)        \\
@@ -149,30 +149,41 @@ then $\left\langle D(v-w_t), y-w_t \right\rangle\leq 0$. In this case the inexac
 }
 
 \begin{figure}[!h]
-%\begin{adjustwidth}{2.2cm}{2.2cm}
-\begin{subfigmatrix}{2}
-   \subfigure[Geometric interpretation.]{\includegraphics{figures/condProj1.pdf}}
-   \subfigure[Example of ${\cal R}_{C,\gamma}^{D}(u, v)$.]{\includegraphics{figures/condProj2.pdf}}
-\end{subfigmatrix}
-\caption{Geometric interpretation of projection ${\cal R}_{C,\gamma}^{D}(u, v)$.}
-\label{fig:condProj1}
-%\end{adjustwidth}
+	%\begin{adjustwidth}{2.2cm}{2.2cm}
+	\begin{subfigmatrix}{2}
+		\subfigure[Geometric interpretation.]{\includegraphics{figures/condProj1.pdf}}
+		\subfigure[Example of ${\cal R}_{C,\gamma}^{D}(u, v)$.]{\includegraphics{figures/condProj2.pdf}}
+	\end{subfigmatrix}
+	\caption{Geometric interpretation of projection ${\cal R}_{C,\gamma}^{D}(u, v)$.}
+	\label{fig:condProj1}
+	%\end{adjustwidth}
 \end{figure}
 \textcolor{blue}{
-	In the following we presents some examples of regions given by inexact projection ${\cal R}_{C,\gamma}^{D}(u, v)$.
-}
-
+	In the following we presents some examples of regions given by inexact projection ${\cal R}_{C,\gamma}^{D}(u, v)$. Note that the projection ${\cal R}_{C,\gamma}^{D}(u, v)$ gets smaller as $u$ gets closer to $w$.
 \begin{figure}[H]
-%\begin{adjustwidth}{2.2cm}{2.2cm}
-\begin{subfigmatrix}{2}
-   \subfigure[]{\includegraphics{figures/condProj3.pdf}}
-   \subfigure[]{\includegraphics{figures/condProj4.pdf}}
-\end{subfigmatrix}
-\caption{Examples of regions given by inexact projection ${\cal R}_{C,\gamma}^{D}(u, v)$.}
-\label{fig:baseline}
-%\end{adjustwidth}
+	%\begin{adjustwidth}{2.2cm}{2.2cm}
+	\begin{subfigmatrix}{3}
+		\subfigure[]{\includegraphics{figures/condProj3.pdf}}
+		\subfigure[]{\includegraphics{figures/condProj4.pdf}}
+		\subfigure[]{\includegraphics{figures/condProj5.pdf}}
+	\end{subfigmatrix}
+	\caption{Examples of regions given by inexact projection ${\cal R}_{C,\gamma}^{D}(u, v)$.}
+	\label{fig:baseline}
+	%\end{adjustwidth}
 \end{figure}
-
+The next example shows the behavior of the projection ${\cal R}_{C,\gamma}^{D}(u, v)$ when the set $C$ has a vertice and some flat parts.
+\begin{figure}[H]
+	%\begin{adjustwidth}{2.2cm}{2.2cm}
+	\begin{subfigmatrix}{3}
+		\subfigure[]{\includegraphics[width=0.3\linewidth]{figures/condProj6.pdf}}
+		\subfigure[]{\includegraphics[width=0.3\linewidth]{figures/condProj7.pdf}}
+		\subfigure[]{\includegraphics[width=0.38\linewidth]{figures/condProj8.pdf}}
+	\end{subfigmatrix}
+	\caption{Examples of regions given by inexact projection ${\cal R}_{C,\gamma}^{D}(u, v)$.}
+	\label{fig:baseline}
+	%\end{adjustwidth}
+\end{figure}
+}
 
 The  next lemma is a variation of \cite[Lemma 6]{Reiner_Orizon_Leandro2019}.  It will allow to relate Definitions~\ref{def:InexactM} and \ref{def:InexactProjC}.
 \begin{lemma} \label{pr:cond}

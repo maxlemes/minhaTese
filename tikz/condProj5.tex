@@ -1,25 +1,25 @@
-\begin{tikzpicture}[scale = 1, rotate = 0]
+\begin{tikzpicture}[scale = 1]
 	\makeatletter
 	\def\convertto#1#2{\strip@pt\dimexpr #2*65536/\number\dimexpr 1#1}
 	\makeatother
 
 	% adicionando as linhas de grade
-	\draw[help lines] (-1,-1) grid (10,10);
+	%\draw[help lines] (-1,-1) grid (10,10);
 
 	% definindo os pontos
 	\coordinate (A) at (1,1.5);
-	\coordinate (C) at (2,8);
+	\coordinate (C) at (2,4);
 	\coordinate (D) at (3,0);
 
-	\coordinate (V) at (9,6);
-	\coordinate (P) at (5.7,6);
-	\coordinate (W) at ($(V)!1.25!-8:(P)$);
+	\coordinate (V) at (8.4,5.6);
+	\coordinate (P) at (5,4.5);
+	\coordinate (W) at ($(V)!.99!3:(P)$);
 
-	\coordinate (W1) at ($(V)!1.28!-14:(P)$);
-	\coordinate (W2) at ($(V)!1.27!-2:(P)$);
-	\coordinate (W3) at ($(V)!1.29!14:(P)$);
-
-	\coordinate (U) at (3,6);
+	\coordinate (W1) at ($(V)!1.01!-3:(P)$);
+	\coordinate (W2) at ($(V)!1.0!10:(P)$);
+	\coordinate (W3) at ($(V)!1.0!24:(P)$);
+	
+	\coordinate (U) at (5,3.7);
 	\coordinate (M) at ($(P)!3cm!90:(V)$);
 
 
@@ -63,16 +63,16 @@
 
 	\def\regionB{
 		(W1)
-		.. controls ++(90:-0.2) and ++(120:0.2) .. (W2)
-		.. controls ++(120:-0.2) and ++(140:0.2) .. (W3)
-		.. controls ++(140:-0.2) and ++(10:3) ..
+		.. controls ++(200:0.2) and ++(230:-0.2) .. (W2)
+		.. controls ++(230:0.2) and ++(260:-0.1) .. (W3)
+		.. controls ++(280:0.1) and ++( 20:1) ..
 		cycle;
 
 	}
-
+	%\draw[line width=0.8pt]\regionB
 
 	% colorindo a interseçao
-	\begin{scope}[shift={(-1.5cm,5.5cm)},rotate=-30]
+	\begin{scope}[shift={(5cm,-1cm)},rotate=70]
 		\clip  % definindo a região fora da \regionA e dentro da \regionB
 		\regionA
 		\fill[fill=cyan, opacity=0.5]
@@ -80,14 +80,18 @@
 
 		% definindo a fronteira da \regionB no interior da \regionA
 		\draw[line width=0.8pt]\regionB
+		%\draw[fill=red, opacity = 0.5,line width=0.8pt,shift={(5cm,-1cm)},rotate=70] (V) circle [radius=3.51cm];
+		%\draw[fill=red, opacity = 0.5,line width=0.8pt,shift={(5cm,-1cm)},rotate=70] (V) circle [radius=4.28cm];
 	\end{scope}
 
 	% desenhando a fronteira da \regionA
-	\draw[line width=0.8pt,shift={(-1.5cm,5.5cm)},rotate=-30]\regionA
+	\draw[line width=0.8pt,shift={(5cm,-1cm)},rotate=70]\regionA
+
+	% \draw[dashed,gray,line width=0.5pt,shift={(5cm,-1cm)},rotate=70] (V) circle (1.15cm);
 
 	% desenhando a reta perpendicular
-	\draw [line width=0.8pt] (N) -- ($(N)!3cm! 90:(V)$) node[right] {$\pi$};
-	\draw [line width=0.8pt] (N) -- ($(N)!3cm!-90:(V)$);
+	\draw [line width=0.8pt] (N) -- ($(N)!4cm! 90:(V)$) node[right] {$\pi$};
+	\draw [line width=0.8pt] (N) -- ($(N)!4cm!-90:(V)$);
 
 	%\draw[line width=0.8pt](V) circle (4.47cm);
 
@@ -102,19 +106,31 @@
 
 
 	% adicionando os pontos ao gráfico
-	\node[above] at (C) {$C$};
+	\node[anchor=south east] at (C) {$C$};
 
-	\node[anchor=north west] at (W) {$w$};
+	\node[anchor=east] at (W) {$w$};
 	\filldraw (W) circle(1pt);
 	\node[above] at (V) {$v$};
 	\filldraw (V) circle(1pt);
-	\node[anchor=north west] at (U) {$u$};
+	\node[anchor=north] at (U) {$u$};
 	\filldraw (U) circle(1pt);
+	% \node[anchor=north west] at (E) {$E$};
+	% \filldraw (E) circle(1pt);
+	% \node[anchor=south] at (W1) {$w1$};
+	% \filldraw (W1) circle(1pt);
+	% \node[anchor=south] at (W2) {$w2$};
+	% \filldraw (W2) circle(1pt);
+	% \node[anchor=south] at (W3) {$w3$};
+	% \filldraw (W3) circle(1pt);
+	% \node[anchor=south] at (W4) {$w4$};
+	% \filldraw (W4) circle(1pt);
+	% \node[anchor=south] at (W5) {$w5$};
+	% \filldraw (W5) circle(1pt);
+
 
 	% adicionando as legendas
-	% \matrix [draw,anchor=south east] at (current bounding box.north east) {
-	% 	\node {$\bullet \;\; w \in {\cal R}_{C,\gamma}^{D}(u, v)$}; \\
-	% };
-
+	\matrix [draw,anchor=south east] at (current bounding box.north east) {
+		\node {$\bullet \;\; w \in {\cal R}_{C,\gamma}^{D}(u, v)$}; \\
+	};
 
 \end{tikzpicture}
