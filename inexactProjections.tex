@@ -37,7 +37,9 @@ The next result  characterizes  the exact projection, its  proof can be found in
 
 \begin{remark}\normalfont \label{re:cproj}
 	It follows from Lemma~\ref{pr:cham}  that $\|{\cal P}_{C}^{D}(v)-{\cal P}_{C}^{D}(u)\|_{D}\leq \|v-u\|_{D}$.  Moreover, since   $D\in {\cal D}_{\mu}$, by \eqref{eq:pnv}, we conclude that   ${\cal P}_{C}^{D}(\cdot)$ is Lipschitz continuous with constant $L=\mu$.   Furthermore,  if  $(D_k)_{k\in\mathbb{N}}\subset {\cal D}_{\mu}$,    $\lim_{k\to +\infty} z^{k} = \bar{z}$, and   $\lim_{k \to +\infty} D_{k} = \bar{D}$, then $\lim_{k \to +\infty}{\cal P}_{C}^{D_k}(z^{k})= {\cal P}_{C}^{\bar D}(\bar{z})$, see   \cite[Proposition~4.2]{CombettesVu2013}.
-\end{remark}\normalfont
+\end{remark}\
+
+\section{The first feasible inexact projection}
 
 In the following, we recall  the  concept of a  feasible inexact projection with respect to $\| \cdot \| _{D}$ relative to a fixed point.
 
@@ -101,6 +103,8 @@ The  concept of  feasible inexact projection  in Definition~\ref{def:InexactM}  
 	Let  $y \in C$. Since   $  2\langle D(v-w), y-w\rangle = \|w-y\|_{D}^2 + \|w-v\|_{D}^2-\|v-y\|_{D}^2$,  using \eqref{eq:Projwm}  we have
 	$2\langle D(v-w), y-w\rangle = \|w-y\|_{D}^2 + \zeta \| {\cal P}_{C}^{D}(v)-v\|_{D}^2+(1-\zeta)\|u-v\|_{D}^2-\|v-y\|_{D}^2$, which is equivalent to  the desired inequality.
 \end{proof}
+
+\section{The second feasible inexact projection}
 
 Next, we recall a second  concept of relative  feasible inexact projection onto a closed convex set, see  \cite{Ademir_Orizon_Leandro2020, OrizonFabianaGilson2018}.  The definition  is as follows.
 \begin{definition} \label{def:InexactProjC}
@@ -203,6 +207,8 @@ The  next lemma is a variation of \cite[Lemma 6]{Reiner_Orizon_Leandro2019}.  It
 	$$
 	Therefore, substituting the last inequality into   \eqref{eq:fg}, we obtain the  desired inequality.
 \end{proof}
+
+\section{The relationship among feasible inexact projections}
 
 In the following  lemma, we present a  relationship between   Definitions~\ref{def:InexactM} and \ref{def:InexactProjC}.
 \begin{lemma} \label{pr:condrip}
