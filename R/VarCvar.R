@@ -19,9 +19,12 @@ q <- rlnorm(10000, meanlog = 0, sdlog = 0.6)
 r <- p/q+10*q
 hist(r,breaks=200)
 
+
+tikz("../tikz/VarCvar.tex",standAlone = TRUE, width = 5,height = 3)
 hist(r,
      freq = TRUE, #FALSE = Density
-  #   labels = TRUE,
+     axes = F,
+     #   labels = TRUE,
      breaks = 200, #número de células do histograma
      xlim = c(0,80),
      ylim = c(0,400), #pode ser ignorado
@@ -33,6 +36,12 @@ hist(r,
      cex.axis = 1,
      cex.main = 2,
      cex.sub = 1)
+dev.off()
+
+
+
+
+
 
 # Barplot
 df %>% ggplot(., aes(x="", y=value, fill=group))+
