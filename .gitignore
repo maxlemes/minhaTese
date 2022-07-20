@@ -11,4 +11,6 @@
 *.toc 
 *.fls
 *.fdb_latexmk
+R/data/*
+R/data-raw/*
 

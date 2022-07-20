@@ -1,0 +1,65 @@
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{xifthen}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{pgf,pgfplots,pgfkeys}
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usepackage{siunitx} %% Sistema Internacional de Unidades
+\usepackage{caption}
+
+
+%\usepackage{tkz-fct}
+
+%
+%%! For older versions of package tkz-euclide
+%%! you may need uncomment the following line:
+%   \usetkzobj{all}
+%%!
+
+\usetikzlibrary
+    {
+      shapes.geometric,
+      arrows,
+      calc,
+      intersections,
+      arrows.meta,
+      decorations.markings,
+      positioning,
+      math,
+      angles,
+      quotes,
+      patterns,3d,
+      backgrounds,
+      fillbetween,
+      automata,
+      trees,
+      external
+    }
+
+
+%%..
+%%Usage: \gettikzxy{(P)}{\px}{\py}
+\makeatletter
+\newcommand{\gettikzxy}[3]{%
+  \tikz@scan@one@point\pgfutil@firstofone#1\relax
+  \edef#2{\the\pgf@x}%
+  \edef#3{\the\pgf@y}%
+  \tikzmath{#2=#2/28.3465;};
+  \tikzmath{#3=#3/28.3465;};
+}
+\tikzstyle{bag} = [align=center]
+\makeatother
+
+
+\pgfplotsset{compat=1.18}
+
+\usepgfplotslibrary{groupplots}
+
+
+% to Bezier curves
+\newcommand\DrawControl[3]{
+  node[#2,circle,fill=#2,inner sep=2pt,label={above:$#1$},label={[black]below:{\footnotesize#3}}] at #1 {}
+ }
+

@@ -1,0 +1,59 @@
+
+% New Packages
+\usepackage{titletoc}
+\usepackage[chapter]{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{refcheck}
+
+% definindo as margens do documento
+\geometry{a4paper,text={17.5cm,25cm},centering}
+
+%------------------------------------ hyperrref
+\usepackage[colorlinks=true]{hyperref}
+\hypersetup{colorlinks,linkcolor={red},citecolor={red},urlcolor={purple}}  
+
+
+\usepackage[capitalise,noabbrev,nameinlink]{cleveref}
+
+\makeatletter
+% \newcommand{\eqref}[1]{\textup{\tagform@{\ref{#1}}}}
+\renewcommand{\eqref}[1]{%
+  \hyperref[#1]{\textup{\tagform@{\ref*{#1}}}}%
+}
+
+\makeatother
+%-------------------------------------------------
+
+% New Theorems
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{axiom}{Axiom}
+
+% New Commands
+\newcommand{\myscale}{0.32}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\tr}{\textrm{tr}}
+\newcommand{\rank}{\textrm{rank}}
+
+\def\proof{\noindent{\textbf{\textit{Proof}}}. \ignorespaces}
+\def\endproof{\ensuremath{\hfill \quad \square}}
+
+
+    \LetLtxMacro\oldref{\ref}%
+    \DeclareRobustCommand{\ref}[1]{\textup\oldref{#1}}%
+
+\DeclareMathOperator*{\argmin}{argmin}
+
+% \AtBeginDocument{
+%   \let\namerefOld\nameref
+%   \renewcommand{\nameref}[1]{\textrm{\namerefOld{#1}}}
+% }

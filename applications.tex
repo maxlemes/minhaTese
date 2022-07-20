@@ -2,20 +2,18 @@
 
 \section{Risks measures}
 
-In this section we discuss different ways to measure the risk of portfolio.
+In this section we discuss different ways of measuring the risk of a portfolio.
 \begin{definition}
 	A portfolio with $n$ assets, $A_1, A_2, \dots, A_n$, is a vector $x^\top = (x_1, x_2, \dots, x_n)\in \R^n$ where each coordinate $x_i$ is the weight of capital invested in asset $A_i$.
 \end{definition}
-In finance risk is the possibility of a loss of capital and one way to measure risk is to calculate the probability of that loss happening.
-
-Considering the loss as a random variable we can calculate the standard deviation of its distribution. This standard deviation (or \textit{volatility}) was considered a measure of risk by Nobel laureate in economics, Harry Markowitz in 1952 (see \cite{Markowitz1952}) under the hypothesis of loss has a normal distribution.
+In finance Risk is the probability of losing capital. Considering the loss as a random variable we can calculate the standard deviation of its distribution. This standard deviation (or \textit{volatility}) was considered a measure of risk by Nobel laureate in economics, Harry Markowitz in 1952 (see \cite{Markowitz1952}) under the hypothesis of loss has a normal distribution.
 
 Others risk measures are done in terms of loss distribution percentiles. An upper percentile of the loss distribution is called \textit{Value-at-Risk} ($\mbox{VaR}_\beta$)\footnote{$\mbox{VaR}_\beta$ is the percentile of the loss distribution, i.e., with a specified confidence level $\beta$,  $\mbox{VaR}_\beta$ is the lowest amount $\zeta$ such that, with probability $\beta$, the loss is less or equal to $\zeta$.}. For instance, $\mbox{VaR}_{0.95}$ is an upper estimate of losses which is exceeded with 5\% probability. The popularity of $\mbox{VaR}_\beta$ is mostly related to a simple and easy to understand representation of high losses. $\mbox{VaR}_\beta$ can be quite efficiently estimated and managed when underlying risk factors are normally (log-normally) distributed.
 
 An alternative measure of losses is another percentile risk measure which is called \textit{Conditional Value-at-Risk} ($\mbox{CVaR}_\beta$)\footnote{$\mbox{CVaR}_\beta$ is the average loss in the $100(1-\beta)$\% worst case scenarios.}. The $\mbox{CVaR}_\beta$ risk measure is closely related to $\mbox{VaR}_\beta$. For continuous distributions, $\mbox{CVaR}_\beta$ is defined as the conditional expected loss under the condition that it exceeds $\mbox{VaR}_\beta$, see Rockafellar and Uryasev (see \cite{RockafellarUryasev2001}). For continuous distributions, this risk measure also is known as \emph{Expected Shortfall}, \textit{Mean Excess Loss}, \textit{Mean Shortfall}, or \textit{Tail Value-at-Risk}.
 
 
-\begin{figure}[H]
+\begin{figure}[!h]
 	\centering
 	\includegraphics{figures/VarCvar.pdf}
 	\caption{Portfolio Loss Distribution, VaR and CVaR.}
@@ -23,7 +21,7 @@ An alternative measure of losses is another percentile risk measure which is cal
 \end{figure}
 
 \begin{remark}\normalfont\label{re:Normal}
-If the loss distribution of a portfolio $x$ is normal, it follows that
+If the loss distribution of a portfolio $x$ is normal, it follows that both $\mbox{VaR}_\beta$ and $\mbox{CVaR}_\beta$ can be rewritten by
 \[
 	\mu(x)+c\sigma(x)
 \]
@@ -78,11 +76,11 @@ where $\mu(x)$ and $\sigma(x)$ denote the mean and volatility of the loss associ
 
 \section{Portfolio optimization}
 
-We consider a universe of $n$ assets. Let $x^\top = (x_1, x_2, \dots, x_n)$ be a portfolio and denoting by $R_i$ the return of asset $i$. If $R^\top=(R_1, R_2, \dots, R_n)$  is the random vector of asset returns then the return of portfolio $x$ is given by:
+In this section we present some ways to build a portfolio. In a universe of $n$ assets let $x^\top = (x_1, x_2, \dots, x_n)$ be a portfolio and denoting by $R_i$ the return of asset $i$. If $R^\top=(R_1, R_2, \dots, R_n)$  is the random vector of asset returns then the return of portfolio $x$ is given by:
 \[
 	R(x) = x_1R_1+x_2R_2+\cdots x_nR_n = x^\top R.
 \]
-If we note $\mu$ and $\Sigma$ the vector of expected returns and the covariance matrix of asset returns, we deduce that the expected return of portfolio $x$ is equal to:
+If we denote by $\mu$ and $\Sigma$ the vector of expected returns and the covariance matrix of asset returns respectively, we deduce that the expected return of portfolio $x$ is equal to:
 \[
 	\mu(x) = x^\top \mu
 \]
@@ -90,19 +88,19 @@ whereas its variance is given by:
 \[
 	\sigma^2(x) = x^\top \Sigma x.
 \]
-The mean-variance portfolio (MVP) of Markowitz (see \cite{Markowitz1952}) consists in maximizing the expected return $\mu(x)$ for a fixed value $\hat{\sigma}$ of the volatility $\sigma(x)$. This can be achieved by solving the problem:
+The mean-variance portfolio (MVP) of Markowitz (see \cite{Markowitz1952}) consists in maximizing the expected return $\mu(x)$ for a fixed value $\nu$ of the volatility $\sigma(x)$. This can be achieved by solving the problem:
 \begin{eqnarray}\label{prob:MVP}
 	\min_{x} \, \{- \mu(x)\}, \\
 	\mbox{s.t. }\left\{
 	\begin{aligned}\nonumber
-		\sigma(x) = \hat{\sigma}, & \\
+		\sigma^2(x) = \nu, & \\
 		\mathbf{1}^\top x=1       &
 	\end{aligned}
 	\right.
 \end{eqnarray}
 where $\textbf{1}^\top =(1,1,\dots,1)$, and the condition $\mathbf{1}^\top x=1$ means that the capital is fully invested.
 
-A portfolio optimization  problem is defined when we want to minimize (or maximize) a performance measure subject to a set of constraints. Here are some examples of performance measures:
+A portfolio optimization  problem is defined when we want to minimize (or maximize) a performance measure subject to a set of constraints. Here are some examples of performance measures and constraints:
 
 \begin{itemize}
 	\item \textbf{Performance Measures}
@@ -120,8 +118,6 @@ A portfolio optimization  problem is defined when we want to minimize (or maximi
 	      \end{itemize}
 \end{itemize}
 
-Constraints can be:
-
 \begin{itemize}
 	\item \textbf{Constraints}
 	      \begin{itemize}
@@ -136,8 +132,10 @@ Constraints can be:
 Some known portfolio optimization problems are:
 
 \noindent\textbf{Global Minimum Variance Portfolio (GMVP)}
+
+Minimize variance with fully capital invested
 \begin{eqnarray}\label{prob:GMVP}
-	\min_{x} \,\{x^\top \Sigma x\}, \\
+	\min_{x} \,\big\{x^\top \Sigma x\big\}, \\
 	\mbox{s.t. }\left\{
 	\begin{aligned}\nonumber
 		\mathbf{1}^\top x=1 \\
@@ -146,75 +144,105 @@ Some known portfolio optimization problems are:
 \end{eqnarray}
 
 \noindent\textbf{Maximum Sharpe Ratio Portfolio (MSRP)}
-\begin{eqnarray}\label{prob:MSRP}
-	\max_{x} \,\{\mbox{SR}(x)\}, \\
-	\mbox{s.t. }\left\{
-	\begin{aligned}\nonumber
-		\mathbf{1}^\top x=1 & \\
-		\mathbf{0}\leq x \leq \mathbf{1}
-	\end{aligned}
-	\right.
-\end{eqnarray}
 
-We can also combine performances and constraints
-\begin{eqnarray}\label{prob:General}
-	\min_{x} \,\{\lambda \mbox{CVaR}_\beta(x) - \mu(x)\}, \\
+Maximize Sharpe ratio with self-financial constraint and leverage restriction.
+\begin{eqnarray}\label{prob:MSRP}
+	\max_{x} \,\big\{\mbox{SR}(x)\big\}, \\
 	\mbox{s.t. }\left\{
 	\begin{aligned}\nonumber
-		\mathbf{1}^\top x=0 & \\
-		\mathbf{0}\leq x \leq \mathbf{1}\\
+		\mathbf{1}^\top x=0, & \\
 		\|x\|_1\leq K.
 	\end{aligned}
 	\right.
 \end{eqnarray}
-where $\lambda$ is a parameter that controls how risk-averse the investor is.
 
-All these problems aim to optimize a performance measure, we will present a new approach where the objective will be the risk allocation.
+We can also combine performances and constraints like this example:
+\begin{eqnarray}\label{prob:General}
+	\min_{x} \,\big\{\lambda \mbox{CVaR}_\beta(x) - \mu(x)\big\}, \\
+	\mbox{s.t. }\left\{
+	\begin{aligned}\nonumber
+		\mathbf{1}^\top x=1, & \\
+		\|x\|_1\leq K.
+	\end{aligned}
+	\right.
+\end{eqnarray}
+where $\lambda$ is a parameter that controls how risk-averse the investor is. 
 
-\input{riskParity}
+Furthermore, we can look at portfolio optimization problems as a multi-objective problem: Let $f:\R^n\to\R^2$ be the function $f(x)= \big(\mathcal{P}(x), \mathcal{R}(x)\big)$, where $\mathcal{P}(x)$ is a performance measure (that we want to minimize) of portfolio $x$ and $\mathcal{R}(x)$ is a risk measure of $x$. We want to find a solution to problem
+\begin{eqnarray}\label{prob:Vector}
+	\min_{x} \,\Big\{f(x)= \big(\mathcal{P}(x), \mathcal{R}(x)\big)\Big\}, \\
+	\mbox{s.t. }\left\{
+	\begin{aligned}\nonumber
+		\mathbf{1}^\top x=1.
+	\end{aligned}
+	\right.
+\end{eqnarray}
+
+In all these problems we want to optimize a performance measure, we will present a new approach where the objective will be the risk allocation.
+
+\section{Risk Parity}
+
+Markowitz’s portfolio has never been fully embraced by practitioners, among other reasons because it only considers the risk of the portfolio as a whole and ignores the diversification risk (i.e., concentrates too much risk in few assets, this was observed in the 2008 financial crisis): one solution to avoid this problem is the risk parity portfolio.
+
+Risk parity is an approach to portfolio management that focuses on allocation of risk rather than allocation of capital. The risk parity approach asserts that when asset allocations are adjusted to the same risk level, the portfolio can achieve a higher Sharpe ratio and can be more resistant to market downturns.
+
+While the minimum variance portfolio tries to minimize the variance (with the disadvantage that a few assets may be the ones contributing most to the risk), the risk parity portfolio distributes the weights so that the risk contribution of each asset (or asset class, such as bonds, stocks, real estate, etc.) is the same.
+
+To define a risk-based allocation strategies it is necessary define how the risk of an asset affects the risk of the portfolio. 
+Let $x^\top=(x_1,x_2,\dots,x_n)$ be a portfolio with $n$ assets and $\mathcal{R}(x)$ be a differentiable, homogeneous risk measure of $x$. Since $\mathcal{R}(x)$ is homogeneous, we have
+\[
+\mathcal{R}(x)=\frac{d}{d\lambda}\mathcal{R}(\lambda x)=\sum_{i=1}^n x_i \frac{\partial \mathcal{R} (x)}{\partial x_i}
+\]
+we can define the risk contribution of the asset $i$ by
+$\mathcal{RC}_i$, where
+\[
+\mathcal{RC}_i(x)= x_i \frac{\partial \mathcal{R}(x)}{\partial x_i}.
+\]
+Therefore, the risk can be written as follows
+\[
+\mathcal{R}(x)=\sum_{i=1}^n \mathcal{RC}_i(x)
+\]
+which is known as \textbf{Euler's Allocation Principle}.
+
+Volatility and $\mbox{CVaR}_\beta$  satisfy the properties required by the risk measure, $\mathcal{R}$, defined above. However, $\mbox{VaR}_\beta$ satisfies these properties only in the Gaussian case. When asset returns have a Normal Distribution, by simplicity (see Remark \ref{re:Normal}), we have that
+$\mathcal{R}(x)=\sigma(x)=\sqrt{x^\top\Sigma x}$, it follows that
+\[
+\mathcal{RC}_i(x)= x_i \frac{\partial \sigma(x)}{\partial x_i}=\frac{x_i (\Sigma x)_i}{\sqrt{x^\top\Sigma x }}.
+\]
+
+It may be interesting for the investor to choose different risks for different assets, in this case the investor choose the percentage of risk that each asset should have in the portfolio, that is,
+\begin{equation}\label{eq:RBP}
+	\mathcal{RC}_i(x)=b_i\mathcal{R}(x),
+\end{equation}
+where $b_i$ represents the risk contribution that asset $i$ will have in the portfolio. Certainly $b_i\geq 0$ for all $i$ and
+${\bf 1}^\top b =1$, with $b^\top=(b_1, b_2, \dots, b_n)$. A portfolio distribution based in relation \eqref{eq:RBP} is called \textit{risk budgeting portfolio} (RBP), when $b_i=1/n$, for all $i$ the distribution is called \textit{risk parity portfolio} (RPP) or \textit{equal risk portfolio} (ERP).
+
+In general, find the risk budgeting portfolio consists to solve the following non-linear system
+\begin{eqnarray}\label{eq:SisNLin}
+\mathcal{RC}_i(x)=b_i\mathcal{R}(x), \\
+	\mbox{s.t. }\left\{
+	\begin{aligned}\nonumber
+b_i \geq 0, \\
+x_i \geq 0, \\
+{\bf 1}^\top b =1, \\
+{\bf 1}^\top x =1.
+	\end{aligned}
+	\right.
+\end{eqnarray}
+
+In 2012 Kaya and Lee (see \cite{KayaLee2012}) show that, in Gaussian case, the risk budgeting portfolio can be found by solving the problem
+\begin{eqnarray}\label{eq:MinProb}
+\min_{x\geq \textbf{0}}\, \{-b^\top \ln(x)\}; \\
+	\mbox{s.t. }\left\{
+	\begin{aligned}\nonumber
+\sigma^2(x)\leq \sigma_0,\\
+{\bf 1}^\top x =1.
+	\end{aligned}
+	\right.
+\end{eqnarray}
+where, $\sigma_0$ is a volatility target.
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{Case Study}
