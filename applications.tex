@@ -1,19 +1,22 @@
 \chapter{Applications} \label{chap:App}
+\thispagestyle{empty}
 
-\section{Risks measures}
+\section{Risks Measures}
 
 In this section we discuss different ways of measuring the risk of a portfolio.
 \begin{definition}
-	A portfolio with $n$ assets, $A_1, A_2, \dots, A_n$, is a vector $x^\top = (x_1, x_2, \dots, x_n)\in \R^n$ where each coordinate $x_i$ is the weight of capital invested in asset $A_i$.
+	A portfolio with $n$ assets, $A_1, A_2, \dots, A_n$, is a vector $x^\top = (x_1, x_2, \dots, x_n)\in \R^n$, each coordinate $x_i$ being the weight of the capital invested in asset $A_i$.
 \end{definition}
-In finance Risk is the probability of losing capital. Considering the loss as a random variable we can calculate the standard deviation of its distribution. This standard deviation (or \textit{volatility}) was considered a measure of risk by Nobel laureate in economics, Harry Markowitz in 1952 (see \cite{Markowitz1952}) under the hypothesis of loss has a normal distribution.
 
-Others risk measures are done in terms of loss distribution percentiles. An upper percentile of the loss distribution is called \textit{Value-at-Risk} ($\mbox{VaR}_\beta$)\footnote{$\mbox{VaR}_\beta$ is the percentile of the loss distribution, i.e., with a specified confidence level $\beta$,  $\mbox{VaR}_\beta$ is the lowest amount $\zeta$ such that, with probability $\beta$, the loss is less or equal to $\zeta$.}. For instance, $\mbox{VaR}_{0.95}$ is an upper estimate of losses which is exceeded with 5\% probability. The popularity of $\mbox{VaR}_\beta$ is mostly related to a simple and easy to understand representation of high losses. $\mbox{VaR}_\beta$ can be quite efficiently estimated and managed when underlying risk factors are normally (log-normally) distributed.
-
-An alternative measure of losses is another percentile risk measure which is called \textit{Conditional Value-at-Risk} ($\mbox{CVaR}_\beta$)\footnote{$\mbox{CVaR}_\beta$ is the average loss in the $100(1-\beta)$\% worst case scenarios.}. The $\mbox{CVaR}_\beta$ risk measure is closely related to $\mbox{VaR}_\beta$. For continuous distributions, $\mbox{CVaR}_\beta$ is defined as the conditional expected loss under the condition that it exceeds $\mbox{VaR}_\beta$, see Rockafellar and Uryasev (see \cite{RockafellarUryasev2001}). For continuous distributions, this risk measure also is known as \emph{Expected Shortfall}, \textit{Mean Excess Loss}, \textit{Mean Shortfall}, or \textit{Tail Value-at-Risk}.
+In financial science, Risk is the probability of losing capital. Considering the loss as a random variable, we may calculate the standard deviation (volatility) of its distribution. Nobel laureate in economics, Harry Markowitz in 1952 (see \cite{Markowitz1952}) assumed that volatility to be modelled by a normal distribution.
 
 
-\begin{figure}[!h]
+Other risk measures are expressed in terms of loss distribution percentiles. An upper percentile of the loss distribution is called \textit{Value-at-Risk} (here $\mbox{VaR}_\beta$)\footnote{$\mbox{VaR}_\beta$ is the percentile of the loss distribution.}. For instance, with probability $95\%$, the loss is less than $\mbox{VaR}_{0.95}$. The popularity of $\mbox{VaR}_\beta$ is mostly related to being a simple way to understand high loss representations. $\mbox{VaR}_\beta$ may be estimated and managed quite efficiently, when the underlying risk factors are normally (log-normally) distributed.
+
+An alternative risk measure of is known as the \textit{Conditional Value-at-Risk} ($\mbox{CVaR}_\beta$)\footnote{$\mbox{CVaR}_\beta$ is the average loss in the $100(1-\beta)$\% worst case scenarios.}. The $\mbox{CVaR}_\beta$ risk measure is closely related to $\mbox{VaR}_\beta$. For continuous distributions, $\mbox{CVaR}_\beta$ is defined as the conditional expected loss, under the condition that it exceeds $\mbox{VaR}_\beta$, see Rockafellar and Uryasev (see \cite{RockafellarUryasev2001}). For continuous distributions, this risk measure is also known as \emph{Expected Shortfall}, \textit{Mean Excess Loss}, \textit{Mean Shortfall}, or \textit{Tail Value-at-Risk}.
+
+
+\begin{figure}[!ht]
 	\centering
 	\includegraphics{figures/VarCvar.pdf}
 	\caption{Portfolio Loss Distribution, VaR and CVaR.}
@@ -21,14 +24,15 @@ An alternative measure of losses is another percentile risk measure which is cal
 \end{figure}
 
 \begin{remark}\normalfont\label{re:Normal}
-If the loss distribution of a portfolio $x$ is normal, it follows that both $\mbox{VaR}_\beta$ and $\mbox{CVaR}_\beta$ can be rewritten by
-\[
-	\mu(x)+c\sigma(x)
-\]
-where $\mu(x)$ and $\sigma(x)$ denote the mean and volatility of the loss associated with portfolio $x$, and $c$ is a constant (see \cite[Chapter 2]{Roncalli2014}). If the portfolio manager has very optimistic forecasts, component $\mu(x)$ may substantially reduce the risk measure. This explains why omitting the mean component is standard practice in the asset management industry.
+
+	Since loss may be seen as negative return, if the loss distribution of a portfolio $x$ is normal, it follows that both $\mbox{VaR}_\beta$ and $\mbox{CVaR}_\beta$ may be rewritten by
+	\[
+		-\mu(x)+c\sigma(x)
+	\]
+	where $\mu(x)$ and $\sigma(x)$ denote the return mean value and volatility,  associated with portfolio $x$, and $c$ is a constant (see \cite[Chapter 2]{Roncalli2014}). If the portfolio manager has very optimistic forecasts, component $\mu(x)$ may reduce the risk measure substantially. This explains why omitting the mean component has been adopted as a standard practice by the asset management industry.
 \end{remark}
 % \begin{example}\normalfont
-% 	We consider three stocks $A$, $B$ and $C$ whose current prices are respectively $\$ 15.00$, $\$ 25.00$ and $\$ 30.00$. We assume that their expected returns are equal to $30$ bps\footnote{1 bps or one basis point is equivalent to
+% 	We consider three stocks $A$, $B$ and $C$ whose current prices are respectively $\$ 15.00$, $\$ 25.00$ and $\$ 30.00$. We assume that their expected returns equals $30$ bps\footnote{1 bps or one basis point is equivalent to
 % 		0.01\% (the hundredth part of 1\%) or 0.0001 in decimal form.}, $50$ bps and $20$ bps on a daily basis and their daily volatilities are $3\%$, $2\%$, and $1\%$ respectively. The asset correlation matrix is given by
 % 	\[
 % 		\rho = \left(
@@ -76,29 +80,29 @@ where $\mu(x)$ and $\sigma(x)$ denote the mean and volatility of the loss associ
 
 \section{Portfolio optimization}
 
-In this section we present some ways to build a portfolio. In a universe of $n$ assets let $x^\top = (x_1, x_2, \dots, x_n)$ be a portfolio and denoting by $R_i$ the return of asset $i$. If $R^\top=(R_1, R_2, \dots, R_n)$  is the random vector of asset returns then the return of portfolio $x$ is given by:
+In this section we present some ways to build a portfolio. In a universe of $n$ assets let $x^\top = (x_1, x_2, \dots, x_n)$ be a portfolio and by $R_i$ denote the return of asset $i$. If $R^\top=(R_1, R_2, \dots, R_n)$  is the random vector of assets, then the return of the portfolio $x$ is given by:
 \[
 	R(x) = x_1R_1+x_2R_2+\cdots x_nR_n = x^\top R.
 \]
-If we denote by $\mu$ and $\Sigma$ the vector of expected returns and the covariance matrix of asset returns respectively, we deduce that the expected return of portfolio $x$ is equal to:
+If we denote by $\mu$ and $\Sigma$ the vector of expected returns and the covariance matrix of asset returns respectively, we deduce that the expected return of portfolio $x$ equals:
 \[
-	\mu(x) = x^\top \mu
+	\mu(x) = x^\top \mu.
 \]
-whereas its variance is given by:
+Its variance is given by:
 \[
 	\sigma^2(x) = x^\top \Sigma x.
 \]
-The mean-variance portfolio (MVP) of Markowitz (see \cite{Markowitz1952}) consists in maximizing the expected return $\mu(x)$ for a fixed value $\nu$ of the volatility $\sigma(x)$. This can be achieved by solving the problem:
+The mean-variance portfolio (MVP) of Markowitz (see \cite{Markowitz1952}), consists of maximizing the expected return $\mu(x)$ for a fixed value $\nu$ of the volatility $\sigma(x)$, achieved by solving the problem:
 \begin{eqnarray}\label{prob:MVP}
 	\min_{x} \, \{- \mu(x)\}, \\
 	\mbox{s.t. }\left\{
 	\begin{aligned}\nonumber
-		\sigma^2(x) = \nu, & \\
-		\mathbf{1}^\top x=1       &
+		\sigma^2(x) = \nu,  & \\
+		\mathbf{1}^\top x=1 &
 	\end{aligned}
 	\right.
 \end{eqnarray}
-where $\textbf{1}^\top =(1,1,\dots,1)$, and the condition $\mathbf{1}^\top x=1$ means that the capital is fully invested.
+where $\textbf{1}^\top =(1,1,\dots,1)$. The condition $\mathbf{1}^\top x=1$ means that the capital is fully invested.
 
 A portfolio optimization  problem is defined when we want to minimize (or maximize) a performance measure subject to a set of constraints. Here are some examples of performance measures and constraints:
 
@@ -111,10 +115,10 @@ A portfolio optimization  problem is defined when we want to minimize (or maximi
 		            \[
 			            \mbox{SR}(x) = \frac{x^\top \mu - r_f}{\sigma(x)}
 		            \]
-		            where $r_f$ is the risk-free rate (e.g. interest rate on a Treasury bill);
+		            where $r_f$ is the risk-free rate (e.g. treasury bill interest rate);
 		      \item Information Ratio (IR): Sharpe Ratio with $r_f=0$;
-		      \item $\mbox{VaR}_\beta$ (Value at Risk): quantile of the loss;
-		      \item $\mbox{CVaR}_\beta$ (Conditional Value at Risk): expected value of the loss above some quantile.
+		      \item $\mbox{VaR}_\beta$ (Value at Risk): loss quantile;
+		      \item $\mbox{CVaR}_\beta$ (Conditional Value at Risk): expected loss value above $\mbox{VaR}_\beta$.
 	      \end{itemize}
 \end{itemize}
 
@@ -124,40 +128,39 @@ A portfolio optimization  problem is defined when we want to minimize (or maximi
 		      \item Capital constraint: $\textbf{1}^\top x=1$;
 		      \item Long-only constraint: $x\geq0$;
 		      \item Self-financial constraint: $\textbf{1}^\top x=0$;
-		      \item Holding constraint: $\mathbf{I}\leq x\leq \mathbf{J}$ where $\mathbf{I},\mathbf{J}\in\R^n$ are lower and upper bounds of the asset positions, respectively.
+		      \item Holding constraint: $\mathbf{I}\leq x\leq \mathbf{J}$ where $\mathbf{I},\mathbf{J}\in\R^n$ are lower and upper portfolio bounds.
 		      \item Leverage constraint: $\|x\|_1\leq K$.
 	      \end{itemize}
 \end{itemize}
 
 Some known portfolio optimization problems are:
 
-\noindent\textbf{Global Minimum Variance Portfolio (GMVP)}
+\noindent\textbf{Minimum Variance Portfolio (MVP)}
 
-Minimize variance with fully capital invested
-\begin{eqnarray}\label{prob:GMVP}
+Minimize variance with fully invested capital
+\begin{eqnarray}\label{eq:MVP}
 	\min_{x} \,\big\{x^\top \Sigma x\big\}, \\
 	\mbox{s.t. }\left\{
-	\begin{aligned}\nonumber
+	\begin{aligned}
 		\mathbf{1}^\top x=1 \\
 	\end{aligned}
-	\right\}.
+	\right\}.\nonumber
 \end{eqnarray}
 
 \noindent\textbf{Maximum Sharpe Ratio Portfolio (MSRP)}
 
-Maximize Sharpe ratio with self-financial constraint and leverage restriction.
-\begin{eqnarray}\label{prob:MSRP}
+Maximize Sharpe ratio with self-financial constraints
+\begin{eqnarray*}
 	\max_{x} \,\big\{\mbox{SR}(x)\big\}, \\
 	\mbox{s.t. }\left\{
 	\begin{aligned}\nonumber
 		\mathbf{1}^\top x=0, & \\
-		\|x\|_1\leq K.
+		\|x\|_1\leq K,
 	\end{aligned}
 	\right.
-\end{eqnarray}
-
-We can also combine performances and constraints like this example:
-\begin{eqnarray}\label{prob:General}
+\end{eqnarray*}
+the latter constraint being a leverage restriction. Performances and constraints may also be combine as
+\begin{eqnarray*}
 	\min_{x} \,\big\{\lambda \mbox{CVaR}_\beta(x) - \mu(x)\big\}, \\
 	\mbox{s.t. }\left\{
 	\begin{aligned}\nonumber
@@ -165,84 +168,179 @@ We can also combine performances and constraints like this example:
 		\|x\|_1\leq K.
 	\end{aligned}
 	\right.
-\end{eqnarray}
-where $\lambda$ is a parameter that controls how risk-averse the investor is. 
+\end{eqnarray*}
+Here, $\lambda$ is a parameter controlling the investor risk-aversity.
 
-Furthermore, we can look at portfolio optimization problems as a multi-objective problem: Let $f:\R^n\to\R^2$ be the function $f(x)= \big(\mathcal{P}(x), \mathcal{R}(x)\big)$, where $\mathcal{P}(x)$ is a performance measure (that we want to minimize) of portfolio $x$ and $\mathcal{R}(x)$ is a risk measure of $x$. We want to find a solution to problem
-\begin{eqnarray}\label{prob:Vector}
+Furthermore, we may consider portfolio optimization problems as multi-objective problems: Let $f:\R^n\to\R^2$ be the function $f(x)= \big(\mathcal{P}(x), \mathcal{R}(x)\big)$, where $\mathcal{P}(x)$ is a performance measure (that we want to minimize) of portfolio $x$ and $\mathcal{R}(x)$ is a risk measure of $x$. We want to solve the problem
+\begin{eqnarray*}
 	\min_{x} \,\Big\{f(x)= \big(\mathcal{P}(x), \mathcal{R}(x)\big)\Big\}, \\
 	\mbox{s.t. }\left\{
 	\begin{aligned}\nonumber
 		\mathbf{1}^\top x=1.
 	\end{aligned}
 	\right.
-\end{eqnarray}
+\end{eqnarray*}
 
-In all these problems we want to optimize a performance measure, we will present a new approach where the objective will be the risk allocation.
+In all these problems we want to optimize a performance measure. In the remainder of this chapter we present a new approach with a risk allocation perspective.
+
 
 \section{Risk Parity}
 
-Markowitz’s portfolio has never been fully embraced by practitioners, among other reasons because it only considers the risk of the portfolio as a whole and ignores the diversification risk (i.e., concentrates too much risk in few assets, this was observed in the 2008 financial crisis): one solution to avoid this problem is the risk parity portfolio.
+Markowitz’s portfolio was never fully embraced by practitioners, among other reasons since, considers only the overall risk of the portfolio, disregarding diversification risks (i.e., concentrates too much risk in few assets, as observed during the 2008 financial crisis). In order to avoid this problem, one solution are to consider the risk parity portfolio.
 
-Risk parity is an approach to portfolio management that focuses on allocation of risk rather than allocation of capital. The risk parity approach asserts that when asset allocations are adjusted to the same risk level, the portfolio can achieve a higher Sharpe ratio and can be more resistant to market downturns.
+Risk parity is an approach to portfolio management that focuses on risk, rather than capital allocation. The risk parity approach asserts that, when asset allocations are adjusted to the same risk level, the portfolio may achieve a higher Sharpe ratio as well as being more resistant to market downturns.
 
-While the minimum variance portfolio tries to minimize the variance (with the disadvantage that a few assets may be the ones contributing most to the risk), the risk parity portfolio distributes the weights so that the risk contribution of each asset (or asset class, such as bonds, stocks, real estate, etc.) is the same.
+While the minimum variance portfolio  (MVP) tries to minimize the variance (with the disadvantage the portfolio risk may be concentrated in only a few assets), the risk parity portfolio distributes the weights, so that the risk contributions of all assets (or asset class, such as bonds, stocks, real estate, etc.) are the same.
 
-To define a risk-based allocation strategies it is necessary define how the risk of an asset affects the risk of the portfolio. 
-Let $x^\top=(x_1,x_2,\dots,x_n)$ be a portfolio with $n$ assets and $\mathcal{R}(x)$ be a differentiable, homogeneous risk measure of $x$. Since $\mathcal{R}(x)$ is homogeneous, we have
+In order to define a risk-based allocation strategy, it is necessary to define how the risk of each asset affects the overall risk of the portfolio.
+Let $x^\top=(x_1,x_2,\dots,x_n)$ be a portfolio with $n$ assets and $\mathcal{R}(x)$ be a differentiable, homogeneous risk measure of $x$. We have
 \[
-\mathcal{R}(x)=\frac{d}{d\lambda}\mathcal{R}(\lambda x)=\sum_{i=1}^n x_i \frac{\partial \mathcal{R} (x)}{\partial x_i}
+	\mathcal{R}(x)=\frac{d}{d\lambda}\mathcal{R}(\lambda x)=\sum_{i=1}^n x_i \frac{\partial \mathcal{R} (x)}{\partial x_i}.
 \]
-we can define the risk contribution of the asset $i$ by
-$\mathcal{RC}_i$, where
+We define the risk contribution of asset $i$  by
 \[
-\mathcal{RC}_i(x)= x_i \frac{\partial \mathcal{R}(x)}{\partial x_i}.
+	\mathcal{RC}_i(x)= x_i \frac{\partial \mathcal{R}(x)}{\partial x_i}.
 \]
-Therefore, the risk can be written as follows
+Therefore, the risk may be written as follows
 \[
-\mathcal{R}(x)=\sum_{i=1}^n \mathcal{RC}_i(x)
+	\mathcal{R}(x)=\sum_{i=1}^n \mathcal{RC}_i(x)
 \]
 which is known as \textbf{Euler's Allocation Principle}.
 
-Volatility and $\mbox{CVaR}_\beta$  satisfy the properties required by the risk measure, $\mathcal{R}$, defined above. However, $\mbox{VaR}_\beta$ satisfies these properties only in the Gaussian case. When asset returns have a Normal Distribution, by simplicity (see Remark \ref{re:Normal}), we have that
+The volatility as well as $\mbox{CVaR}_\beta$  satisfies the properties required by the risk measure, $\mathcal{R}$, defined above. However, $\mbox{VaR}_\beta$ satisfies these properties only in the Gaussian case. When asset returns follows a Normal Distribution, by Remark \ref{re:Normal}, we have that
 $\mathcal{R}(x)=\sigma(x)=\sqrt{x^\top\Sigma x}$, it follows that
 \[
-\mathcal{RC}_i(x)= x_i \frac{\partial \sigma(x)}{\partial x_i}=\frac{x_i (\Sigma x)_i}{\sqrt{x^\top\Sigma x }}.
+	\mathcal{RC}_i(x)= x_i \frac{\partial \sigma(x)}{\partial x_i}=\frac{x_i (\Sigma x)_i}{\sqrt{x^\top\Sigma x }}.
 \]
 
-It may be interesting for the investor to choose different risks for different assets, in this case the investor choose the percentage of risk that each asset should have in the portfolio, that is,
+It may be interesting for the investor to choose different risk levels for different assets. In this case the investor choose the percentage of risk, $b_i$, that each asset should have in the portfolio, that is,
 \begin{equation}\label{eq:RBP}
 	\mathcal{RC}_i(x)=b_i\mathcal{R}(x),
 \end{equation}
-where $b_i$ represents the risk contribution that asset $i$ will have in the portfolio. Certainly $b_i\geq 0$ for all $i$ and
-${\bf 1}^\top b =1$, with $b^\top=(b_1, b_2, \dots, b_n)$. A portfolio distribution based in relation \eqref{eq:RBP} is called \textit{risk budgeting portfolio} (RBP), when $b_i=1/n$, for all $i$ the distribution is called \textit{risk parity portfolio} (RPP) or \textit{equal risk portfolio} (ERP).
+$b_i\geq 0$ for all $i$, and
+${\bf 1}^\top b =1$, with $b^\top=(b_1, b_2, \dots, b_n)$. A portfolio distribution based on equation \eqref{eq:RBP} is called a \textit{risk budgeting portfolio} (RBP). When $b_i=1/n$, for all $i$, the distribution is called \textit{risk parity portfolio} (RPP) or \textit{equal risk portfolio} (ERP).
 
-In general, find the risk budgeting portfolio consists to solve the following non-linear system
-\begin{eqnarray}\label{eq:SisNLin}
-\mathcal{RC}_i(x)=b_i\mathcal{R}(x), \\
+In general, find the risk budgeting portfolio consists in solving the following non-linear system
+\begin{eqnarray*}
+	\mathcal{RC}_i(x)=b_i\mathcal{R}(x), \\
 	\mbox{s.t. }\left\{
 	\begin{aligned}\nonumber
-b_i \geq 0, \\
-x_i \geq 0, \\
-{\bf 1}^\top b =1, \\
-{\bf 1}^\top x =1.
+		b_i \geq 0,        \\
+		x_i \geq 0,        \\
+		{\bf 1}^\top b =1, \\
+		{\bf 1}^\top x =1.
+	\end{aligned}
+	\right.
+\end{eqnarray*}
+
+In 2012, Kaya and Lee (see \cite{KayaLee2012}) show that, in the Gaussian case, the risk budgeting portfolio may be found solving the optimization problem
+\begin{eqnarray}
+	\min_{x\geq \textbf{0}}\, \{-b^\top \ln(x)\}; \label{eq:RPP}\\
+	\mbox{s.t. }\left\{ \nonumber
+	\begin{aligned}\nonumber
+		\sigma^2(x)\leq \sigma_0, \\
+		{\bf 1}^\top x =1,
 	\end{aligned}
 	\right.
 \end{eqnarray}
-
-In 2012 Kaya and Lee (see \cite{KayaLee2012}) show that, in Gaussian case, the risk budgeting portfolio can be found by solving the problem
-\begin{eqnarray}\label{eq:MinProb}
-\min_{x\geq \textbf{0}}\, \{-b^\top \ln(x)\}; \\
-	\mbox{s.t. }\left\{
-	\begin{aligned}\nonumber
-\sigma^2(x)\leq \sigma_0,\\
-{\bf 1}^\top x =1.
-	\end{aligned}
-	\right.
-\end{eqnarray}
-where, $\sigma_0$ is a volatility target.
+$\sigma_0$ being a volatility target.
 
 
+\section{A Backtest Study}
+
+In this section we present a backtest study of a portfolio build with the 10 biggest companies on the brazilian market: Ambev S.A. (ABEV3), B3 S.A. (B3SA3), Banco do Brasil S.A. (BBAS3), Banco Bradesco S.A. (BBDC4), Itaúsa S.A. (ITSA3), Itaú Unibanco S.A. (ITUB4), Lojas Renner S.A. (LREN3), Petróleo Brasileiro S.A (PETR4), Vale S.A. (VALE3) and WEG S.A. (WEGE3), in parentheses we have the tickers of each company.  We did a backtest, building 2 portfolios with monthly rebalance. One was the minimum variance portfolio (MVP), and the other the risk parity portfolio (RPP),  obtained solving optimization problems \eqref{eq:MVP} and \eqref{eq:RPP}, respectively. Data pertaining to the period between January 2016  and June 2022, was taken from Yahoo Finance (\url{http://finance.yahoo.com}). For rebalancing, the volatilities were calculated using data from the previous 12 months. 2016 year data was used only for past volatilities calculations.
+
+Generally, MVP is rarely used in practice, one of the reasons resides in the fact that the weights (and consequently the risks), may be concentrated in a few assets. Figure \ref{fig:totalRiskMVP} shows the weight distribution as well as the risk contribution of stocks during the MVP backtest study. We note that the MVP concentrates capital in few assets and consequently also concentrates risk in these assets.
+
+% \begin{figure}[H]
+% 	%\begin{adjustwidth}{2.2cm}{2.2cm}
+% 	\begin{subfigmatrix}{3}
+% 		\subfigure[January]{\includegraphics{figures/RiskContribEqual101.pdf}}
+% 		\subfigure[February]{\includegraphics{figures/RiskContribEqual102.pdf}}
+% 		\subfigure[March]{\includegraphics{figures/RiskContribEqual103.pdf}}
+% 		\subfigure[April]{\includegraphics{figures/RiskContribEqual104.pdf}}
+% 		\subfigure[May]{\includegraphics{figures/RiskContribEqual105.pdf}}{}
+% 		\subfigure[June]{\includegraphics{figures/RiskContribEqual106.pdf}}
+% 	\end{subfigmatrix}
+% 	\caption{Risk Contributions of EWP.}
+% 	\label{fig:condProj1}
+% 	%\end{adjustwidth}
+% \end{figure}
 
 
+% \begin{figure}[H]
+% 	%\begin{adjustwidth}{2.2cm}{2.2cm}
+% 	\begin{subfigmatrix}{3}
+% 		\subfigure[January]{\includegraphics{figures/RiskContrib101.pdf}}
+% 		\subfigure[February]{\includegraphics{figures/RiskContrib102.pdf}}
+% 		\subfigure[March]{\includegraphics{figures/RiskContrib103.pdf}}
+% 		\subfigure[April]{\includegraphics{figures/RiskContrib104.pdf}}
+% 		\subfigure[May]{\includegraphics{figures/RiskContrib105.pdf}}
+% 		\subfigure[June]{\includegraphics{figures/RiskContrib106.pdf}}
+% 	\end{subfigmatrix}
+% 	\caption{Risk Contributions of RPP.}
+% 	\label{fig:condProj1}
+% 	%\end{adjustwidth}
+% \end{figure}
+
+
+\begin{figure}[H]
+	%\begin{adjustwidth}{2.2cm}{2.2cm}
+	\begin{subfigmatrix}{2}
+		\subfigure[Weigths]{\includegraphics{figures/totalWeigthMVP.pdf}}
+		\subfigure[Risks]{\includegraphics{figures/totalRiskMVP.pdf}}
+	\end{subfigmatrix}
+	\caption{Monthly distribution of MVP.}
+	\label{fig:totalRiskMVP}
+	%\end{adjustwidth}
+\end{figure}
+
+
+A RPP has the weights distributed with the purpose of having a uniform risk distribution, Figure \ref{fig:totalRiskPPP} shows the distribution of weights and risks in our backtest study.
+
+\begin{figure}[H]
+	%\begin{adjustwidth}{2.2cm}{2.2cm}
+	\begin{subfigmatrix}{2}
+		\subfigure[Weigths]{\includegraphics{figures/totalWeigthRPP.pdf}}
+		\subfigure[Risks]{\includegraphics{figures/totalRiskRPP.pdf}}
+	\end{subfigmatrix}
+	\caption{Monthly distribution of RPP.}
+	\label{fig:totalRiskPPP}
+	%\end{adjustwidth}
+\end{figure}
+
+The total return of the RPP was greater than the MVP in the period studied. While MVP had a total return of 52\%, the accumulated RPP return was 119\% (44\% higher than the MVP).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{figures/retornoRPPMVP.pdf}
+	\caption{MVP and RPP accumulated returns: January 2017 $-$ June 2022.}
+	\label{fig:retornoRPPMVP}
+\end{figure}
+
+The MVP volatility was slightly smaller than the RPP. However, considering the zero risk-free rate, the RRP Sharpe ratio was bigger than the MVP.
+
+\input{tables/RPP}
+
+
+We remind that after 2020, due to the COVID-19 pandemic, the volatility of all assets has exploded, so we separate two period in our study, from 2017 until 2019 and after 2020. We may observe that the RPP performed much better (135\% gain) than the MVP (79\% gain) in the period between January 2017 and December 2019. Besides, MVP had a great annualized Sharpe ratio of 1.20, however, lower than RPP annualized Sharpe ratio (1.58). 
+
+\input{tables/RPP1}
+
+\begin{figure}[H]
+	%\begin{adjustwidth}{2.2cm}{2.2cm}
+	\begin{subfigmatrix}{2}
+		\subfigure[January 2017 $-$ December 2019.]{\includegraphics{figures/retornoRPPMVP1.pdf}}
+		\subfigure[January 2020 $-$ June 2022.]{\includegraphics{figures/retornoRPPMVP2.pdf}}
+	\end{subfigmatrix}
+	\caption{MVP and RPP accumulated returns.}
+	\label{fig:retornoRPPMVP12}
+	%\end{adjustwidth}
+\end{figure}
+
+From January 2020 to June 2022, MVP exhibited an accumulated $15.2\%$ loss, while RPP reduced the loss to only $6.8\%$. Despite the loss in the period, the RPP improved the protection of the invested capital.
+
+\input{tables/RPP2}
+
+In our study, the RPP had a superior performance when compared to the MVP, both in high and low moments. Clearly, this study is not conclusive, but simply an example of the use of Algorithm~\ref{Alg:GeneralSeach}.
 

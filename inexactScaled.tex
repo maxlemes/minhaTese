@@ -1,8 +1,10 @@
 \chapter{Inexact scaled gradient method} \label{chap:SGM}
+\thispagestyle{empty}
+
 
 The aim of this chapter is to present an  inexact  version of SGP method, which   inexactness are in two distinct senses.  First,  we  use  a version of the inexactness scheme introduced in \cite{BirginMartinezRaydan2003},  and also a variation of the one appeared in \cite{VillaSalzo2013},  to compute an inexact projection  onto the feasible  set   allowing an appropriate  relative error tolerance. Second,  using the  inexactness  conceptual scheme for  nonmonotones    line  search   introduced  in  \cite{GrapigliaSachs2017, SachsSachs2011}, a step size is computed  to define the next iterate.  The statement of the  conceptual algorithm is as follows.\\
 
-\begin{algorithm}[H]
+\begin{algorithm}[H]\footnotesize
 	\addtocontents{loa}{\def\string\figurename{Algorithm}}
 	%\begin{algorithmic}[h]
 	\begin{description}

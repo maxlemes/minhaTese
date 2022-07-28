@@ -33,9 +33,10 @@ ss4 <- drive_get("ibra")
 
 #----------------- SELECIONAR AS ACOES DO IBRA 
 
-i = 2
 
 file <- list.files(path="data-raw/", pattern=".csv")
+
+i = 4
 
 file <- file[i]
 
@@ -60,7 +61,7 @@ df$Fatia <- df$Fatia/100
 df[nrow(df),"Fatia"] <- 1-sum(df[1:(nrow(df)-1),"Fatia"])
 
 df <- df %>%
-  arrange(Ticker)
+  arrange(yahoo)
 
 #-------------------- ORGANIZAR A PLANILHA COTACOES
 

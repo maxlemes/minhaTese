@@ -1,37 +1,39 @@
 rm(list = ls())
+
 library(ggplot2)
 library(tikzDevice)
 library(hrbrthemes)
+library(paletteer)
+library(PortfolioAnalytics)
 
 myColors <- RColorBrewer::brewer.pal(10,"Spectral") 
 
-load("data/RPP.rda")
-RPP$EWP <- RPP$EWP-1
-RPP$RPP <- RPP$RPP -1
-gdf <- RPP
+load("data/RPP2.rda")
 
-plot(gdf, line)
+gdf <- RPP2
+#plot(gdf, bt, line)
 
 # ----------  gráfico das cotações --------------------------------------
 pgdf <- ggplot(gdf, aes(x=Index)) +
-  geom_line(aes(y=RPP, color = "RPP"), size=1)+
-  geom_line(aes(y=EWP, color = "EWP"), size=1)+
+  geom_line(aes(y=RPP, color = "RPP"), size=1.5)+
+  geom_line(aes(y=MVP, color = "MVP"), size=1.5)+
   xlab("")+
   ylab("")+
  # ylim(-0.1,0.2)+
-  scale_colour_brewer(palette="Set2", direction = 1)+
+  paletteer::scale_colour_paletteer_d("nbapalettes::kings_city", direction=-1) +
+  #scale_colour_brewer(palette="Dark2", direction = 1)+
   theme_minimal()+
   labs(title = "",
        colour = "")+
   #scale_y_continuous(breaks=c(0,1,2), labels = c("\u2113", "\u2113", "\u2113"))+
   #scale_y_continuous(labels = scales::percent_format())+
  # scale_x_date(date_breaks = "1 day", date_labels = "%b")+
-  theme(legend.position="bottom", )
+  theme(legend.position="bottom")
 
 pgdf
 
 # cria o tikz do gráfico das cotações
-tikz("../tikz/retornoRPP.tex",
+tikz("../tikz/retorno/retornoRPPMVP2.tex",
      standAlone = TRUE, 
      bg = "transparent",
      width = 6,
@@ -39,41 +41,45 @@ tikz("../tikz/retornoRPP.tex",
 
 pgdf
 dev.off()
+
 #--------------------------------------------------------------------------
 # ----------  gráfico do Risco Total  -------------------------------------
 
-load("data/RiskContributions.rda")
+load("data/RiskContributionsRPP.rda")
+load("data/RiskContributionsMVP.rda")
+df <- dg
 
-df <- df[,c(1,seq(from = 70,to = 201, by = 2))]
+dp <- df[,c(2:68)]
+dr <- df[,c(2,70:ncol(df))]
 
-datas <- format(seq(as.Date("2016-01-01"), as.Date("2022-07-01"), by="months"), format="%Y-%m-%d")
+datas <- format(seq(as.Date("2017-01-01"), as.Date("2022-06-01"), by="months"), format="%b%y")
 
-colnames(df) <- c("Stocks", datas[13:78])
+colnames(dp) <- c("Stocks", datas)
+colnames(dr) <- c("Stocks", datas)
 
-df[,1] <- lista <- c("ABEV3", "BBDC4", "ITUB4", "PETR4","VALE3")
+dt <- dr
 
-
-gdf <- reshape2::melt(df,  id.vars = 'Stocks', variable.name = 'Data')
+gdf <- reshape2::melt(dt,  id.vars = 'Stocks', variable.name = 'Data')
 
 gdf <- gdf %>%
   arrange(Stocks)
 
-gdf$Data <- as.Date(gdf$Data)
+#gdf$Data <- as.Date(gdf$Data)
 
 pgdf <- ggplot(gdf[order(gdf$Stocks, decreasing = F),], aes(fill=Stocks, y=value, x=Data)) + 
   geom_bar(position="stack", stat="identity") +
   #scale_fill_viridis(discrete = T) +
   theme_minimal() +
-  scale_fill_brewer(palette="Spectral", name=NULL, direction = -1)+
+  scale_fill_brewer(palette="RdBu", name=NULL, direction = -1)+
   ylab("")+
   xlab("")+
-  theme(axis.text.x = element_text(angle = 0, hjust = 1, vjust = 0.5))+
+  theme(axis.text.x = element_text(angle = 90, hjust = 2, vjust = 0.5, size = 5))+
   theme(legend.position="bottom", )
 
 pgdf
 
 # cria o tikz do gráfico das cotações
-tikz("../tikz/totalRisk.tex",
+tikz("../tikz/total/totalRiskRPP.tex",
      standAlone = TRUE, 
      bg = "transparent",
      width = 6,
@@ -93,20 +99,22 @@ colnames(df) <- c("Stocks", datas)
 
 df[,1] <- lista <- c("ABEV3", "BBDC4", "ITUB4", "PETR4","VALE3")
 
-i =  2 # do 2 ao 7
+i <- 7
   gdf <- df[,c(1,i)]
   colnames(gdf)[2] <- c("value")
   
   pgdf <- ggplot(gdf, aes(x=Stocks, y=value)) + 
-    geom_bar(position="stack", stat="identity", fill = "#3288BD") +
+    geom_bar(position="stack", stat="identity", fill=myColors[i])+ #fill = "#3288BD") +
     #scale_fill_viridis(discrete = T) +
     theme_ipsum() +
-    scale_fill_brewer(palette="Blues")+
+    #scale_fill_brewer(palette="Blues")+
     ylab("")+
     xlab("")+
     theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
   
   pgdf
+
+
   
   # cria o tikz do gráfico das cotações
   tikz(paste0("../tikz/RiskContrib10",i-1,".tex"),
