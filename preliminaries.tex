@@ -3,12 +3,14 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this chapter, we introduce  some notation and results used throughout our presentation. We also introduce the concept of risk measure that will be used in Chapter \ref{chap:App}.
+In this chapter, we introduce  some notation and results used throughout our presentation.
 
-
-
-First we  consider the  index set  ${\mathbb{N}}:=\{0,1,2,\ldots\}$,  the usual inner  product  $\langle \cdot,\cdot \rangle$ in $\mathbb{R}^n$, and the associated Euclidean norm    $\|\cdot\|$.
-Let  $f:\mathbb{R}^n \to \mathbb{R}$ be a differentiable function and $C \subseteq \mathbb{R}^n$. The  gradient $\nabla f$ of $f$ is said to be {\it Lipschitz continuous} in $C$ with constant $L>0$ if $\|\nabla f(x)-\nabla f(y)\|\leq L \|x-y\|$, for all~$x, y\in C$. Combining this definition with the fundamental theorem of calculus, we obtain the following result whose proof can be found in \cite[Proposition A.24]{Bertsekas1999}.
+First, we  consider the  index set  ${\mathbb{N}}:=\{0,1,2,\ldots\}$,  the usual inner  product  $\langle \cdot,\cdot \rangle$ in $\mathbb{R}^n$, and the associated Euclidean norm    $\|\cdot\|$.
+Let  $f:\mathbb{R}^n \to \mathbb{R}$ be a differentiable function and $C \subseteq \mathbb{R}^n$. The  gradient $\nabla f$ of $f$ is said to be {\it Lipschitz continuous} in $C$ with constant $L>0$ if
+$$
+	\|\nabla f(x)-\nabla f(y)\|\leq L \|x-y\|,
+$$
+for all~$x, y\in C$. Combining this definition with the Fundamental Theorem of Calculus, we obtain the following result whose proof may be found in \cite[Proposition A.24]{Bertsekas1999}.
 
 \begin{lemma} \label{Le:derivlipsch}
 	Let $f:\mathbb{R}^n \to \mathbb{R}$ be a differentiable function and $C \subseteq \mathbb{R}^n$. Assume that $\nabla f$  is Lipschitz continuous in C with constant $L>0$. Then,
@@ -44,12 +46,12 @@ Let us recall the the concept of  sequence  quasi-Fej\'er  monotone to a set, in
 	for    all $k\in \mathbb{N}$.
 \end{definition}
 
-The following lemma is useful to study the  quasi-Fej\'er  monotone sequence, its prove can be found in \cite[Lemma 2.2.2]{PolyakLivro1987}.
+The following lemma is useful to study the  quasi-Fej\'er  monotone sequence, its prove may be found in \cite[Lemma 2.2.2]{PolyakLivro1987}.
 \begin{lemma} \label{le:pl}
 	Let $(\alpha_k)_{k\in\mathbb{N}}$, $(\eta_k)_{k\in\mathbb{N}}$ and $(\epsilon_k)_{k\in\mathbb{N}}$ be a sequences in $[0, +\infty)$  such that $\sum_{k\in \mathbb{N}}\eta_k<\infty$ and $\sum_{k\in \mathbb{N}}\epsilon_k<\infty$. Assume that $\alpha_{k+1}\leq (1 +\eta_k)\alpha_k+\epsilon_k$, for all $k\in {\mathbb N}$. Then, $(\alpha_k)_{k\in\mathbb{N}}$ converges.
 \end{lemma}
 
-The main property of  quasi-Fej\'er  monotone sequences is stated in the following. Its proof can be found in \cite[Proposition~3.2 and Theorem 3.3]{CombettesVu2013}. For sake of completeness, we include it here.
+The main property of  quasi-Fej\'er  monotone sequences is stated in the following. Its proof may be found in \cite[Proposition~3.2 and Theorem 3.3]{CombettesVu2013}. For sake of completeness, we include it here.
 
 \begin{theorem}\label{teo.qf}
 	Let $(y^k)_{k\in\mathbb{N}}$ be a sequence in $\mathbb{R}^n$ and   $(D_k)_{k\in\mathbb{N}}$ be  a sequence in ${\cal D}_{\mu}$ such that $\lim_{k\rightarrow\infty}D_k={\bar D}$.   If $(y^k)_{k\in\mathbb{N}}$ is quasi-Fej\'er  monotone to a nonempty set $W\subset  \mathbb{R}^n$ with respect to $(D_k)_{k\in\mathbb{N}}$ then,  for each  $w\in W$,    the sequence  $(\|y^{k}-w\|_{D_{k}})_{k\in\mathbb{N}}$ converges. Furthermore, $(y^k)_{k\in\mathbb{N}}$ is bounded and, if each  cluster point of $(y^k)_{k\in\mathbb{N}}$ belongs to $W$, then there exists ${\bar y}\in W$ such that $\lim_{k\rightarrow\infty}y^k={\bar y}$.

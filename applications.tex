@@ -8,12 +8,12 @@ In this section we discuss different ways of measuring the risk of a portfolio.
 	A portfolio with $n$ assets, $A_1, A_2, \dots, A_n$, is a vector $x^\top = (x_1, x_2, \dots, x_n)\in \R^n$, each coordinate $x_i$ being the weight of the capital invested in asset $A_i$.
 \end{definition}
 
-In financial science, Risk is the probability of losing capital. Considering the loss as a random variable, we may calculate the standard deviation (volatility) of its distribution. Nobel laureate in economics, Harry Markowitz in 1952 (see \cite{Markowitz1952}) assumed that volatility to be modelled by a normal distribution.
+In financial science, Risk is the probability of losing capital. Considering the loss as a random variable, we may calculate the standard deviation (volatility) of its distribution. Nobel laureate in economics, Harry Markowitz in 1952 (see \cite{Markowitz1952}) assumed volatility as a risk measure under the hypothesis that the returns has a normal distribution.
 
 
-Other risk measures are expressed in terms of loss distribution percentiles. An upper percentile of the loss distribution is called \textit{Value-at-Risk} (here $\mbox{VaR}_\beta$)\footnote{$\mbox{VaR}_\beta$ is the percentile of the loss distribution.}. For instance, with probability $95\%$, the loss is less than $\mbox{VaR}_{0.95}$. The popularity of $\mbox{VaR}_\beta$ is mostly related to being a simple way to understand high loss representations. $\mbox{VaR}_\beta$ may be estimated and managed quite efficiently, when the underlying risk factors are normally (log-normally) distributed.
+Other risk measures are expressed in terms of loss distribution percentiles. An upper percentile of the loss distribution is called \textit{Value-at-Risk} (here $\mbox{VaR}_\beta$)\footnote{$\mbox{VaR}_\beta$ is the percentile of the loss distribution.}. For instance, with probability $95\%$, the loss is smaller than $\mbox{VaR}_{0.95}$. The popularity of $\mbox{VaR}_\beta$ is mostly related to being a simple way to understand high loss representations. $\mbox{VaR}_\beta$ may be estimated and managed quite efficiently, when the underlying risk factors are normally (log-normally) distributed.
 
-An alternative risk measure of is known as the \textit{Conditional Value-at-Risk} ($\mbox{CVaR}_\beta$)\footnote{$\mbox{CVaR}_\beta$ is the average loss in the $100(1-\beta)$\% worst case scenarios.}. The $\mbox{CVaR}_\beta$ risk measure is closely related to $\mbox{VaR}_\beta$. For continuous distributions, $\mbox{CVaR}_\beta$ is defined as the conditional expected loss, under the condition that it exceeds $\mbox{VaR}_\beta$, see Rockafellar and Uryasev (see \cite{RockafellarUryasev2001}). For continuous distributions, this risk measure is also known as \emph{Expected Shortfall}, \textit{Mean Excess Loss}, \textit{Mean Shortfall}, or \textit{Tail Value-at-Risk}.
+An alternative risk measure is known as the \textit{Conditional Value-at-Risk} ($\mbox{CVaR}_\beta$)\footnote{$\mbox{CVaR}_\beta$ is the average loss in the $100(1-\beta)$\% worst case scenarios.}. The $\mbox{CVaR}_\beta$ risk measure is closely related to $\mbox{VaR}_\beta$. For continuous distributions, $\mbox{CVaR}_\beta$ is defined as the conditional expected loss, under the condition that it exceeds $\mbox{VaR}_\beta$, see Rockafellar and Uryasev (see \cite{RockafellarUryasev2001}). For continuous distributions, this risk measure is also known as \emph{Expected Shortfall}, \textit{Mean Excess Loss}, \textit{Mean Shortfall}, or \textit{Tail Value-at-Risk}.
 
 
 \begin{figure}[!ht]
@@ -25,7 +25,7 @@ An alternative risk measure of is known as the \textit{Conditional Value-at-Risk
 
 \begin{remark}\normalfont\label{re:Normal}
 
-	Since loss may be seen as negative return, if the loss distribution of a portfolio $x$ is normal, it follows that both $\mbox{VaR}_\beta$ and $\mbox{CVaR}_\beta$ may be rewritten by
+	Since loss may be seen as negative return, if the return of portfolio has a normal distribution, it follows that both $\mbox{VaR}_\beta$ and $\mbox{CVaR}_\beta$ may be rewritten by
 	\[
 		-\mu(x)+c\sigma(x)
 	\]
@@ -92,17 +92,16 @@ Its variance is given by:
 \[
 	\sigma^2(x) = x^\top \Sigma x.
 \]
-The mean-variance portfolio (MVP) of Markowitz (see \cite{Markowitz1952}), consists of maximizing the expected return $\mu(x)$ for a fixed value $\nu$ of the volatility $\sigma(x)$, achieved by solving the problem:
-\begin{eqnarray}\label{prob:MVP}
-	\min_{x} \, \{- \mu(x)\}, \\
+The minimum variance portfolio (MVP) of Markowitz (see \cite{Markowitz1952}), consists of minimize variance with fully invested capital, achieved by solving the problem:
+\begin{eqnarray}\label{eq:MVP}
+	\min_{x} \,\big\{x^\top \Sigma x\big\}, \\
 	\mbox{s.t. }\left\{
-	\begin{aligned}\nonumber
-		\sigma^2(x) = \nu,  & \\
-		\mathbf{1}^\top x=1 &
+	\begin{aligned}
+		\mathbf{1}^\top x=1. \\
 	\end{aligned}
-	\right.
+	\right.\nonumber
 \end{eqnarray}
-where $\textbf{1}^\top =(1,1,\dots,1)$. The condition $\mathbf{1}^\top x=1$ means that the capital is fully invested.
+where $\textbf{1}^\top =(1,1,\dots,1)$.
 
 A portfolio optimization  problem is defined when we want to minimize (or maximize) a performance measure subject to a set of constraints. Here are some examples of performance measures and constraints:
 
@@ -135,16 +134,17 @@ A portfolio optimization  problem is defined when we want to minimize (or maximi
 
 Some known portfolio optimization problems are:
 
-\noindent\textbf{Minimum Variance Portfolio (MVP)}
+\noindent\textbf{Global Mean Variance Portfolio (GMVP)}
 
-Minimize variance with fully invested capital
-\begin{eqnarray}\label{eq:MVP}
-	\min_{x} \,\big\{x^\top \Sigma x\big\}, \\
+Maximizing the expected return $\mu(x)$ for a fixed value $\nu$ of the volatility $\sigma(x)$
+\begin{eqnarray}\label{prob:MVP}
+	\min_{x} \, \{- \mu(x)\}, \\
 	\mbox{s.t. }\left\{
-	\begin{aligned}
-		\mathbf{1}^\top x=1 \\
+	\begin{aligned}\nonumber
+		\sigma^2(x) = \nu,  & \\
+		\mathbf{1}^\top x=1 &
 	\end{aligned}
-	\right\}.\nonumber
+	\right.
 \end{eqnarray}
 
 \noindent\textbf{Maximum Sharpe Ratio Portfolio (MSRP)}
@@ -186,7 +186,7 @@ In all these problems we want to optimize a performance measure. In the remainde
 
 \section{Risk Parity}
 
-Markowitz’s portfolio was never fully embraced by practitioners, among other reasons since, considers only the overall risk of the portfolio, disregarding diversification risks (i.e., concentrates too much risk in few assets, as observed during the 2008 financial crisis). In order to avoid this problem, one solution are to consider the risk parity portfolio.
+Markowitz’s portfolio was never fully embraced by practitioners, among other reasons since, considers only the overall risk of the portfolio, disregarding diversification risks (i.e., concentrates too much risk in few assets, which is undesirable as observed during the 2008 financial crisis). In order to avoid this problem, one solution are to consider the risk parity portfolio.
 
 Risk parity is an approach to portfolio management that focuses on risk, rather than capital allocation. The risk parity approach asserts that, when asset allocations are adjusted to the same risk level, the portfolio may achieve a higher Sharpe ratio as well as being more resistant to market downturns.
 
@@ -197,7 +197,7 @@ Let $x^\top=(x_1,x_2,\dots,x_n)$ be a portfolio with $n$ assets and $\mathcal{R}
 \[
 	\mathcal{R}(x)=\frac{d}{d\lambda}\mathcal{R}(\lambda x)=\sum_{i=1}^n x_i \frac{\partial \mathcal{R} (x)}{\partial x_i}.
 \]
-We define the risk contribution of asset $i$  by
+We define the risk contribution of asset $i$  as
 \[
 	\mathcal{RC}_i(x)= x_i \frac{\partial \mathcal{R}(x)}{\partial x_i}.
 \]
@@ -233,7 +233,7 @@ In general, find the risk budgeting portfolio consists in solving the following 
 	\right.
 \end{eqnarray*}
 
-In 2012, Kaya and Lee (see \cite{KayaLee2012}) show that, in the Gaussian case, the risk budgeting portfolio may be found solving the optimization problem
+Kaya and Lee (see \cite{KayaLee2012}) show that, in the Gaussian case, the risk budgeting portfolio may be found solving the optimization problem
 \begin{eqnarray}
 	\min_{x\geq \textbf{0}}\, \{-b^\top \ln(x)\}; \label{eq:RPP}\\
 	\mbox{s.t. }\left\{ \nonumber
@@ -248,7 +248,7 @@ $\sigma_0$ being a volatility target.
 
 \section{A Backtest Study}
 
-In this section we present a backtest study of a portfolio build with the 10 biggest companies on the brazilian market: Ambev S.A. (ABEV3), B3 S.A. (B3SA3), Banco do Brasil S.A. (BBAS3), Banco Bradesco S.A. (BBDC4), Itaúsa S.A. (ITSA3), Itaú Unibanco S.A. (ITUB4), Lojas Renner S.A. (LREN3), Petróleo Brasileiro S.A (PETR4), Vale S.A. (VALE3) and WEG S.A. (WEGE3), in parentheses we have the tickers of each company.  We did a backtest, building 2 portfolios with monthly rebalance. One was the minimum variance portfolio (MVP), and the other the risk parity portfolio (RPP),  obtained solving optimization problems \eqref{eq:MVP} and \eqref{eq:RPP}, respectively. Data pertaining to the period between January 2016  and June 2022, was taken from Yahoo Finance (\url{http://finance.yahoo.com}). For rebalancing, the volatilities were calculated using data from the previous 12 months. 2016 year data was used only for past volatilities calculations.
+In this section we present an application for Algorithm~\ref{Alg:GeneralSeach}, a backtest study of a portfolio build with the 10 biggest companies on the brazilian market: Ambev S.A. (ABEV3), B3 S.A. (B3SA3), Banco do Brasil S.A. (BBAS3), Banco Bradesco S.A. (BBDC4), Itaúsa S.A. (ITSA3), Itaú Unibanco S.A. (ITUB4), Lojas Renner S.A. (LREN3), Petróleo Brasileiro S.A (PETR4), Vale S.A. (VALE3) and WEG S.A. (WEGE3), in parentheses we have the tickers of each company.  We did a backtest, building 2 portfolios with monthly rebalance. One was the minimum variance portfolio (MVP), and the other the risk parity portfolio (RPP),  obtained solving optimization problems \eqref{eq:MVP} and \eqref{eq:RPP}, respectively. Data pertaining to the period between January 2016  and June 2022, was taken from Yahoo Finance (\url{http://finance.yahoo.com}). For rebalancing, the volatilities were calculated using data from the previous 12 months. 2016 year data was used only for past volatilities calculations.
 
 Generally, MVP is rarely used in practice, one of the reasons resides in the fact that the weights (and consequently the risks), may be concentrated in a few assets. Figure \ref{fig:totalRiskMVP} shows the weight distribution as well as the risk contribution of stocks during the MVP backtest study. We note that the MVP concentrates capital in few assets and consequently also concentrates risk in these assets.
 
@@ -323,7 +323,7 @@ The MVP volatility was slightly smaller than the RPP. However, considering the z
 \input{tables/RPP}
 
 
-We remind that after 2020, due to the COVID-19 pandemic, the volatility of all assets has exploded, so we separate two period in our study, from 2017 until 2019 and after 2020. We may observe that the RPP performed much better (135\% gain) than the MVP (79\% gain) in the period between January 2017 and December 2019. Besides, MVP had a great annualized Sharpe ratio of 1.20, however, lower than RPP annualized Sharpe ratio (1.58). 
+We remind that after 2020, due to the COVID-19 pandemic, the volatility of all assets has exploded, so we separate two period in our study, from 2017 until 2019 and after 2020. We may observe that the RPP performed much better (135\% gain) than the MVP (79\% gain) in the period between January 2017 and December 2019. Besides, MVP had a great annualized Sharpe ratio of 1.20, however, lower than RPP annualized Sharpe ratio (1.58).
 
 \input{tables/RPP1}
 
