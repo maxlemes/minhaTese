@@ -1,0 +1,52 @@
+\documentclass[aspectratio=1610,10pt]{beamer} %Other possible values are: 169, 149, 54, 43 and 32.
+  
+\input{../preambles/preamble}
+\input{../preambles/preambleTikz}
+\input{../preambles/preambleBeamer}
+
+
+%o titulo e biblioteca na pasta local headtail
+\input{title}
+\addbibresource{presentation.bib}
+
+%-----------------------------------------------------------------
+\begin{document}
+%-----------------------------------------------------------------
+
+\maketitle
+
+%         Outline      -------------------------------------------
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+%-----------------------------------------------------------------
+
+
+
+\input{preliminaries}
+\input{inexactProjections}
+\input{inexactScaled}
+\input{numerical}
+\input{applications}
+
+
+
+
+%           References      --------------------------------------
+\topskip=2cm\advance\textheight by -2cm\enlargethispage{-1cm}
+
+% \nocite{} % incluir sem citar no texto
+% \nocite{*} % Citar todos
+
+\printbibliography
+%-----------------------------------------------------------------
+
+\begin{frame}[c]\frametitle{}
+	\centering
+	\Huge \textbf{Thank you!}
+\end{frame}
+%-----------------------------------------------------------------
+\end{document}
+%-----------------------------------------------------------------
