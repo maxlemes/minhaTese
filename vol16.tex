@@ -1,0 +1,64 @@
+\newpage
+
+%\input{tables/StocksVol}
+
+\begin{figure}[H]
+	%\begin{adjustwidth}{2.2cm}{2.2cm}
+	\begin{subfigmatrix}{2}
+		\subfigure[Weigths]{\includegraphics{figures/totalWeigthMVPVol.pdf}}
+		\subfigure[Risks]{\includegraphics{figures/totalRiskMVPVol.pdf}}
+	\end{subfigmatrix}
+	\caption{Monthly distribution of MVP.}
+	\label{fig:totalRiskMVP}
+	%\end{adjustwidth}
+\end{figure}
+
+
+% A RPP has the weights distributed with the purpose of having a uniform risk distribution, Figure \ref{fig:totalRiskPPP} shows the distribution of weights and risks in our backtest study.
+
+\begin{figure}[H]
+	%\begin{adjustwidth}{2.2cm}{2.2cm}
+	\begin{subfigmatrix}{2}
+		\subfigure[Weigths]{\includegraphics{figures/totalWeigthRPPVol.pdf}}
+		\subfigure[Risks]{\includegraphics{figures/totalRiskRPPVol.pdf}}
+	\end{subfigmatrix}
+	\caption{Monthly distribution of RPP.}
+	\label{fig:totalRiskPPP}
+	%\end{adjustwidth}
+\end{figure}
+
+% The total return of the RPP was greater than the MVP in the period studied. While MVP had a total return of 52\%, the accumulated RPP return was 119\% (44\% higher than the MVP).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{figures/retornoRPPMVPVol.pdf}
+	\caption{MVP and RPP accumulated returns: January 2017 $-$ June 2022.}
+	\label{fig:retornoRPPMVP}
+\end{figure}
+
+% The MVP volatility was slightly smaller than the RPP. However, considering the zero risk-free rate, the RRP Sharpe ratio was bigger than the MVP.
+
+\input{tables/RPPVol}
+
+
+% We remind that after 2020, due to the COVID-19 pandemic, the volatility of all assets has exploded, so we separate two period in our study, from 2017 until 2019 and after 2020. We may observe that the RPP performed much better (135\% gain) than the MVP (79\% gain) in the period between January 2017 and December 2019. Besides, MVP had a great annualized Sharpe ratio of 1.20, however, lower than RPP annualized Sharpe ratio (1.58).
+
+\input{tables/RPPVol1}
+
+\begin{figure}[H]
+	%\begin{adjustwidth}{2.2cm}{2.2cm}
+	\begin{subfigmatrix}{2}
+		\subfigure[January 2017 $-$ December 2019.]{\includegraphics{figures/retornoRPPMVPVol1.pdf}}
+		\subfigure[January 2020 $-$ June 2022.]{\includegraphics{figures/retornoRPPMVPVol2.pdf}}
+	\end{subfigmatrix}
+	\caption{MVP and RPP accumulated returns.}
+	\label{fig:retornoRPPMVP12}
+	%\end{adjustwidth}
+\end{figure}
+
+% From January 2020 to June 2022, MVP exhibited an accumulated $15.2\%$ loss, while RPP reduced the loss to only $6.8\%$. Despite the loss in the period, the RPP improved the protection of the invested capital.
+
+\input{tables/RPPVol2}
+
+% In our study, the RPP had a superior performance when compared to the MVP, both in high and low moments. Clearly, this study is not conclusive, but simply an example of the use of Algorithm~\ref{Alg:GeneralSeach}.
+

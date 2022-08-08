@@ -12,7 +12,8 @@ i = 1
 
 file <- file[i]
 
-df <- read.table(paste0("data-raw/",file), sep = ";", dec = ",", header = FALSE, fill = TRUE)
+df <- read.table(paste0("data-raw/",file), sep = ";", dec = ",", header = FALSE,
+                 fill = TRUE)
 
 if (i==1){
   df <- df[-c(1,nrow(df)-1,nrow(df)),]
@@ -39,7 +40,8 @@ df <- df %>% arrange(yahoo)
 #df[is.na(df)] <- 0
 
 # retirando os tickers antigos
- df <- df[!(df$yahoo %in% c("PETR3.SA", "GNDI3.SA", "OMGE3.SA", "PINE3.SA", "RLOG3.SA", "TESA3.SA")),]
+ df <- df[!(df$yahoo %in% c("PETR3.SA", "GNDI3.SA", "OMGE3.SA", "PINE3.SA", 
+                            "RLOG3.SA", "TESA3.SA")),]
 
  # # Salvando os dados
  save(df, file = "data/df.ibov.rda")
@@ -80,7 +82,8 @@ prices <- map(tickers,function(x) Ad(get(x)))
 prices <- reduce(prices,merge)
 colnames(prices) <- tickers
 
-tickers <- tickers[!(tickers %in% c("GNDI3.SA", "OMGE3.SA", "PINE3.SA", "RLOG3.SA", "TESA3.SA"))]
+tickers <- tickers[!(tickers %in% c("GNDI3.SA", "OMGE3.SA", "PINE3.SA", 
+                                    "RLOG3.SA", "TESA3.SA"))]
 
 # Returns
 returns <- map(tickers,function(x) dailyReturn(Ad(get(x))))
@@ -107,14 +110,17 @@ save(ibov_ret, file = "data/ibov_ret.rda")
 #                           rm_stocks_with_na = TRUE)
 # 
 # # Calculando os retornos diários
-# ibov_ret <- Return.calculate(ibov_precos$adjusted, method = c("discrete", "log"))
+# ibov_ret <- Return.calculate(ibov_precos$adjusted, 
+# method = c("discrete", "log"))
 # ibov_ret <- na.fill(ibov_ret, fill=0.0)
 
 
-faang_data <- stockDataDownload(c("GOOG", "NFLX", "AAPL", "AMZN", "FB"),from = "2015-12-28", 
-  to   = "2022-07-02")
+faang_data <- stockDataDownload(c("GOOG", "NFLX", "AAPL", "AMZN", "FB"),
+                                from = "2015-12-28", 
+                                to   = "2022-07-02")
 
-index_data <- faang_data <- stockDataDownload(c("BOVA11.SA", "IVVB11.SA"),from = "2015-12-28", 
+index_data <- faang_data <- stockDataDownload(c("BOVA11.SA", "IVVB11.SA"),
+                                              from = "2015-12-28", 
                                               to   = "2022-07-02")
 
 # # Salvando os dados

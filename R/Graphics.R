@@ -8,9 +8,12 @@ library(PortfolioAnalytics)
 
 myColors <- RColorBrewer::brewer.pal(10,"Spectral") 
 
-load("data/RPP2.rda")
+load("data/ports.rda")
+load("data/ports1.rda")
+load("data/ports2.rda")
 
-gdf <- RPP2
+
+gdf <- ports2
 #plot(gdf, bt, line)
 
 # ----------  gráfico das cotações --------------------------------------
@@ -33,7 +36,7 @@ pgdf <- ggplot(gdf, aes(x=Index)) +
 pgdf
 
 # cria o tikz do gráfico das cotações
-tikz("../tikz/retorno/retornoRPPMVP2.tex",
+tikz("../tikz/retorno/retornoRPPMVPVol2.tex",
      standAlone = TRUE, 
      bg = "transparent",
      width = 6,
@@ -47,19 +50,22 @@ dev.off()
 
 load("data/RiskContributionsRPP.rda")
 load("data/RiskContributionsMVP.rda")
-df <- dg
 
-dp <- df[,c(2:68)]
-dr <- df[,c(2,70:ncol(df))]
+# Escolha o portfolio df = RPP, dt = MVP
+dq <- dt
+
+dp <- dq[,c(1,3:68)]
+dr <- dq[,c(1,70:ncol(dq))]
 
 datas <- format(seq(as.Date("2017-01-01"), as.Date("2022-06-01"), by="months"), format="%b%y")
 
 colnames(dp) <- c("Stocks", datas)
 colnames(dr) <- c("Stocks", datas)
 
-dt <- dr
+# Escolha a dsitribuicao dp = pesos, dr = riscos
+dw <- dp
 
-gdf <- reshape2::melt(dt,  id.vars = 'Stocks', variable.name = 'Data')
+gdf <- reshape2::melt(dw,  id.vars = 'Stocks', variable.name = 'Data')
 
 gdf <- gdf %>%
   arrange(Stocks)
@@ -79,7 +85,7 @@ pgdf <- ggplot(gdf[order(gdf$Stocks, decreasing = F),], aes(fill=Stocks, y=value
 pgdf
 
 # cria o tikz do gráfico das cotações
-tikz("../tikz/total/totalRiskRPP.tex",
+tikz("../tikz/total/totalWeigthMVPVol.tex",
      standAlone = TRUE, 
      bg = "transparent",
      width = 6,
