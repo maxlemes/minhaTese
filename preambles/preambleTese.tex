@@ -4,7 +4,6 @@
 \usepackage[chapter]{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
-
 %\usepackage{refcheck}
 
 % definindo as margens do documento
@@ -12,7 +11,18 @@
 
 %------------------------------------ hyperrref
 \usepackage[colorlinks=true]{hyperref}
-\hypersetup{colorlinks,linkcolor={purple},citecolor={purple},urlcolor={purple}}  
+
+\makeatletter
+\hypersetup{colorlinks=true,     % Color text instead of boxes
+	        linkcolor={purple},  % Color of internal links
+	        citecolor={purple},  % Color of citations
+	        filecolor={purple},  % color of file links
+	        urlcolor={purple},   % Color of external urls
+	        pdftitle=\@title,    % pdf title
+	        pdfauthor=\@author,  % pdf author
+	        pdfstartview  = FitH,%{XYZ null null 1.00}, % fits the width of the page to the window
+}
+\makeatother
 
 
 \usepackage[capitalise,noabbrev,nameinlink]{cleveref}
@@ -20,7 +30,7 @@
 \makeatletter
 % \newcommand{\eqref}[1]{\textup{\tagform@{\ref{#1}}}}
 \renewcommand{\eqref}[1]{%
-  \hyperref[#1]{\textup{\tagform@{\ref*{#1}}}}%
+	\hyperref[#1]{\textup{\tagform@{\ref*{#1}}}}%
 }
 
 \makeatother
@@ -48,8 +58,8 @@
 \def\endproof{\ensuremath{\hfill \quad \square}}
 
 
-    \LetLtxMacro\oldref{\ref}%
-    \DeclareRobustCommand{\ref}[1]{\textup\oldref{#1}}%
+\LetLtxMacro\oldref{\ref}%
+\DeclareRobustCommand{\ref}[1]{\textup\oldref{#1}}%
 
 \DeclareMathOperator*{\argmin}{argmin}
 
