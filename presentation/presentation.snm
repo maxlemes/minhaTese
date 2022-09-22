@@ -1,11 +1,21 @@
 \beamer@slide {eq:OptP}{4}
 \beamer@slide {eq:IterArm}{5}
 \beamer@slide {fig:exactProj}{9}
-\beamer@slide {fig:martinezProj}{11}
-\beamer@slide {fig:condProj1}{13}
-\beamer@slide {fig:baseline}{14}
-\beamer@slide {fig:baseline}{15}
-\beamer@slide {eq:TkArm}{20}
-\beamer@slide {eq:IterArm}{20}
-\beamer@slide {eq:nuGLL}{21}
-\beamer@slide {eq:nuZH}{22}
+\beamer@slide {fig:martinezProj}{12}
+\beamer@slide {eq:TkArm}{19}
+\beamer@slide {eq:IterArm}{19}
+\beamer@slide {eq:nuGLL}{20}
+\beamer@slide {eq:nuZH}{21}
+\beamer@slide {eq:MVP}{44}
+\beamer@slide {eq:RBP}{46}
+\beamer@slide {eq:RPP}{47}
+\beamer@slide {fig:totalRiskMVP}{49}
+\beamer@slide {fig:totalRiskPPP}{49}
+\beamer@slide {fig:retornoRPPMVP}{50}
+\beamer@slide {tab:RPP}{50}
+\beamer@slide {fig:totalRiskMVP}{59}
+\beamer@slide {fig:totalRiskPPP}{59}
+\beamer@slide {fig:retornoRPPMVP}{60}
+\beamer@slide {tab: volHighLow }{60}
+\beamer@slide {tab: volHighLow1 }{61}
+\beamer@slide {tab: volHighLow2 }{61}

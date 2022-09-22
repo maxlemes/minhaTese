@@ -36,7 +36,7 @@ d10 <- tibble(
 # Selecionando segundo a volatilidade em 2016
 
 # separando os dados do 1o ano
-ret16 <- returns
+ret16 <- returns[,names(returns)!='IBOV']
 ret16 <- ret16[index(ret16) >= "2016-01-01"]
 ret16 <- ret16[index(ret16) <  "2017-01-01"]
 

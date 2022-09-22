@@ -8,6 +8,7 @@ library(tidyquant)
 df <- read_csv("data-raw/ibov2017.csv",
                 col_names = TRUE  # Usa a 1a linha como colnames
                )
+
 df$yahoo <- paste0(df$Ticker, ".SA")
 
 # Ações que mudaram o ticker 
@@ -19,7 +20,7 @@ blacklist <- c("BVMF3.SA", "ESTC3.SA", "FIBR3.SA", "KROT3.SA", "LAME4.SA",
 df <- df[!(df$yahoo %in% blacklist),]
 df$Peso <- df$Peso/sum(df$Peso)
 
-tickers <- df$yahoo
+tickers <- c(df$yahoo, '^BVSP')
 
 df <- df[,-3]
 # # Salvando os dados
@@ -33,6 +34,11 @@ getSymbols(tickers,
            #    env=data.env,
            reload.Symbols = FALSE,
            verbose = TRUE)
+
+# Trocando ^BVSP por IBOV e ajustando os tickers
+IBOV <- BVSP
+tickers <- gsub('.{3}$', '', tickers)
+tickers[tickers=='^B'] <- 'IBOV'
 
 # Prices
 prices <- map(tickers,function(x) Ad(get(x)))
@@ -49,9 +55,6 @@ colnames(returns) <- tickers
 prices <- prices[-c(1:3, nrow(prices)),]
 returns <- returns[-c(1:3, nrow(returns)),]
 
-# Tirando o .SA (3 ultimas letras) do nome
-colnames(prices) <- gsub('.{3}$', '', colnames(prices))
-colnames(returns) <- gsub('.{3}$', '', colnames(returns))
 
 # # Salvando os dados
 save(prices, file = "data/prices.rda")

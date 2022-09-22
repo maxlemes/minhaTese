@@ -17,8 +17,9 @@ name <- "Low10"
 # ----------  gráfico das cotações --------------------------------------
 gdf <- ports
 pgdf <- ggplot(gdf, aes(x=Index)) +
-  geom_line(aes(y=RPP, color = "RPP"), size=1.5)+
-  geom_line(aes(y=MVP, color = "MVP"), size=1.5)+
+  geom_line(aes(y=RPP,  color = "RPP"), size=1.5)+
+  geom_line(aes(y=MVP,  color = "MVP"), size=1.5)+
+#  geom_line(aes(y=IBOV, color = "IBOV"), size=1.5)+
   xlab("")+
   ylab("")+
  # ylim(-0.1,0.2)+
@@ -51,6 +52,7 @@ gdf <- ports1
 pgdf <- ggplot(gdf, aes(x=Index)) +
   geom_line(aes(y=RPP, color = "RPP"), size=1.5)+
   geom_line(aes(y=MVP, color = "MVP"), size=1.5)+
+  #  geom_line(aes(y=IBOV, color = "IBOV"), size=1.5)+
   xlab("")+
   ylab("")+
   # ylim(-0.1,0.2)+
@@ -83,6 +85,8 @@ gdf <- ports2
 pgdf <- ggplot(gdf, aes(x=Index)) +
   geom_line(aes(y=RPP, color = "RPP"), size=1.5)+
   geom_line(aes(y=MVP, color = "MVP"), size=1.5)+
+  #  geom_line(aes(y=IBOV, color = "IBOV"), size=1.5)+
+  
   xlab("")+
   ylab("")+
   # ylim(-0.1,0.2)+
@@ -222,7 +226,7 @@ pgdf <- ggplot(gdf[order(gdf$Stocks, decreasing = F),],
   theme(axis.text.x = element_text(angle = 90, hjust = 2, vjust = 0.5, size = 5))+
   theme(legend.position="bottom", )
 
-#pgdf
+pgdf
 
 # cria o tikz do gráfico das cotações
 tikz(paste0("../tikz/Rgraphics/Weigth", name.port, name, ".tex"),
@@ -253,7 +257,7 @@ pgdf <- ggplot(gdf[order(gdf$Stocks, decreasing = F),],
   theme(axis.text.x = element_text(angle = 90, hjust = 2, vjust = 0.5, size = 5))+
   theme(legend.position="bottom", )
 
-#pgdf
+pgdf
 
 # cria o tikz do gráfico das cotações
 tikz(paste0("../tikz/Rgraphics/Risk", name.port, name, ".tex"),

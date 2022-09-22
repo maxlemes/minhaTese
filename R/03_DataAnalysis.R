@@ -17,9 +17,9 @@ datas <- format(seq(as.Date("2016-01-01"), as.Date("2022-07-01"), by="months"),
 
 
 # Selecionando os ativos desejados
-tickers <- d10$Low10 %>% 
+tickers <- d10$volHighLow %>% 
   sort()
-name <- "Low10"
+name <- "volHighLow"
 
 # filtrando os retornos dos ativos
 d10_ret <- returns
@@ -123,7 +123,7 @@ colSums(dt[,-1])
  #datas <- dt[37:61]
 
 data_ini <- date(datas[13])
-ports_ret <- xts(cbind(MVP=0,RPP=0), data_ini)
+ports_ret <- xts(cbind(MVP=0, RPP=0, IBOV=0), data_ini)
 
 # Calculando o Retorno do portfolio
 for (i in 1:(length(datas)-13)){
@@ -157,26 +157,45 @@ for (i in 1:(length(datas)-13)){
   )
   mv$RPP <- rp
   
+  # Adding IBOV
+  R <- returns[!is.na(returns[,'IBOV']), 'IBOV']
+  R <- R[index(R) > index(ports_ret)[nrow(ports_ret)]]
+  R <- R[index(R) < data_fim]
+  
+  ib <- Return.portfolio(R, 
+                         rebalance_on = NA, 
+                         geometric = TRUE, 
+                         wealth.index = FALSE,
+                         verbose = FALSE
+  )
+  
+  mv$IBOV <- ib
+  
   ports_ret <- rbind(ports_ret, mv)
   
   print(i)
 }
 
+ports_ret <- ports_ret[!is.na(ports_ret[,'IBOV']),]
 ports <- ports_ret
 
-ports$MVP <- cumprod(1+ports_ret$MVP)
-ports$RPP <- cumprod(1+ports_ret$RPP)
+ports$MVP  <- cumprod(1+ports_ret$MVP)
+ports$RPP  <- cumprod(1+ports_ret$RPP)
+ports$IBOV <- cumprod(1+ports_ret$IBOV)
 
 ports1 <- ports[index(ports)<="2019-12-30"]
 
 ports2 <- ports[index(ports)>="2019-12-30"]
-ports2$MVP <- ports2$MVP/ports2$MVP[[1]]
-ports2$RPP <- ports2$RPP/ports2$RPP[[1]]
+ports2$MVP  <- ports2$MVP/ports2$MVP[[1]]
+ports2$RPP  <- ports2$RPP/ports2$RPP[[1]]
+ports2$IBOV <- ports2$IBOV/ports2$IBOV[[1]]
+
 
 # Plot 
 ggplot(ports, aes(x=Index)) +
   geom_line(aes(y=RPP, color = "RPP"), size=1)+
-  geom_line(aes(y=MVP, color = "MVP"), size=1)
+  geom_line(aes(y=MVP, color = "MVP"), size=1)+
+  geom_line(aes(y=IBOV, color = "IBOV"), size=1)
 
 head(ports)
 tail(ports)
@@ -186,7 +205,7 @@ table.AnnualizedReturns(Return.calculate(ports2))
 # table.CalendarReturns((RPP$MVP))
 # table.CalendarReturns((RPP$RPP))
 # Salvando os dados
-save(ports, file = "data/ports.rda")
+save(ports,  file = "data/ports.rda")
 save(ports1, file = "data/ports1.rda")
 save(ports2, file = "data/ports2.rda")
 
@@ -264,4 +283,4 @@ for (i in 1:(length(datas)-13)){ #-13
 # Salvando os dados
 save(df, file = "data/RiskContributionsRPP.rda")
 save(dt, file = "data/RiskContributionsMVP.rda")
-save(d10_ret, file = "data/RiskContributionsMVP.rda")
+#save(d10_ret, file = "data/RiskContributionsMVP.rda")

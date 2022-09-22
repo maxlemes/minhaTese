@@ -1,10 +1,20 @@
-\usepackage{refcheck} % coloca a referência no texto
+%\usepackage{refcheck} % coloca a referência no texto
 \usepackage{biblatex}
 \usepackage[english]{babel}
 
 %------------------------------------ hyperrref
-% \hypersetup{colorlinks,linkcolor={purple},citecolor={purple},urlcolor={purple}}  
-
+\makeatletter
+\hypersetup{colorlinks=true,     % Color text instead of boxes
+          %linkcolor={gray!80!black},  % Color of internal links
+          linkcolor={UFGblue!90!black},  % Color of internal links
+          citecolor={UFGblue!90!black},  % Color of citations
+          filecolor={purple},  % color of file links
+          urlcolor={purple},   % Color of external urls
+          pdftitle=\@title,    % pdf title
+          pdfauthor=\@author,  % pdf author
+          pdfstartview  = FitH,%{XYZ null null 1.00}, % fits the width of the page to the window
+}
+\makeatother
 
 \mode<presentation>
 \usetheme{metropolis}
@@ -17,7 +27,8 @@
 
 
 %  Define as cores a serem usadas
-\definecolor{mLightBrown}{HTML}{990000} % alert block
+%\definecolor{mLightBrown}{HTML}{990000} % alert block
+\definecolor{mLightBrown}{rgb}{0, 0.125, 0.376} 
 \definecolor{mLightGreen}{HTML}{EB811B} % example text
 
 

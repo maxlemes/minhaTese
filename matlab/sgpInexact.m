@@ -69,15 +69,12 @@ function [X,f,time,outiter,nfev,info] = sgpInexact(X)
         % Print information
         if (mod(outiter,10) == 0)
             fprintf('\n')
-            fprintf('%-5s   %-8s   %2s     %-6s  %-3s    %-6s  %-8s %-8s\n',
-            'it','f','IS','nfev','k','||d||','|x-xprev|/|xprev|')
+            fprintf('%-5s   %-8s   %2s     %-6s  %-3s    %-6s  %-8s %-8s\n', 'it','f','IS','nfev','k','||d||','|x-xprev|/|xprev|')
         end
         if (outiter == 0)
-            fprintf('%5d   %5.2e   %2d   %6d   %3d   %6d   %8.2e     %1s\n',
-            outiter,f,infoProj,nfev,k,normd,'-')
+            fprintf('%5d   %5.2e   %2d   %6d   %3d   %6d   %8.2e     %1s\n', outiter,f,infoProj,nfev,k,normd,'-')
         else
-            fprintf('%5d   %5.2e   %2d   %6d   %3d   %6d   %8.2e     %8.2e\n',
-            outiter,f,infoProj,nfev,k,normd,normXXprev)
+            fprintf('%5d   %5.2e   %2d   %6d   %3d   %6d   %8.2e     %8.2e\n',  outiter,f,infoProj,nfev,k,normd,normXXprev)
         end
 
         % --------------------------------

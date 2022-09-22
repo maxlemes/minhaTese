@@ -9,15 +9,15 @@
     \item[Step 0.] Choose  $\sigma,{\zeta_{\min}}  \in (0, 1)$, $0 < \alpha_{\min} \leq \alpha_{\max}$ and $\mu \geq1$. Let $x^0\in C$, $\nu_0\geq 0$ and set $k\gets0$.
 
     \item[Step 1.] Choose positive real numbers $\alpha_k$ and $\zeta_k$ and a positive definite matrix $D_k$ such that
-      \begin{equation*} 
+      \begin{equation*}
         \alpha_{\min}\leq \alpha_k \leq \alpha_{\max}, \qquad \qquad 0 <{\zeta_{\min}}<\zeta_k \leq 1, \qquad \qquad D_k\in {\cal D}_{\mu}.
       \end{equation*}
-      Compute  $w^{k}\in C$  as any feasible inexact projection  with respect to the norm $\| \cdot \| _{D_k}$ of 
+      Compute  $w^{k}\in C$  as any feasible inexact projection  with respect to the norm $\| \cdot \| _{D_k}$ of
       \[
         z^k := x^{k}-\alpha_k D_k^{-1}\nabla f(x^{k})
       \]
       onto $C$ relative to $x^{k}$  with forcing parameter $\zeta_k$, i.e.,
-      \begin{equation*} 
+      \begin{equation*}
         w^k \in   {\cal P}_{C, \zeta_k}^{D_k}(x^{k}, z^k).
       \end{equation*}
       If $w^k= x^k$, then {\bf stop} declaring convergence.
@@ -32,34 +32,38 @@
   \frametitle{InexProj-SGM employing nonmonotone line search}
 
   \begin{enumerate}
-    \item[Step 2.] Set $\tau_{\textrm{trial}} \gets 1$. If
-    \begin{equation}\label{eq:TkArm}
-       f\Big(x^{k}+ \tau_{\textrm{trial}}(w^k - x^{k})\Big) \leq f(x^{k}) + \sigma \tau_{\textrm{trial}}\Big\langle \nabla f(x^{k}), w^k - x^{k} \Big\rangle + \nu_k,
-    \end{equation}
-    then  $\tau_k\gets \tau_{\textrm{trial}}$, define the next iterate $x^{k+1}$ as
-    \begin{equation} \label{eq:IterArm}
-      x^{k+1} = x^{k} + \tau_k (w^k - x^{k}),
-    \end{equation}
-    and go to {\bf Step 3}. Otherwise, choose $\tau_{\textrm{new}} \in [\underline\omega \tau_{\textrm{trial}}, \bar\omega \tau_{\textrm{trial}} ]$, set $\tau_{\textrm{trial}} \gets \tau_{\textrm{new}}$, and repeat test \eqref{eq:TkArm}.
-    
-    \item [Step 3.] Take  $\delta_{k+1}\in [\delta_{\min}, 1]$ and choose    $\nu_{k+1}\in {\mathbb R}$ satisfying
-    \begin{equation*} 
-      0\leq \nu_{k+1}\leq (1-\delta_{k+1})\Big[f(x^{k})+\nu_{k}-f(x^{k+1})\Big].
-    \end{equation*}
-    Set $k\gets k+1$ and go to \textbf{Step~1}.
+    \item[Step 2.\footfullcite{BirginMartinezRaydan2003}] Set $\tau_{\textrm{trial}} \gets 1$. If
+      \begin{equation}\label{eq:TkArm}
+        f\Big(x^{k}+ \tau_{\textrm{trial}}(w^k - x^{k})\Big) \leq f(x^{k}) + \sigma \tau_{\textrm{trial}}\Big\langle \nabla f(x^{k}), w^k - x^{k} \Big\rangle + \nu_k,
+      \end{equation}
+      then  $\tau_k\gets \tau_{\textrm{trial}}$, define the next iterate $x^{k+1}$ as
+      \begin{equation} \label{eq:IterArm}
+        x^{k+1} = x^{k} + \tau_k (w^k - x^{k}),
+      \end{equation}
+      and go to {\bf Step 3}. Otherwise, choose $\tau_{\textrm{new}} \in [\underline\omega \tau_{\textrm{trial}}, \bar\omega \tau_{\textrm{trial}} ]$, set $\tau_{\textrm{trial}} \gets \tau_{\textrm{new}}$, and repeat test \eqref{eq:TkArm}.
+
+    \item [Step 3.\footfullcite{GrapigliaSachs2017}] Take  $\delta_{k+1}\in [\delta_{\min}, 1]$ and choose    $\nu_{k+1}\in {\mathbb R}$ satisfying
+          \begin{equation*}
+            0\leq \nu_{k+1}\leq (1-\delta_{k+1})\Big[f(x^{k})+\nu_{k}-f(x^{k+1})\Big].
+          \end{equation*}
+          Set $k\gets k+1$ and go to \textbf{Step~1}.
   \end{enumerate}
 \end{frame}
 \endgroup
 
 \begin{frame}[t]\frametitle{Nonmonotone line search}
   \begin{block}{Remarks}
-  There are several ways of choosing $\nu_k$
+    There are several ways of choosing $\nu_k$
     \begin{enumerate}[(i)]
-      \item If $\nu_k = 0$, the line search (\ref{eq:IterArm}) is the well-known Armijo line search.
-      \item If $f_{\max} = \max\{f(x^{k-j})\, | \, 0\leq j\leq \min\{k,M\}\}$ and
-            \begin{equation}\label{eq:nuGLL}
-              \nu_k = f_{\max} - f(x^k)
-            \end{equation}
+      \item If $\nu_k = 0$ and $\delta_{k+1}=1$, the line search (\ref{eq:IterArm}) is the well-known Armijo line search.
+      \item Let $M>0$ be an integer parameter and  $f(x^{\ell(k)}) := \max\{f(x^{k-j})\, | \, 0\leq j\leq \min\{k,M\}\}$. If
+            \begin{align}\label{eq:nuGLL}
+              \begin{aligned}
+                \nu_k        & = f(x^{\ell(k)}) - f(x^k) \mbox{ and }                                    \\
+                \\
+                \delta_{k+1} & \leq  \dfrac{f(x^{\ell(k)})- f(x^{\ell(k+1)})}{f(x^{\ell(k)})-f(x^{k+1})}
+              \end{aligned}
+            \end{align}
             the line search (\ref{eq:IterArm}) is the same defined by Grippo, Lampariello and Lucidi\footfullcite{Grippo1986}.
     \end{enumerate}
   \end{block}
@@ -72,10 +76,13 @@
             \begin{equation*}
               q_{k+1}=\eta_kq_{k}+1, \qquad c_{k+1} = (\eta_k q_k c_k + f(x^{k+1}))/q_{k+1}, \qquad \forall k \in \mathbb{N}.
             \end{equation*}
-            If $\delta_{k+1}=1/q_{k+1}$ and
-            \begin{equation}\label{eq:nuZH}
-              \nu_{k}=c_k-f(x^k)
-            \end{equation}
+            If
+            \begin{align}\label{eq:nuZH}
+              \begin{aligned}
+                \nu_{k}      & = c_k-f(x^k) \mbox{ and } \\
+                \delta_{k+1} & = \frac{1}{q_{k+1}}
+              \end{aligned}
+            \end{align}
             the line search \eqref{eq:IterArm} is the same defined by Zhang and Hager\footfullcite{ZhangHager2004}.
     \end{enumerate}
   \end{block}
@@ -87,37 +94,58 @@
 
 
 \begin{frame}[t]\frametitle{Partial asymptotic convergence analysis}
-  \begin{lemma}
-    There holds  $0\leq \delta_{k+1}\Big[ f(x^{k})+\nu_{k}-  f(x^{k+1})\Big] \leq \Big( f(x^{k})+\nu_{k}\Big) - \Big( f(x^{k+1})+\nu_{k+1}\Big)$, for all $k \in \mathbb{N}$. As consequence the sequence   $\left(f(x^k)+\nu_k\right)_{k\in\mathbb{N}}$ is    non-increasing.
+  \begin{lemma}[3.2]
+    As consequence of \textbf{Step~3} the sequence   $\left(f(x^k)+\nu_k\right)_{k\in\mathbb{N}}$ is    non-increasing.
   \end{lemma}
 
   \bigskip
   \bigskip
+  \bigskip
 
 
-
-  \begin{theorem} 
-    Assume that $\displaystyle\lim_{k\to +\infty} \nu_{k} = 0$.   Then, Algorithm InexProj-SGM stops in a finite number of iterations at a stationary point of problem~\eqref{eq:OptP}, or generates an infinite sequence $(x^k)_{k\in\mathbb{N}}$ for which every cluster point is stationary for problem~\eqref{eq:OptP}.
-  \end{theorem}
+  \begin{proposition}[3.3]
+    Assume that $\displaystyle\lim_{k\to +\infty} \nu_{k} = 0$.   Then, Algorithm InexProj-SGM stops in a \textcolor{purple}{finite} number of iterations at a stationary point of problem~\eqref{eq:OptP}, or generates an \textcolor{purple}{infinite} sequence $(x^k)_{k\in\mathbb{N}}$ for which every cluster point is stationary for problem~\eqref{eq:OptP}.
+  \end{proposition}
 \end{frame}
 
 
 \begin{frame}[t]\frametitle{Partial asymptotic convergence analysis}
-  \begin{proposition}
+  \begin{corollary}[3.4]
     If $\delta_{min}>0$,  then  $\displaystyle\sum_{k=0}^{+\infty} \nu_k<+\infty$. Consequently, $\displaystyle\lim_{k\to +\infty} \nu_{k} = 0$.\footfullcite{GrapigliaSachs2017}
-  \end{proposition}
+  \end{corollary}
 
-  \begin{block}{Remark}
-    Armijo line search and nonmonotone line search strategy defined by \eqref{eq:nuZH} satisfies  a condition $\delta_{min}>0$.  However,    for  the  nonmonotone line search strategy proposed by \eqref{eq:nuGLL},  we   can only guarantee that $\delta_{min}\geq 0$. Hence,  we need deal with this case separately.
+  \bigskip
+  \bigskip
+
+  \begin{block}{Remarks}
+\begin{itemize}
+  \item    Armijo line search and Zhang, Hager nonmonotone line search strategy satisfies  a condition $\delta_{min}>0$.
+  \item For the Grippo, Lampariello and Lucidi nonmonotone line search strategy,  we   can only guarantee that $\delta_{min}\geq 0$.
+\end{itemize}
+
+ Hence,  we need deal with this case separately.
   \end{block}
 \end{frame}
 
 
 
 \begin{frame}\frametitle{Partial asymptotic convergence analysis}
-  \begin{proposition}
-    Assume that the sequence  $(x^k)_{k\in\mathbb{N}}$ is generated by Algorithm~InexProj-SGM with the  nonmonotone line  search \eqref{eq:nuGLL}, i.e.,  $\nu_{k}= f_{\max}-f(x^k)$ for all  $k \in \mathbb{N}$. In addition,  assume that the level set $C_{0}:=\{ x\in C: ~ f(x)\leq f(x^0) \}$ is bounded and $\nu_0= 0$.  Then, $\displaystyle\lim_{k\to +\infty} \nu_{k} = 0$.
+  \begin{proposition}[3.5]
+    Assume that the sequence  $(x^k)_{k\in\mathbb{N}}$ is generated by Algorithm~InexProj-SGM with the  nonmonotone line  search \eqref{eq:nuGLL}, i.e.,  $\nu_{k}= f(x^{\ell(k)})-f(x^k)$ for all  $k \in \mathbb{N}$. In addition,  assume that the level set $C_{0}:=\{ x\in C: ~ f(x)\leq f(x^0) \}$ is bounded and $\nu_0= 0$.  Then, $\displaystyle\lim_{k\to +\infty} \nu_{k} = 0$.
   \end{proposition}
+
+    \bigskip
+  \bigskip
+
+  \begin{remark}\normalfont
+
+  \begin{itemize}
+    % \item Let  $C_{0}:=\{ x\in C: ~ f(x)\leq f(x^0) \}$ be  bounded and    $(x^k)_{k\in\mathbb{N}}$ be  generated by Algorithm~InexProj-SGM with the Grippo, Lampariello and Lucidi nonmonotone line  search with $\nu_0= 0$. 
+    \item Combining Propositions~3.3 and 3.5, we conclude that  $(x^k)_{k\in\mathbb{N}}$  is either \textcolor{purple}{finite} terminating at a stationary point of problem~\eqref{eq:OptP}, or \textcolor{purple}{infinite},  and every cluster point of $(x^k)_{k\in\mathbb{N}}$ is stationary for problem~\eqref{eq:OptP}.  
+  \end{itemize}
+
+    Therefore, we have an alternative proof for the result obtained in \cite[Theorem 2.1]{BirginMartinezRaydan2003}\footfullcite{BirginMartinezRaydan2003}.
+  \end{remark}
 \end{frame}
 
 
@@ -130,46 +158,57 @@
     \item[{\bf A1.}] For all $k \in \mathbb{N}$, we take   $w^k \in   {\cal R}_{C,\gamma_k}^{D_k}(x^{k}, z^k)$   with $\gamma_k=(1-\zeta_k)/2$.
       \item[{\bf A2.}]For all $k \in \mathbb{N}$,  we take  $0\leq \nu_{k}$ such that  $\sum_{k=0}^{+\infty} \nu_k<+\infty$.
   \end{itemize}
-  Armijo line search and nonmonotone line search strategies defined by \eqref{eq:nuZH} satisfies  the assumption {\bf A2}. 
 
+  \bigskip
+
+  To  prove  the full convergence of the  sequence  $(x^k)_{k\in\mathbb{N}}$ satisfying {\bf A1} and {\bf A2} we consider an additional assumption on the sequence $(D_k)_{k\in {\mathbb N}}\subset {\cal D}_{\mu}$ as follows.
+  \begin{itemize}
+    \item[{\bf A3.}] For all $k \in \mathbb{N}$,   $(1+\eta_k)D_k-  D_{k+1}$ is  a positive semidefinite matrix, for some sequence $(\eta_k)_{k\in\mathbb{N}}\subset [0, +\infty)$ such that $\sum_{k\in \mathbb{N}}\eta_k<\infty$.
+  \end{itemize}
+
+  \bigskip
+
+  Armijo line search and nonmonotone line search strategies defined by \eqref{eq:nuZH} satisfies {\bf A2}.
 \end{frame}
 
 
-\begin{frame}[c]\frametitle{Full asymptotic convergence analysis}
- \begin{lemma}
-  For each  $x\in C$, there holds
-  \begin{equation*}
-    \|x^{k+1}-x\|_{D_k}^2 \leq \|x^k-x\|_{D_k}^2 + 2\alpha_k\tau_k \Big\langle \nabla f(x^k), x-x^k\Big\rangle + \xi \Big[f(x^k) - f(x^{k+1})+ \nu_k \Big], \quad \forall ~k \in \mathbb{N}.
-  \end{equation*}
-  where $\xi := \dfrac{2 \alpha_{\max}}{\sigma} > 0.$
-\end{lemma}
-\begin{corollary}
-  Assume that $f$ is a convex function. If $U := \left\{x \in C: f(x) \leq \inf_{k\in {\mathbb N}}\left(f(x^{k})+\nu_k\right) \right\}$ is not empty, then $(x^k)_{k\in\mathbb{N}}$ converges to a stationary point of problem~\eqref{eq:OptP}.
-\end{corollary}
-\end{frame}
+% \begin{frame}[c]\frametitle{Full asymptotic convergence analysis}
+%   \begin{lemma}[3.7]
+%     For each  $x\in C$, there holds
+%     \begin{equation*}
+%       \|x^{k+1}-x\|_{D_k}^2 \leq \|x^k-x\|_{D_k}^2 + 2\alpha_k\tau_k \Big\langle \nabla f(x^k), x-x^k\Big\rangle + \xi \Big[f(x^k) - f(x^{k+1})+ \nu_k \Big], \quad \forall ~k \in \mathbb{N}.
+%     \end{equation*}
+%     where $\xi := \dfrac{2 \alpha_{\max}}{\sigma} > 0.$
+%   \end{lemma}
+
+%   \bigskip\bigskip
+
+%   \begin{corollary}[3.8]
+%     Assume that $f$ is a convex function. If $U := \left\{x \in C: f(x) \leq \inf_{k\in {\mathbb N}}\left(f(x^{k})+\nu_k\right) \right\}$ is not empty, then $(x^k)_{k\in\mathbb{N}}$ converges to a stationary point of problem~\eqref{eq:OptP}.
+%   \end{corollary}
+% \end{frame}
 
 
 \begin{frame}[t]\frametitle{Full asymptotic convergence analysis}
 
 
-\begin{theorem}
-  If $f$ is a convex function and $(x^k)_{k\in\mathbb{N}}$ has no cluster points,  then $\Omega^* = \varnothing$, $\lim_{k \to \infty} \|x^k\|=~+\infty$, and $\inf_{k\in {\mathbb N}} f(x^k) = \inf \{f(x) : x \in C\}$.
-\end{theorem}
-\end{frame}
+  \begin{theorem}[3.9]
+    If $f$ is a convex function and $(x^k)_{k\in\mathbb{N}}$ has no cluster points,  then $\Omega^* = \varnothing$, $\lim_{k \to \infty} \|x^k\|=~+\infty$, and $\inf_{k\in {\mathbb N}} f(x^k) = \inf \{f(x) : x \in C\}$.
+  \end{theorem}
+
+  \bigskip\bigskip
 
 
-\begin{frame}[t]\frametitle{Full asymptotic convergence analysis}
-\begin{corollary}
-  If $f$ is a convex function and $(x^k)_{k\in\mathbb{N}}$ has at least one cluster point, then    $(x^k)_{k\in\mathbb{N}}$ converges to a stationary point of problem~\eqref{eq:OptP}.
-\end{corollary}
+  \begin{corollary}[3.10]
+    If $f$ is a convex function and $(x^k)_{k\in\mathbb{N}}$ has at least one cluster point, then    $(x^k)_{k\in\mathbb{N}}$ converges to a stationary point of problem~\eqref{eq:OptP}.
+  \end{corollary}
 
-\end{frame}
+  \bigskip\bigskip
 
 
-\begin{frame}[t]\frametitle{Full asymptotic convergence analysis}
-\begin{theorem}
-  Assume that $f$ is a convex function and  $\Omega^* \neq \varnothing$. Then,   $(x^k)_{k\in\mathbb{N}}$ converge to an optimal solution of problem~\eqref{eq:OptP}.
-\end{theorem}
+  \begin{theorem}[3.11]
+    Assume that $f$ is a convex function and  $\Omega^* \neq \varnothing$. Then,   $(x^k)_{k\in\mathbb{N}}$ converge to an optimal solution of problem~\eqref{eq:OptP}.
+  \end{theorem}
 \end{frame}
 
 
@@ -177,64 +216,72 @@
 
 
 \begin{frame}[t]\frametitle{Interation-complexity bound}
-    Besides  assuming   that  in ${\bf Step\,1}$ of  Algorithm~InexProj-SGM we take   $(x^k)_{k\in\mathbb{N}}$ satisfying {\bf A1} and {\bf A2},  we also need the following assumption.
-\begin{itemize}
-  \item[{\bf A3.}] The  gradient $\nabla f$ of $f$ is  Lipschitz continuous with constant $L>0$.
-\end{itemize}
+  Besides  assuming   that  in ${\bf Step\,1}$ of  Algorithm~InexProj-SGM we take   $(x^k)_{k\in\mathbb{N}}$ satisfying {\bf A1} and {\bf A2},  we also need the following assumption.
+  \begin{itemize}
+    \item[{\bf A3.}] The  gradient $\nabla f$ of $f$ is  \textcolor{purple}{Lipschitz continuous} with constant $L>0$.
+  \end{itemize}
+
+  \bigskip\bigskip
 
 
-\begin{lemma}
-  The steepsize $\tau_k$ in Algorithm~InexProj-SGM satisfies $\tau_k \geq \tau_{\min}$,
-\end{lemma}
-where 
-\begin{equation*}
-  \tau_{\min} := \min \left\{1, \frac{\tau(1-\sigma)}{{\alpha_{\max}}\mu L}\right\}.
-\end{equation*}
+
+  \begin{lemma}[3.12]
+    The steepsize $\tau_k$ in Algorithm~InexProj-SGM satisfies $\tau_k \geq \tau_{\min}$,
+  \end{lemma}
+  where
+  \begin{equation*}
+    \tau_{\min} := \min \left\{1, \frac{\tau(1-\sigma)}{{\alpha_{\max}}\mu L}\right\}.
+  \end{equation*}
 \end{frame}
 
 
 \begin{frame}[t]\frametitle{Interation-complexity bound}
-\begin{theorem} 
-  For every $N \in \mathbb{N}$, the following inequality holds
-  $$
-    \min\left\{\|w^k-x^k\| :~ k= 0, 1 \ldots, N-1\right\} \leq \sqrt{\frac{2{\alpha_{\max}}\mu\left(f(x^0)-f^* +\sum_{k= 0}^{\infty}\nu_k\right) }{\sigma \tau_{\min}}} \frac{1}{\sqrt{N}}.
-  $$
-\end{theorem}
+  \begin{theorem}[3.13]
+    For every $N \in \mathbb{N}$, the following inequality holds
+    $$
+      \min\left\{\|w^k-x^k\| :~ k= 0, 1 \ldots, N-1\right\} \leq \sqrt{\frac{2{\alpha_{\max}}\mu\left(f(x^0)-f^* +\sum_{k= 0}^{\infty}\nu_k\right) }{\sigma \tau_{\min}}} \frac{1}{\sqrt{N}}.
+    $$
+  \end{theorem}
 
-\begin{theorem} 
-  Let $f$ be a convex function on $C$. Then, for every $N \in \mathbb{N}$, there holds
-  $$
-    \min \left\{f(x^k) - f^* :~k = 0, 1 \ldots, N-1\right\} \leq \frac{\|x^0 - x^*\|^2_{D_0} + \xi\left[f(x^0)-f^*+ \sum_{k=0}^{\infty} \nu_k\right]}{2 \alpha_{\min} \tau_{\min}}\frac{1}{N}.
-  $$
-\end{theorem}
+
+  \bigskip\bigskip
+
+
+
+  \begin{theorem}[3.17]
+    Let $f$ be a convex function on $C$. Then, for every $N \in \mathbb{N}$, there holds
+    $$
+      \min \left\{f(x^k) - f^* :~k = 0, 1 \ldots, N-1\right\} \leq \frac{\|x^0 - x^*\|^2_{D_0} + \xi\left[f(x^0)-f^*+ \sum_{k=0}^{\infty} \nu_k\right]}{2 \alpha_{\min} \tau_{\min}}\frac{1}{N}.
+    $$
+  \end{theorem}
 \end{frame}
 
-\begin{frame}[c]\frametitle{Interation-complexity bound}
-  \begin{lemma} 
-  Let $N_{k}$ be  the number of function evaluations after $k\geq 1$ iterations of Algorithm~InexProj-SGM. Then,  
-  \[N_{k}\leq 1+ (k+1)\left[\frac{\log (\tau_{\min})}{\log(\tau)}+1 \right].\]
-\end{lemma}
-\end{frame}
+% \begin{frame}[c]\frametitle{Interation-complexity bound}
+%   \begin{lemma}[3.14]
+%     Let $N_{k}$ be  the number of function evaluations after $k\geq 1$ iterations of Algorithm~InexProj-SGM. Then,
+%     \[N_{k}\leq 1+ (k+1)\left[\frac{\log (\tau_{\min})}{\log(\tau)}+1 \right].\]
+%   \end{lemma}
+% \end{frame}
 
 
 \begin{frame}[c]\frametitle{Interation-complexity bound}
-\begin{theorem}
-  For a given $\epsilon>0$, the number  of  function evaluations in  Algorithm~InexProj-SGM are  at most
+  \begin{theorem}[3.15]
+    For a given $\epsilon>0$, the number  of  \textcolor{purple}{function evaluations} in  Algorithm~InexProj-SGM are  at most
     $$
       1+\left({\frac{2{\alpha_{\max}}\mu\left(f(x^0)-f^* +\sum_{k= 0}^{\infty}\nu_k\right) }{\sigma \tau_{\min}}} \frac{1}{\epsilon^2}+1\right) \left(\frac{\log (\tau_{\min})}{\log (\tau)}+1\right),
     $$
-  to compute $x^k$ and $w^k$ such that $\|  w^{k}-x^{k}\|\leq \epsilon$.
-\end{theorem}
-\end{frame}
+    to compute $x^k$ and $w^k$ such that $\|  w^{k}-x^{k}\|\leq \epsilon$.
+  \end{theorem}
+
+  \bigskip\bigskip
 
 
-\begin{frame}[c]\frametitle{Interation-complexity bound}
-\begin{theorem}
-  Let $f$ be a convex function on $C$. For a given $\epsilon>0$, the number  of  function evaluations in  Algorithm~InexProj-SGM are  at most
+  \begin{theorem}[3.16]
+    Let $f$ be a convex function on $C$. For a given $\epsilon>0$, the number  of  \textcolor{purple}{function evaluations} in  Algorithm~InexProj-SGM are  at most
 
-  $$
-    1+\left(\frac{\|x^0 - x^*\|^2_{D_0} + \xi\left(f(x^0)-f^*+ \sum_{k=0}^{\infty} \nu_k\right)}{2 \alpha_{\min} \tau_{\min}}\frac{1}{\epsilon}+1\right) \left(\frac{\log (\tau_{\min})}{\log (\tau)}+1\right),
-  $$
-  to compute $x^k$ such that $f(x^k) - f^*\leq \epsilon$.
-\end{theorem}
+    $$
+      1+\left(\frac{\|x^0 - x^*\|^2_{D_0} + \xi\left(f(x^0)-f^*+ \sum_{k=0}^{\infty} \nu_k\right)}{2 \alpha_{\min} \tau_{\min}}\frac{1}{\epsilon}+1\right) \left(\frac{\log (\tau_{\min})}{\log (\tau)}+1\right),
+    $$
+    to compute $x^k$ such that $f(x^k) - f^*\leq \epsilon$.
+  \end{theorem}
 \end{frame}

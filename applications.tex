@@ -248,7 +248,7 @@ $\sigma_0$ being a volatility target.
 
 \section{A Backtest Study}
 
-In this section we present an application for Algorithm~\ref{Alg:GeneralSeach}, a backtest study of a portfolio build with the 10 biggest companies on the brazilian market: Ambev S.A. (ABEV3), B3 S.A. (B3SA3), Banco do Brasil S.A. (BBAS3), Banco Bradesco S.A. (BBDC4), Itaúsa S.A. (ITSA3), Itaú Unibanco S.A. (ITUB4), Lojas Renner S.A. (LREN3), Petróleo Brasileiro S.A (PETR4), Vale S.A. (VALE3) and WEG S.A. (WEGE3), in parentheses we have the tickers of each company.  We did a backtest, building 2 portfolios with monthly rebalance. One was the minimum variance portfolio (MVP), and the other the risk parity portfolio (RPP),  obtained solving optimization problems \eqref{eq:MVP} and \eqref{eq:RPP}, respectively. Data pertaining to the period between January 2016  and June 2022, was taken from Yahoo Finance (\url{http://finance.yahoo.com}). For rebalancing, the volatilities were calculated using data from the previous 12 months. 2016 year data was used only for past volatilities calculations.
+In this section we present an application for Algorithm~InexProj-SGM, a backtest study of a portfolio build with the 10 biggest companies on the brazilian market: Ambev S.A. (ABEV3), B3 S.A. (B3SA3), Banco do Brasil S.A. (BBAS3), Banco Bradesco S.A. (BBDC4), Itaúsa S.A. (ITSA3), Itaú Unibanco S.A. (ITUB4), Lojas Renner S.A. (LREN3), Petróleo Brasileiro S.A (PETR4), Vale S.A. (VALE3) and WEG S.A. (WEGE3), in parentheses we have the tickers of each company.  We did a backtest, building 2 portfolios with monthly rebalance. One was the minimum variance portfolio (MVP), and the other the risk parity portfolio (RPP),  obtained solving optimization problems \eqref{eq:MVP} and \eqref{eq:RPP}, respectively. Data pertaining to the period between January 2016  and June 2022, was taken from Yahoo Finance (\url{http://finance.yahoo.com}). For rebalancing, the volatilities were calculated using data from the previous 12 months. 2016 year data was used only for past volatilities calculations.
 
 Generally, MVP is rarely used in practice, one of the reasons resides in the fact that the weights (and consequently the risks), may be concentrated in a few assets. Figure \ref{fig:totalRiskMVP} shows the weight distribution as well as the risk contribution of stocks during the MVP backtest study. We note that the MVP concentrates capital in few assets and consequently also concentrates risk in these assets.
 
@@ -310,5 +310,81 @@ From January 2020 to June 2022, MVP exhibited an accumulated $15.2\%$ loss, whil
 
 \input{tables/RPP2}
 
-In our study, the RPP had a superior performance when compared to the MVP, both in high and low moments. Clearly, this study is not conclusive, but simply an example of the use of Algorithm~\ref{Alg:GeneralSeach}.
+\section{A second Backtest Study}
+
+Now we present an application for Algorithm~InexProj-SGM, a backtest study of a portfolio build with the \textcolor{purple}{5 most volatile brazilian companies} of 2016: Gerdau S.A. (GGBR4, GOAU4), CSN S.A (CSNA3), RUMO S.A. (RAIL3), Usiminas (USIM5) and the \textcolor{purple}{5 least volatile assets} of 2016: Ambev S.A. (ABEV3), Engie S.A. (EGIE3), Ultrapar S.A. (UGPA3), Equatorial (EQTL3), Raia Drogasil S.A. (RADL3).
+
+We did a backtest, building 2 portfolios with monthly rebalance:
+\begin{itemize}
+	\item One was the minimum variance portfolio (MVP),
+	\item the other the risk parity portfolio (RPP).
+\end{itemize}
+
+Data pertaining to the period between January 2016  and June 2022, was taken from Yahoo Finance (\url{http://finance.yahoo.com}). For rebalancing, the volatilities were calculated using data from the previous 12 months. 2016 year data was used only for past volatilities calculations.
+
+
+\begin{figure}[H]
+	%\begin{adjustwidth}{1cm}{1cm}
+	\begin{subfigmatrix}{2}
+		\subfigure[Weigths]{\includegraphics{figures/WeigthMVPvolHighLow.pdf}}
+		\subfigure[Risks]{\includegraphics{figures/RiskMVPvolHighLow.pdf}}
+	\end{subfigmatrix}
+	\caption{Monthly distribution of MVP.}
+	\label{fig:totalRiskMVP}
+	%\end{adjustwidth}
+\end{figure}
+
+
+\begin{figure}[H]
+	%\begin{adjustwidth}{1cm}{1cm}
+	\begin{subfigmatrix}{2}
+		\subfigure[Weigths]{\includegraphics{figures/WeigthRPPvolHighLow.pdf}}
+		\subfigure[Risks]{\includegraphics{figures/RiskRPPvolHighLow.pdf}}
+	\end{subfigmatrix}
+	\caption{Monthly distribution of RPP.}
+	\label{fig:totalRiskPPP}
+	%\end{adjustwidth}
+\end{figure}
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{figures/retornovolHighLow.pdf}
+	\caption{MVP and RPP accumulated returns: January 2017 $-$ June 2022.}
+	\label{fig:retornoRPPMVP}
+\end{figure}
+
+
+\input{tables/volHighLow}
+
+
+
+\begin{figure}[H]
+	%\begin{adjustwidth}{2.2cm}{2.2cm}
+	\begin{subfigmatrix}{2}
+		\subfigure[January 2017 $-$ December 2019.]{\includegraphics{figures/retornovolHighLow1.pdf}}
+		\subfigure[January 2020 $-$ June 2022.]{\includegraphics{figures/retornovolHighLow2.pdf}}
+	\end{subfigmatrix}
+	\caption{MVP and RPP accumulated returns.}
+	%	\label{fig:retornoRPPMVP12}
+	%\end{adjustwidth}
+\end{figure}
+
+
+\begin{table}[!htb]
+	\centering
+	\fontsize{8}{8}
+	\selectfont
+	\begin{minipage}{.48\linewidth}
+		\input{tables/volHighLow1}
+	\end{minipage}%
+	\begin{minipage}{.48\linewidth}
+		\input{tables/volHighLow2}
+	\end{minipage}
+	\label{tab:volHighLow12}
+\end{table}
+
+
+ In both studies the RPP had a superior performance when compared to the MVP, both in high and low moments. Clearly, this study is not conclusive, but simply an example of the use of Algorithm~\ref{Alg:GeneralSeach}.
 
